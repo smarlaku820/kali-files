@@ -1,0 +1,3 @@
+hashcat -m 3200 -a 0 bcrypt_hash.txt /usr/share/wordlists/rockyou.txt.gz --force
+hashcat -m 1400 -a 0 sha256_hash.txt /usr/share/wordlists/rockyou.txt.gz --force
+hashcat -m 1800 -a 0 sha512crypt_hash.txt /usr/share/wordlists/rockyou.txt.gz --force

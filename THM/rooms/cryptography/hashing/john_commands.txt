@@ -1,0 +1,11 @@
+john --help
+john --test
+john --list=formats
+john --wordlist=/usr/share/wordlists/rockyou.txt.gz --format=Raw-MD5 first_task_hashes/hash1.txt
+john --wordlist=/usr/share/wordlists/rockyou.txt --format=Raw-SHA1 first_task_hashes/hash2.txt 
+john --list=formats | grep -iF "sha256" 
+john --list=formats | grep -iF "sha512" 
+john --wordlist=/usr/share/wordlists/rockyou.txt --format=Raw-SHA256 first_task_hashes/hash3.txt 
+john --wordlist=/usr/share/wordlists/rockyou.txt --format=Raw-SHA512 first_task_hashes/hash4.txt 
+john --wordlist=/usr/share/wordlists/rockyou.txt --format=sha512crypt first_task_hashes/hash4.txt
+history | grep john | awk '{for(i=2; i<=NF; ++i) printf "%s ", $i; print ""}' | grep -v history 
