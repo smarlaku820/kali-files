@@ -9,3 +9,7 @@ john --wordlist=/usr/share/wordlists/rockyou.txt --format=Raw-SHA256 first_task_
 john --wordlist=/usr/share/wordlists/rockyou.txt --format=Raw-SHA512 first_task_hashes/hash4.txt 
 john --wordlist=/usr/share/wordlists/rockyou.txt --format=sha512crypt first_task_hashes/hash4.txt
 history | grep john | awk '{for(i=2; i<=NF; ++i) printf "%s ", $i; print ""}' | grep -v history 
+john --wordlist=/usr/share/wordlists/rockyou.txt --format=NT ntlm.txt
+unshadow linux_authentication_hashes/passwd linux_authentication_hashes/shadow > linux_authentication_hashes/unshadowed.txt
+john --wordlist=/usr/share/wordlists/rockyou.txt --format=sha512crypt linux_authentication_hashes/unshadowed.txt
+john --single --format=raw-md5 basic_hashes/single-crack/hash7.txt
