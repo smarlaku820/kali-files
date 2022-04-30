@@ -12,7 +12,9 @@ Or refer these sample hashes to find out the hashing algorthim used.
 [HashCat Examples](https://hashcat.net/wiki/doku.php?id=example_hashes)
 [Python Hash Identifier](https://gitlab.com/kalilinux/packages/hash-identifier/-/raw/kali/master/hash-id.py)
 
-
+## John the Ripper
+[John the Ripper Website](https://www.openwall.com/john/)
+[John Custom Rules](https://www.openwall.com/john/doc/RULES.shtml)
 
 Understand the Hashing Algorithm used. Create a file & store the hash value.
 Refer `hashcat_commands.txt` file in the current directory for commands.

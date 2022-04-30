@@ -1,15 +1,75 @@
-john --help
-john --test
-john --list=formats
-john --wordlist=/usr/share/wordlists/rockyou.txt.gz --format=Raw-MD5 first_task_hashes/hash1.txt
-john --wordlist=/usr/share/wordlists/rockyou.txt --format=Raw-SHA1 first_task_hashes/hash2.txt 
-john --list=formats | grep -iF "sha256" 
-john --list=formats | grep -iF "sha512" 
-john --wordlist=/usr/share/wordlists/rockyou.txt --format=Raw-SHA256 first_task_hashes/hash3.txt 
-john --wordlist=/usr/share/wordlists/rockyou.txt --format=Raw-SHA512 first_task_hashes/hash4.txt 
-john --wordlist=/usr/share/wordlists/rockyou.txt --format=sha512crypt first_task_hashes/hash4.txt
-history | grep john | awk '{for(i=2; i<=NF; ++i) printf "%s ", $i; print ""}' | grep -v history 
-john --wordlist=/usr/share/wordlists/rockyou.txt --format=NT ntlm.txt
-unshadow linux_authentication_hashes/passwd linux_authentication_hashes/shadow > linux_authentication_hashes/unshadowed.txt
-john --wordlist=/usr/share/wordlists/rockyou.txt --format=sha512crypt linux_authentication_hashes/unshadowed.txt
-john --single --format=raw-md5 basic_hashes/single-crack/hash7.txt
+# hash cracking
+  john --help
+  john --test
+  john --list=formats
+  john --wordlist=/usr/share/wordlists/rockyou.txt.gz --format=Raw-MD5 first_task_hashes/hash1.txt
+  john --wordlist=/usr/share/wordlists/rockyou.txt --format=Raw-SHA1 first_task_hashes/hash2.txt 
+  john --list=formats | grep -iF "sha256" 
+  john --list=formats | grep -iF "sha512" 
+  john --wordlist=/usr/share/wordlists/rockyou.txt --format=Raw-SHA256 first_task_hashes/hash3.txt 
+  john --wordlist=/usr/share/wordlists/rockyou.txt --format=Raw-SHA512 first_task_hashes/hash4.txt 
+  john --wordlist=/usr/share/wordlists/rockyou.txt --format=sha512crypt first_task_hashes/hash4.txt
+  history | grep john | awk '{for(i=2; i<=NF; ++i) printf "%s ", $i; print ""}' | grep -v history 
+  john --wordlist=/usr/share/wordlists/rockyou.txt --format=NT ntlm.txt
+
+# unshadow
+  unshadow linux_authentication_hashes/passwd linux_authentication_hashes/shadow > linux_authentication_hashes/unshadowed.txt
+  john --wordlist=/usr/share/wordlists/rockyou.txt --format=sha512crypt linux_authentication_hashes/unshadowed.txt
+
+# single-crack
+  john --single --format=raw-md5 basic_hashes/single-crack/hash7.txt
+
+# Most basic & common modifiers
+Az - Takes the word and appends it with the characters you define
+A0 - Takes the word and prepends it with the characters you define
+c - Capitalises the character positionally
+
+# Charactersets
+[0-9] - Will include numbers 0-9
+[0] - Will include only the number 0
+[A-z] - Will include both upper and lowercase
+[A-Z] - Will include only uppercase letters
+[a-z] - Will include only lowercase letters
+[a] - Will include only a
+[!£$%@] - Will include the symbols !£$%@
+
+# /etc/john/john.conf
+[List.Rules:PoloPassword]
+cAz"[0-9] [!£$%@]"
+
+In order to:
+- Capitalise the first  letter - c
+- Append to the end of the word - Az
+- A number in the range 0-9 - [0-9]
+- Followed by a symbol that is one of [!£$%@]
+
+# For example:-
+To append all capital letters to the end of the word. The rule will look something like this.
+Az"[A-Z]"
+
+  john --wordlist=[path to wordlist] --rule=PoloPassword [path to file]
+  john --wordlist=[path to wordlist] --rule=THMRules [path to file]
+
+# zip2john
+zip2john converts the zip file into a hash format that john is able to understand, and hopefully able to crack.
+
+  zip2john [options] zip_file > output_file
+[options] - allows you to pass specific checksum options to zip2john
+
+# Example:-
+  zip2john zip_file > zip_hash.txt
+  john --wordlist=/usr/share/wordlists/rockyou.txt zip_hash.txt
+
+# rar2john
+rar2john converts the rar file into a hash format that john is able to understand, and hopefully able to crack. rar files are compressed files/folders created by winrar archive manager.
+
+# Example:-
+  rar2john rar_file > rar_hash.txt
+  john --wordlist=/usr/share/wordlists/rockyou.txt rar_hash.txt
+
+# ssh2john
+ssh2john converts the ssh private key (protected with a passphrase) into a hash format that john is able to understand, and hopefully able to crack. 
+
+# Example:-
+  ssh2john <path_to_private_key_file> > private_key_hash.txt
+  john --wordlists=/usr/share/wordlists/rockyou.txt private_key_hash.txt
