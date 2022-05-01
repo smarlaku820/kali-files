@@ -1,0 +1,4 @@
+# import the key
+gpg --import tryhackme.key
+# decrypt the message
+gpg -d message.gpg

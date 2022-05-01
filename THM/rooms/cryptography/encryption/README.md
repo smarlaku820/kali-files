@@ -45,5 +45,6 @@ RSA CTF challenges
 
 ## References
 [3DES and DES Encryption](https://www.comparitech.com/blog/information-security/3des-encryption/#The_history_of_3DES_encryption)
-
 [Math Behind RSA Encryption](https://muirlandoracle.co.uk/2020/01/29/rsa-encryption/)
+[How HTTP(s) work](https://robertheaton.com/2014/03/27/how-does-https-actually-work/)
+
