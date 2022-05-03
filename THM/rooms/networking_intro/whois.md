@@ -6,4 +6,4 @@
 - You can do OSINT based on the address details, like forexample finding the nearest golf course.
 
 ## Reference
-[Web Version of whois](https://www.whois.com/whois/)
+- [Web Version of whois](https://www.whois.com/whois/)

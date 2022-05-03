@@ -187,9 +187,9 @@ which updates the script.db file to contain the newly downloaded script
 - `--badsum` any real TCP/IP stack will drop this packet. However firewalls may potentially respond automatically without bothering to check the checksum of the packet.As such this switch can be used to check the presence of a firewall.
 
 ## References
-[NMAP.org](https://nmap.org)
-[NMAP option summary](https://nmap.org/book/man-briefoptions.html)
-[nse usage](https://nmap.org/book/nse-usage.html)
-[scripts](https://nmap.org/nsedoc/scripts/)
-[scripts and arguments](https://nmap.org/nsedoc/)
-[firewall evasion](https://nmap.org/book/man-bypass-firewalls-ids.html)
+- [NMAP.org](https://nmap.org)
+- [NMAP option summary](https://nmap.org/book/man-briefoptions.html)
+- [nse usage](https://nmap.org/book/nse-usage.html)
+- [scripts](https://nmap.org/nsedoc/scripts/)
+- [scripts and arguments](https://nmap.org/nsedoc/)
+- [firewall evasion](https://nmap.org/book/man-bypass-firewalls-ids.html)
