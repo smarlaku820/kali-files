@@ -1,0 +1,16 @@
+# TCP connect scan against the target on port 80
+nmap -sT -p 80 10.10.13.189
+
+# ICMP scanning (no port scanning).
+nmap -sn 10.10.13.189
+
+# perform XMAS scan on the first 999 ports of the target
+nmap -sX -p1-999 10.10.13.189
+nmap -sX -vv -p1-999 10.10.13.189
+
+# perform a TCP SYN scan on the first 5000 ports of the target
+nmap -sS -p1-5000 10.10.13.189
+
+# deploy ftp-anon script against the box. Can nmap login successfully to the FTP
+server on the port 21 ?
+nmap --script ftp-anon --script-args ftp-anon.maxlist=-1 10.10.13.189
