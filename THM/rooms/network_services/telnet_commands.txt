@@ -1,0 +1,10 @@
+# First run a port scan
+nmap -sT -A 10.10.90.130
+nmap -sT -p- 10.10.90.130
+nmap -sT -p 8012 -A -sV -vv 10.10.90.130
+
+nmap -n -sV -p 8012 --script "*telnet* and safe" 10.10.90.130
+# -n stands for not to perform reverse dns lookup
+# -sV stands to grab all the version information
+
+netcat -nv 10.10.90.130 8012

