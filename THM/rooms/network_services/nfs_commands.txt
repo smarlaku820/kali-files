@@ -1,0 +1,18 @@
+# Run an nmap
+nmap -sT -p- -A <target_ip>
+nmap -sT -sV -p2049 -A <target_ip>
+
+# Mounting the NFS
+sudo mount -t nfs IP:share /tmp/mount_dir -nolock
+
+# use showmount to look for shares
+showmount -e IP
+
+# mkdir and mount the share
+mkdir /tmp/mount
+cd /tmp/mount
+sudo mount -t nfs 10.10.202.7:home /tmp/mount -nolock
+
+# look for files/directories and find sensitive files for exploitation
+
+
