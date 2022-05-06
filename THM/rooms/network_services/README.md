@@ -50,3 +50,4 @@ You can start a tcpdump session to listen for traffic.
 - [Exploiting simple network services in CTF](https://gregit.medium.com/exploiting-simple-network-services-in-ctfs-ec8735be5eef)
 - [Exploiting remote services](https://attack.mitre.org/techniques/T1210/)
 - [NSA Warns of Vulns in VPN services](https://www.nextgov.com/cybersecurity/2019/10/nsa-warns-vulnerabilities-multiple-vpn-services/160456/)
+- [Common Exploits and Attacks](https://web.mit.edu/rhel-doc/4/RH-DOCS/rhel-sg-en-4/ch-exploits.html)
