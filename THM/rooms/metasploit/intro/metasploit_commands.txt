@@ -1,0 +1,29 @@
+## metasploit
+`help`
+`show`
+`use expoit/<rest_of_the_path>`
+`info` - to get info about the module or exploit.
+`show options`
+`show payloads`
+`search type:auxiliary telnet`
+`search type:auxiliary smtp`
+You can use `show options` against a particular exploit & set those mandatory parameters.
+`set RHOSTS <target_ip>` - across a single exploit or module
+`set RHOSTS <target_ip>` - across all modules
+Once all the module parameters are set, you can launch the module using the `exploit` command. Metasploit also supports the `run` command which is an alias created for `exploit` comman as the word exploit did not make sense when using modules that were not exploits (port scanners, vulnerability scanners, etc.,)
+
+The `exploit` command can be used without any parameters or using the -z parameter.
+The `exploit -z` command will run the exploit and background the session as soon as it opens.
+
+
+Once a vulnerability has been successfully exploited, a session will be created. This is the communication channel established between the target system and metasploit.
+
+You can use the `background` command to background the session prompt and go back to the `msfconsole` prompt.
+You can run the `sessions` command to see active sessions.
+You can use the `session -i <session_num>` to interact with that session 
+
+commands
+- set LPORT 6666
+- setg RHOSTS 10.10.19.23
+- unset payload
+- exploit

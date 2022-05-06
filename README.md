@@ -9,3 +9,4 @@
 
 ## Interesting Rooms
 - [Wifi Cracking](https://tryhackme.com/room/wifihacking101)
+- [Metasploit](https://tryhackme.com/room/rpmetasploit)

