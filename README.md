@@ -4,9 +4,10 @@
 - [Cryptography](./THM/rooms/cryptography)
 - [Networking Intro](./THM/rooms/networking_intro)
 - [NMAP](./THM/rooms/nmap)
-- [Network Services 1](./THM/rooms/network_services)
-- [Network Services 2](./THM/rooms/network_services2)
+- [Network Services](./THM/rooms/network_services)
+- [shells](./THM/rooms/shells)
 
 ## Interesting Rooms
 - [Wifi Cracking](https://tryhackme.com/room/wifihacking101)
 - [Metasploit](https://tryhackme.com/room/rpmetasploit)
+- [Upload Vulns](https://tryhackme.com/room/uploadvulns)
