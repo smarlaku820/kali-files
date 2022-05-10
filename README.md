@@ -6,6 +6,7 @@
 - [NMAP](./THM/rooms/nmap)
 - [Network Services](./THM/rooms/network_services)
 - [shells](./THM/rooms/shells)
+- [Linux Privilege Escalation](./THM/rooms/linux_privesc)
 
 ## Interesting Rooms
 - [Wifi Cracking](https://tryhackme.com/room/wifihacking101)
