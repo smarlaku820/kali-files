@@ -34,6 +34,19 @@
 ### Vertical Privsec
 - this is with respect to gaining superuser or administrator privileges by hacking an admin account.
 
+
+## Privilege Escalation Techniques
+- [service exploits](./service_exploits.md)
+- [weak file permissions](./weak_file_permissions.md)
+- [shell escape sequences](./shell_escape_sequences.md)
+- [cron jobs](./cronjobs.md)
+- [suid/sgid executables](./suid_sgid_executables.md)
+- [passwords_and_keys](./passwords_and_keys.md)
+- [nfs](./nfs.md)
+- [kernel exploits](./kernel_exploits.md)
+- [privilege escalation scripts](./privilege_escalation_scripts.md)
+
+
 ## References
 
 - [checklists linux priv escalation](https://github.com/netbiosX/Checklists/blob/master/Linux-Privilege-Escalation.md)
