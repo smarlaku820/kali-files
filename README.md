@@ -7,6 +7,8 @@
 - [Network Services](./THM/rooms/network_services)
 - [shells](./THM/rooms/shells)
 - [Linux Privilege Escalation](./THM/rooms/linux_privesc)
+- [Burp Suite Basics](./THM/rooms/burp_suite_basics)
+- [Vulnversity - Reconn/PrivEsc/Web Attacks](./THM/rooms/vulnversity)
 
 ## Interesting Rooms
 - [Wifi Cracking](https://tryhackme.com/room/wifihacking101)

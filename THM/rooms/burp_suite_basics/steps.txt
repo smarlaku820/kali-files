@@ -1,0 +1,13 @@
+- Launch the Burp Suite
+- Choose a Temporary Project
+- Start Burp
+- Go to proxy -> Open Browser
+- You will face an error
+- Now go to Project Options -> Misc -> Allow the embedded browser to run without a sandbox
+- Go back to Proxy -> Open Browser
+- Ensure the Intercept is On in the Proxy
+- Go to the browser & Launch the web app
+- Come back to the proxy to "Forward" it.
+- Go to Target & Scope the web site
+- Go to Proxy -> Options -> Intercept Client Requests -> Click on (And - URL - is in target scope)
+- 
