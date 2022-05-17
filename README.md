@@ -8,6 +8,7 @@
 - [shells](./THM/rooms/shells)
 - [Linux Privilege Escalation](./THM/rooms/linux_privesc)
 - [Burp Suite Basics](./THM/rooms/burp_suite_basics)
+- [OWASP TOP 10 ](./THM/rooms/owasp_top10)
 - [Vulnversity - Reconn/PrivEsc/Web Attacks](./THM/rooms/vulnversity)
 
 ## Interesting Rooms
