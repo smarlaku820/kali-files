@@ -223,4 +223,6 @@ RCE $ wc -c /etc/passwd
 RCE $ 
 ```
 
-
+## References
+- [Web Enumeration](./web_enumeration)
+- [Upload Vulns](./upload_vulns)
