@@ -1,0 +1,13 @@
+wpscan --update
+wpscan --url http://cmnatics.playground/ --enumerate t
+wpscan --url http://cmnatics.playground/ --enumerate p
+wpscan --url http://cmnatics.playground/ --enumerate u
+wpscan --url http://cmnatics.playground/ --enumerate vp
+wpscan --url http://cmnatics.playground/ --passwords rockyou.txt --usernames cmnatic
+wpscan --url http://cmnatics.playground/ --enumerate vp --plugins-detection [passive/aggressive]
+
+wpscan --url http://wpscan.thm --enumerate t
+wpscan --url http://wpscan.thm --enumerate p
+wpscan --url http://wpscan.thm --enumerate u
+wpscan --url http://wpscan.thm --usernames phreakazoid --password /usr/share/wordlists/rockyou.txt
+wpscan --url http://wpscan.thm --usernames phreakazoid --passwords /usr/share/wordlists/rockyou.txt

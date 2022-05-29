@@ -1,0 +1,6 @@
+gobuster dir -u http://10.10.0.0 -w /usr/share/wordlists/dirbuster/directory-list-medium-2.3.txt
+gobuster dir -u http://10.10.0.0 -w /usr/share/wordlists/dirbuster/directory-list-medium-2.3.txt -x.html,.css,.js
+gobuster dns -d mydomain.thm -w /usr/share/wordlists/SecLists/Discovery/DNS/subdomains-top1million-5000.txt
+gobuster vhost -w -u http://example.com -w /usr/share/wordlists/SecLists/Discovery/DNS/subdomains-top1million-5000.txt
+gobuster vhost -t 64 -w /usr/share/wordlists/SecLists/Discovery/DNS/subdomains-top1million-5000.txt -u http://webenum.thm/usr/share/wordlists/dirbuster/directory-list-2.3-*.txt
+gobuster dir -t 64 -u http://products.webenum.thm -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -x.txt,.php
