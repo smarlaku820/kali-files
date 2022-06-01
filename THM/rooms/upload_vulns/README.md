@@ -97,5 +97,4 @@ these filtering techniques are applied as a multi-layer, thus increasing the sec
 - as mentioned earlier, magic numbers are used as a more accurage identifier of the files. The magic number of a file is a string of hex digits & is always the very first thing in the file.
 - knowing this it is useful to validate magic numbers during file uploads.
 - so, the technique is by simply by reading those first few bytes & crossing them through a whitelist or blacklist.
-- 
-
+- R1ckRul3s
