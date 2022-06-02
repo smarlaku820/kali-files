@@ -12,6 +12,7 @@
 - [Burp Suite Repeater](./THM/rooms/burp_suite_repeater)
 - [Web Enumeration](./THM/rooms/web_enumeration)
 - [Upload Vulns](./THM/rooms/upload_vulns)
+- [Windows Exploitation](./THM/rooms/windows_exploitation)
 - [Vulnversity - Reconn/PrivEsc/Web Attacks](./THM/rooms/vulnversity)
 
 ## Interesting Rooms
