@@ -1,6 +1,7 @@
 # Run an nmap
 nmap -sT -p- -A <target_ip>
 nmap -sT -sV -p2049 -A <target_ip>
+nmap -p 111 --script=nfs-ls,nfs-showmount,nfs-statfs 10.10.163.33
 
 # Mounting the NFS
 sudo mount -t nfs IP:share /tmp/mount_dir -nolock

