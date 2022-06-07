@@ -1,6 +1,45 @@
 # TCP connect scan against the target on port 80
 nmap -sT -p 80 10.10.13.189
 
+# -F indicates fast mode - it scans the most widely used 100 ports rather than 1000 ports
+nmap -sT -F 10.10.13.189
+# checks 10 most common ports
+nmap -sT --top-ports 10 10.10.13.189
+
+# -r does the port scans in consequtive order rather than random order
+# this is especially useful if the ports are getting opened in a consistent manner especially during a target boot up
+nmap -sT -r 10.10.13.189
+
+# -sS  - performs TCP SYN scanning
+nmap -sS 10.10.13.189
+
+# -sU - performs upd scanning
+nmap -sU 10.10.13.189
+# UDP scans are slower hence to get to know whats happening leverage the -F,-sV,-v flags
+nmap -sU -v -F -sV 10.10.13.189
+
+# You can control the scan timing
+nmap -T<0-5> --min-rate x --max-rate y  <IP_ADDRESS>
+- 0 slowest
+- 5 fastest
+# According to nmap man page, there are 6 templates
+0 - paranoid
+1 - sneaky
+2 - polite
+3 - normal
+4 - aggressive
+5 - insane
+# always use -T0 or -T1 to avoid alerts because of an IDS (Intrusion Detection System)
+# -T0 takes a hell lot of time between sending probes
+# -T1 is used in RED team engagements
+# -T4 is used in CTF's
+# -T3 is by default
+# --min-rate & --max-rate ensures that many no of packets are sent per sec
+
+# nmap probes the targets to discover which hosts are alive and which hosts are not. If hosts are alive, which ports are open. Probing Parallalization specifies number of such probes that can be run in parallel. For instance, --min-parallelist=512 pushes nmap to maintain at least 512 probes at the minimum.And these 512 probes are related to host discovery and open ports.
+
+
+
 # ICMP scanning (no port scanning).
 nmap -sn 10.10.13.189
 

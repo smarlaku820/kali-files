@@ -14,6 +14,7 @@
 - [Upload Vulns](./THM/rooms/upload_vulns)
 - [Windows Exploitation](./THM/rooms/windows_exploitation)
 - [Vulnversity - Reconn/PrivEsc/Web Attacks](./THM/rooms/vulnversity)
+- [Windows Privilege Escalation](./THM/rooms/windows_privesc)
 
 ## Interesting Rooms
 - [More rooms related to Web Enumeration](./THM/rooms/web_enumeration)
