@@ -6,6 +6,18 @@
   - takes care of sending outgoing email 
   - outgoing mail can't be delivered it sends the message back to the sender
 
+## Components in email delivery
+- Mail User Agent (email client)
+- Mail Submission Agent (MUA connects to MSA to send its message, MSA checks message for any errors before transferring it to MTA which is hosted on the same server) 
+- Mail Transfer Agent (The MTA will send the message to MTA of the recipient, the MTA can also act as MSA)
+- Mail Delivery Agent(A typical setup will have the MTA act as MDA)
+
+## POP3/IMAP
+- MUA downloads/reads email messages from MDA using POP3/IMAP protocols
+- POP3 will usually download and delete messages & is not able to keep the messages (read/unread) syncrhonized if there are multiple email clients. Hence IMAP has come into picture.
+- IMAP is more sophisticated than POP3. Every detail is synced with MDA
+
+
 steps in smtp
 1. mail agent connects to SMTP server of your domain. An SMTP handshake is initiated over SMTP port 25. Once the handshake has been   made, SMTP session starts.
 2. the process of sending email (sender, recipients email address, body of the email with any attachments)

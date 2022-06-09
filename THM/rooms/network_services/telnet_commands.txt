@@ -38,3 +38,41 @@ flag.txt
 cat flag.txt
 THM{telnet_flag}
 ```
+
+
+# ftp commands
+telnet <target-ip> 21
+SYST
+STAT
+ACTIVE - data is sent over a seperate channel originating from FTP server's port 20
+PASSIVE - data is sent over a seperate channel originating from FTP client's port above 1023
+TYPE A - file transfer mode to ASCII
+TYPE I - file transfer mode to binary
+
+
+# smtp commands
+telnet <target-ip> 25
+helo <smtp-hostname>
+mail from: sai
+rcpt to: frank
+data
+<enter subject: and email content>
+quit
+
+# pop3 commands
+telnet <target-ip> 110
+USER frank
+PASS <pass>
+STAT (this will tell you how many email messages are waiting for you to be downloaded with POP3)
+<+OK nn mm>
+<nn - no of messages>
+<mm - size of the messages>
+LIST <list of new messages on the server>
+RETR 1 <retrieves the first message in the list>
+
+# imap commands
+telnet <target-ip> 143
+c1 LOGIN frank <pass>
+c2 LIST "" "*" (listing email folders)
+c3 EXAMINE INBOX
+

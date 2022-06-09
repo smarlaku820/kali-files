@@ -17,6 +17,13 @@ In passive FTP connection, the server opens a port & listens (passively) & the c
 
 The seperation of data & control channels doesn't block the commands to go through and reach server if there is a large file being transferred or in a slow internet connection.
 
+## FTP server software
+- vsftpd
+- ProFTPD
+- uFTP
+FileZilla is an GUI based ftp client
+
+
 References:-
 [RFC 959](https://www.ietf.org/rfc/rfc959.txt)
 [FTP Solaris Exploit](https://www.exploit-db.com/exploits/20745)

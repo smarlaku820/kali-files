@@ -1,0 +1,2 @@
+# capture the packets over a specific port & display it in ASCII format
+tcpdump -p 110 -A

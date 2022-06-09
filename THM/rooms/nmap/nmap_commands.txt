@@ -8,12 +8,20 @@ nmap -sT --top-ports 10 10.10.13.189
 
 # -r does the port scans in consequtive order rather than random order
 # this is especially useful if the ports are getting opened in a consistent manner especially during a target boot up
+# when the port is open, it will respond with an ACK flag set
+# SYN  - SYN/ACK - ACK - RST/ACK
 nmap -sT -r 10.10.13.189
 
 # -sS  - performs TCP SYN scanning
+# this is a stealthier scan
+# when the port is open, it will respond with a TCP packet with RST set
+# when the port is closed, there is no response
 nmap -sS 10.10.13.189
 
+
 # -sU - performs upd scanning
+# no response when the port is open
+# there is an ICMP (3) response when the port is closed
 nmap -sU 10.10.13.189
 # UDP scans are slower hence to get to know whats happening leverage the -F,-sV,-v flags
 nmap -sU -v -F -sV 10.10.13.189
@@ -38,7 +46,64 @@ nmap -T<0-5> --min-rate x --max-rate y  <IP_ADDRESS>
 
 # nmap probes the targets to discover which hosts are alive and which hosts are not. If hosts are alive, which ports are open. Probing Parallalization specifies number of such probes that can be run in parallel. For instance, --min-parallelist=512 pushes nmap to maintain at least 512 probes at the minimum.And these 512 probes are related to host discovery and open ports.
 
+# Null Scan, Fin Scan, XMas Scan
+# when the port is open, the target will not respond
+# when the port is closed, the target will respond with a RST,ACK flag
+# Null Scan - 0 flags are set, this is also very stealthier scan which is least detected by the firewall.
+# XMas Scan - PSH/URG/FIN flags are set (3 flags are set)
+# FIN Scan - FIN flag is set (1 flag is set)
+nmap -sN <target-ip> # stealthier scan - least detected by firewall
+nmap -sF <target-ip>
+nmap -sX <target-ip>
 
+# maimon scan
+# won't work in most of the modern systems
+# FIN/ACK flags are set
+# most of the BSD systems will drop the packet even if the port is open
+# ideally, this will trigger a RST flag if the port is open/closed, so can't say for sure.
+nmap -sM <target-ip>
+
+# ACK Scan
+# the target will respond with a TCP packet with RST flag set - be it port open/closed
+# this will help us know if there is a firewall before or not
+# and will display the message that all ports are unfiltered, which means there is no firewall
+# In somecases this can also be used to read firewall configuration
+# if you have setup a target VM with firewall, then it will say how many ports are filtered and how many are unfiltered.
+nmap -sA <target-ip>
+
+# Window Scan
+# same as ACK scan, but inspects the window of TCP RST packet set.
+nmap -sW <target-ip>
+
+# Custom Scan
+nmap --custom-flags RSTFINSYN <target-ip>
+
+# spoofs and decoys
+nmap -e NET_INTERFACE -Pn -S SPOOFED_IP <target-ip>
+# if you are on the same subnet as the target machine, you can choose to spoof your MAC address as well
+nmap -e NET_INTERFACE -Pn -S SPOOFED_IP --spoof-mac SPOOFED_MAC <target-ip>
+
+# make the scan appear that it is coming from many IP addresses
+# RND specifies a random IP address
+# ME specifies the attacker's ip address
+nmap -D 10.0.0.1,10.0.0.2,ME <target-ip>
+nmap -D 10.0.0.1,10.0.0.2,RND,RND,ME <target-ip>
+
+# Fragmented packets
+nmap -sS -p80 -f <target-ip>
+nmap -sS -p80 -ff <target-ip>
+# No.of.IP Fragments = <total tcp segment size>/8; if it has been fragmented once with (-f)
+# No.of.IP Fragments = <total tcp segment size>/16; if it has been fragmented twice with (-ff)
+
+
+# Idle/Zombie scan
+# The idle (zombie) scan requires the following three steps to discover whether a port is open:
+- 1. Trigger the idle host to respond so that you can record the current IP ID on the idle host.
+- 2. Send a SYN packet to a TCP port on the target. The packet should be spoofed to appear as if it was coming from the idle host (zombie) IP address.
+- 3. Trigger the idle machine again to respond so that you can compare the new IP ID with the one received earlier.
+nmap -sI ZOMBIE_IP <target-ip>
+
+nmap -sS --reason <target-ip>
 
 # ICMP scanning (no port scanning).
 nmap -sn 10.10.13.189
@@ -53,3 +118,39 @@ nmap -sS -p1-5000 10.10.13.189
 # deploy ftp-anon script against the box. Can nmap login successfully to the FTP
 server on the port 21 ?
 nmap --script ftp-anon --script-args ftp-anon.maxlist=-1 10.10.13.189
+
+
+# nmap service detection
+nmap -sV  -T5 -F --version-light <target-ip> (default intensity of 2)
+nmap -sV  -T5 -F --version-intensity 3 <targetip>
+nmap -sV  -T5 -F --version-all <target-ip> (has the intensity of 9)
+# -sV will force a three-way handshake & the tcp connection should be established fully, -sS (stealth scan) cannot be used along with -sV
+# -sV produces a version column, where you can typically find banner information
+
+# nmap OS Detection & traceroute
+nmap -sS -O <target-ip>
+# no of routers
+nmap -sS --trace-route <target-ip>
+
+# nmap scripting engine (Lua Interpreter)
+nmap -sC <target-ip>
+# -sC indicates default category
+# safe category of scripts won't bring the target down
+sudo nmap -sS -sC <target-ip>
+# default scripts are run after SYN scan
+# you can also call a specific script, in the following command, brute force attack will be lauched against the ftp service
+sudo nmap -sS -n --script "ftp-brute" <target-ip>
+sudo nmap -sS -n --script "http-date" <target-ip>
+# reports the number of algorithms for compression & key exchange which are supported
+sudo nmap -sS --script "ssh2-enum-algos" <target-ip>
+
+# Good naming convention and output for your files
+# 3 main formats
+# - normal
+# - greppable
+# - xml
+# There is a fourth piece we cannot recommend - Script kiddie
+nmap -oN nmap_scan.nmap <target-ip>
+nmap -oG nmap_scan.gnmap <target-ip>
+nmap -oX nmap_scan.xml <target-ip>
+nmap -oS nmap_scan.kiddie <target-ip> 
