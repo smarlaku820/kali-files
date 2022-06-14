@@ -28,6 +28,83 @@ show advanced
 set PSH-EncodedCommand false
 exploit
 
+# information gathering
+
+## user enumeration
+
+whoami /priv
+# list users
+net users
+# list details of a user
+net user username
+# details about other users logged on the system
+qwinsta
+query session
+# user groups defined on the system
+net localgroup
+# list members of a specific group
+net localgroup groupname
+
+## collecting system info
+systeminfo
+systeminfo | findstr /B /C:"OS Name" /C:"OS Version"
+
+## searching for files using findstr
+help findstr
+findstr /si password *.txt
+# /si - searches for current directory and sub-directories
+# search for .txt, .xml, .config, .ini & .xls extensions
+
+## patch levels
+## wmic - windows management instrumentation command line interface
+wmic qfe
+wmic qfe | findstr /C:"K4562562"
+wmic qfe get Caption,Description,HotFixID,InstalledOn
+
+## WinPEAS
+## run all checks (except for additional slower checks - LOLBAS and linpeas.sh in WSL) (noisy - CTFs)
+winpeas.exe
+
+## Only systeminfo and userinfo checks executed
+winpeas.exe systeminfo userinfo
+
+## Do not color the output
+winpeas.exe notcolor
+
+## enumerate also domain information
+winpeas.exe domain
+
+## wait for user input between tests
+winpeas.exe wait
+
+## display additional debug information
+winpeas.exe debug
+
+## log output to out.txt instead of standard output
+winpeas.exe log
+
+## Execute also additional linpeas check (runs linpeas.sh in default WSL distribution) with custom linpeas.sh URL (if not provided, the default URL is: https://raw.githubusercontent.com/carlospolop/privilege-escalation-awesome-scripts-suite/master/linPEAS/linpeas.sh)
+winpeas.exe -linpeas=http://127.0.0.1/linpeas.sh
+
+## Execute also additional LOLBAS search check
+winpeas.exe -lolbas
+
+## gathering active listening ports and processess information
+netstat -ano
+
+## scheduled tasks
+## some tasks may be scheduled to run at pre-defined times
+schtasks /query /?
+schtasks /query /fo LIST /v
+
+## drivers
+dirverquery
+
+## anti-virus
+sc query windefend
+sc queryex type=service
+
+
 # service exploits - Insecure service permissions
 
 .\Accesschk.exe /accepteula -uwcqv user daclsvc
