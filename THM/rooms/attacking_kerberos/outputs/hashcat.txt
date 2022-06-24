@@ -1,0 +1,65 @@
+└─$ hashcat -m 13100 --force ./hashes.txt ./Pass.txt
+hashcat (v6.2.5) starting
+
+You have enabled --force to bypass dangerous warnings and errors!
+This can hide serious problems and should only be done when debugging.
+Do not report hashcat issues encountered when using --force.
+
+OpenCL API (OpenCL 2.0 pocl 1.8  Linux, None+Asserts, RELOC, LLVM 11.1.0, SLEEF, POCL_DEBUG) - Platform #1 [The pocl project]
+=============================================================================================================================
+* Device #1: pthread-0x000, 1438/2940 MB (512 MB allocatable), 4MCU
+
+Minimum password length supported by kernel: 0
+Maximum password length supported by kernel: 256
+
+Hashes: 2 digests; 2 unique digests, 2 unique salts
+Bitmaps: 16 bits, 65536 entries, 0x0000ffff mask, 262144 bytes, 5/13 rotates
+Rules: 1
+
+Optimizers applied:
+* Zero-Byte
+* Not-Iterated
+
+ATTENTION! Pure (unoptimized) backend kernels selected.
+Pure kernels can crack longer passwords, but drastically reduce performance.
+If you want to switch to optimized kernels, append -O to your commandline.
+See the above message to find out about the exact limits.
+
+Watchdog: Hardware monitoring interface not found on your system.
+Watchdog: Temperature abort trigger disabled.
+
+Host memory required for this attack: 0 MB
+
+Dictionary cache built:
+* Filename..: ./Pass.txt
+* Passwords.: 1240
+* Bytes.....: 9706
+* Keyspace..: 1240
+* Runtime...: 0 secs
+
+$krb5tgs$23$*HTTPService$CONTROLLER.local$CONTROLLER-1/HTTPService.CONTROLLER.local:30222*$c525a1a18046d319d29033249a5d98e6$d7516a5efb55b41c62731c9564301f896138251453c88d77dc4e1adbea18d5bf829e23c318370d5eec4585817a00ab3b7bf5592ae5ac03bf1f67b1671c4483083b5f7e7f99012682ceb9afee13d42d8d9f46d7167275f25904b093dec973d855cf092b626454a2d9c9a99bf2b98d25c463eae01b6c812c7b3a28d449b1d3133d77171a44186b1c6ff5d5ada5448f7600024a56e678d44aa5cfb6366fd20143399460c95f9aa88d94ce3d040384308b599374ee60373e2a62086d56bcac07444bb59a1104f473a2d8887ce0473d854b8144284d759fadab5e7f8d32775ec710a4026801e61f0dbd5585d0ac03c89d900d283572ca29c5a4fd9673f5c6faf470f3a5f73ddd97a4affb6866a1b56c9f336baa5edce2b198f11c0e0039c4d52ad7d7858b08a498bc2e7e454fea9915ee453aaf0893e29c16b4d5f474de1e0af73e0e6bcd7227c41148ad9ec24fcf22e20027ab23c80b58fb845728957a47d75ded4ad87bb48f63e18be9da8e34df6638d45e694afb8b16a4dd590f034eeb8efed1b49e0e2f130b2ec94781326413bd598329c6b3d5f5307dea3be9a0715200de9b4544e11053b839d3713d5c45e8b2ece6c513bacc144abdbaf9eab4d5afb44b3a1005bfd9eda29fea3f4fe8680a03fbe08bd7980cd396371ffb7cdb3f56cec48e02a056997edc0356331c0170fd1afd212c3504498aa5864a60ce8d2b33c96e70f6ee56ca26beb610497d6b6d5995ace49c457ab04b87a2d78d6077603f2b88d7f772c284f8d66360a60a613c210d13b66cb789cc46fd1af7640b32b56cd257fdc4e0323da8b3319ed7f0ba716f88b1a6c6fb4226a79ef0682c44b4110d80d0b4a392204ce8f5c4d783d19f30037f34c95ac7d9241c34d54a0059180c9a254147d2fdee69e0c649b47b3e5ddabeed617072efad73e0f9861be7a7a53678876f7901b3b118992a79bc9bb25ecf3298b4d58e14490f94eb62be75122918f0ef72351c81f4321c62757e406b1ffba581c29c0c1f4ee97a4e317e9194be6d12a51e135c0b79aa960f5963553905f92fda5e9815710796b2c336bdada007cb67bd5f8a3f4962b39da1b96b193c796ebe6a0577d20c5133b130942368e70b35962b133c21447fbcd9d561e8dfc1fd322a9656a24dc0f34a0a7a4c773003b786ff4f5291cb96b88b346f1e697a4748690a5410040dcb5f4e0aa571122d08cd6597b7212cfd3f8431b3b7fabc8d5fd0b3a115308029fbc83e690407f2325ea11f20fc9c1d821fa91d229d6301d04d8fc8d32ccf7dc369d3d6ab81c36871f626113fc985e84f1ce0fe89612036977dc1e01db9fa61e6efb21badedb4c0c13ab5b6849154ca4e79c304ec39af894a7663b6e1a8c172702a4a3133f8889dc98138bac4b295796d69adab30de9d2433c83ed6c6f46e8cf795a9712bb55add8388fc7bd102298a0b257defb17c7b6971df79b80295f685495587550a675ae6b49fe9b6d319d64ce9886b040d8022b55017c8fa3741300479f68fbac61b1bd12a9aaf7fb500cadf8d4d43a9abf81825e2a31f52bb801fceb1e260a2ae568f5dbe787e785ba2b9b78a6cb8381ba15e1bdfa34bafafdb6770afd397232285b7ff542dc5be7e1785661bceac6338b8051cc857b1d2d27f108ede:Summer2020
+Approaching final keyspace - workload adjusted.           
+
+$krb5tgs$23$*SQLService$CONTROLLER.local$CONTROLLER-1/SQLService.CONTROLLER.local:30111*$bf5f24543ecbe7338eb3e8df573e2954$06b9fdded7b36b9feb4c7daff25d27011fdfcab4eb8d543c60f9dcb6b8f65535a3ae81c2da32cf58f697993795b1bdb05261a2390caf74e6f51989abfd5858047e2c5408cbd0885d090da8abe2308b3256aa1794db8b4835aebaf9f0213e5a0ae3434c6458e44ca32844a565e9d3d7b14e9cc3dcfdf022046d923bc2bc98fd76ea9c8699c3c9e10e83e1ef4fe2f5f86ebf76e6a758d85c5956a245556bf5e51844bd7a3c49437f1f7af585dfcb0e63b4e23f5fdd2a584d46a466e9c8d34aa53b4091b2f2e4d7f9a5623967e8abd18a60d73bd5a7274a6fc87e6326803e0812ecdcee8721dca793601a3d6a9b8aed4a365c3c60941dfa8c5decd4efe06c4dcf4856603066faa01bde15849ce12726c8d8200de8b183c9e1b320a6f83df24dd9db7e887a5237d2edbcd202e9d1e55247bcb3c6df3527a1508a44b1eb7cc1993ec7d2515fee1c1a1ebc1b93996d1321d4b7d5940b4df5beb2c6cb47eb5f5a24e11bb6f19fe603291c97b94f6befcc0ea42079a0ae2e1b311cd970e81c296e9dd8e9f7f822e3ed1525116be3f21502a85d27b7b62fb6ffce72d42b4499fe793c33d692deeecef1e2afa6efa55e6abb67b29619487ce2d7d74dbf291468570776458e6a19cf593e2e3d95d2a81fe1ff7aac8ac46d4b55a0af773c1c1c43564a8dc49370c6a425cf547db257bf537d2dc399c3439ec067916d9b1020eb4496c898ef2d7058cd681437a003679e4e20b910d6182676311ece4b0691fd154daaeada7dece9a7b7e4b09dd5d196411626e9f15615c2f656157bd0b0f6d90cb143872646f68f470c46d88761e658766864dc3eed3cb0bfe34ccf8eda523100860bd04524d28bad790296b7c8d1fc2f50a15a3d2792d961d406460dfc4993f971ca3e1270ee4ce7a0aa57a25219e5c0ee898ccb1fdefd14e6c57ae39f8efb951f052d9e97a0b3ddf132d6e30d9dff1a2314ba2aa375e170f1d1303744dfa9992fb692a19dcd31b363420a9fbde013b459739d723274b9cfdd7bf4cc38eb1a4218b51a5501eacd5d103e6104302c82708e3ff8c0a434b1adbbb401c3bef1634e23e588a1af9e22686ce79c1bd75715ec61cb23e3f876082d49dc45545199e24ea1d7cadf2907a162d70b43f03fee20e483be3ce31a3191dbfecdda5cd4bb3b2aed5d3a2f5e2bcef7bc997f6cafcbbbc7b48dedb64501d241ee0cf67b8385d4e3de46549b46d285971c8c4d13eadf9eaf404e0a1b5197a11db47fc302109a57ba1c9d5aa9ca574a00176a610f215c044ab281024dd9fcdc3862ba5b1bfa7319195056b61623f31a6dc3e6e394b7d94bfca12f175cd7ee52493596c77ee9ad22990bb44a4684e4a0f40767d5c67f6148d1297e9d17c9712a0828ffb0970801b195af01f468d9191ff21024a52eb820e168d03b20459ec8ac1b41e39752ca1f61e5e4e1e89655b45e8e4fa1dca8a75d4c6b7999e20fea144e74f75d8206dd95e6037a72203fcb7ee7e89b0a1b414b8d004d19d41d483d65acc97e2e14589e7fca221a4db6dbbc855d492f445a21b6d7db4ea217b88e67f7587a3b792054643eb7fa01762d00021ade3b58a4f95367c8ac8feeb5a748854378a82128901f3836283e2b2404467df3598b6094cfa5756dbbaa0d13a5f82b98:MYPassword123#
+                                                          
+Session..........: hashcat
+Status...........: Cracked
+Hash.Mode........: 13100 (Kerberos 5, etype 23, TGS-REP)
+Hash.Target......: ./hashes.txt
+Time.Started.....: Fri Jun 24 15:15:01 2022, (1 sec)
+Time.Estimated...: Fri Jun 24 15:15:02 2022, (0 secs)
+Kernel.Feature...: Pure Kernel
+Guess.Base.......: File (./Pass.txt)
+Guess.Queue......: 1/1 (100.00%)
+Speed.#1.........:   572.7 kH/s (0.40ms) @ Accel:256 Loops:1 Thr:1 Vec:4
+Recovered........: 2/2 (100.00%) Digests, 2/2 (100.00%) Salts
+Progress.........: 2264/2480 (91.29%)
+Rejected.........: 0/2264 (0.00%)
+Restore.Point....: 1024/1240 (82.58%)
+Restore.Sub.#1...: Salt:0 Amplifier:0-1 Iteration:0-1
+Candidate.Engine.: Device Generator
+Candidates.#1....: paulina -> hello123
+
+Started: Fri Jun 24 15:14:51 2022
+Stopped: Fri Jun 24 15:15:03 2022
+

