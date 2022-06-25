@@ -78,5 +78,19 @@ x86_64-w64-mingw32-gcc malicious_dll.c -shared -o output.dll
 - use the xfreerdp to connect & open a windows rdp session
 - fire up a python web server or an smb server and try to get the msfvenom stageless (windows/x64/shell_reverse_tcp) onto the target machine & obtain a reverse windows shell on your attack box.
 
+## Unattended Windows Installations
+- When installing windows on a large number of hosts, administrators may use windows deployment services, which allows single operating system image to be deployed to several hosts through the network. Such installations require admin account to be setup. And these accounts might end up getting stored at the following places on those machines.
+```
+C:\Unattend.xml
+C:\Windows\Panther\Unattend.xml
+C:\Windows\Panther\Unattend\Unattend.xml
+C:\Windows\system32\sysprep.inf
+C:\Windows\system32\sysprep\sysprep.xml
+```
+
+
+
+
+
 ## Ways to privilege escalation on windows
 - [ServiceExploits - Insecure service permissions](ServiceExploits_InsecurePermissions.md)
