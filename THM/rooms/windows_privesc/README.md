@@ -126,7 +126,55 @@ C:\Windows\system32\sysprep\sysprep.xml
 - [ServiceExploits - Insecure service permissions](ServiceExploits_InsecurePermissions.md)
 
 
+## Abusing dangerous privileges
+- `whoami /priv` lets you know the privs of a user
+- `SEBackup` & `SERestore` privs let you take backup (read/write) of any file on a windows computer without requiring any admin privs
+- What we can do is copy the `SAM` & `SYSTEM` registry hives to extract the local administrator's password hash.
+## SEBackup
+- Dump the SAM/SYSTEM hashes and copy them to the attack box
+- use impacket/psexec.py -hashes to use the hash (pass the hash attack) and obtain a foothold on the target
+
+## SETakeOwnerShip
+- SETakeOwnership allows us to take ownership of any object on the system including files and registry keys, opening up many possibilities for an attacker to elevate privileges.
+- For example we could search for a service running as system user & take ownership of the service's executable.
+
+
+## SEImpersonate/SEAssignPrimaryToken
+- These privileges allow for a process to impersonate other users & act on their behalf. Impersonation usually consists of being able to spawn a process under the security context of another user. This is used by services that need to allow different users to access various resources, allowing the server to provide access restricted to a user's permission easily.
+- As attackers you need to take control of a process with SEImpersonate and SEAssignPrimaryToken privileges, we can impersonate any user connecting and authenticating to that process
+- In Windows systems, you will find that the LOCAL SERVICE and NETWORK SERVICE ACCOUNTS already have such privileges enabled. Since these accounts are used to spawn services using restricted accounts, it makes sense to allow them to impersonate connecting users if needed by the service. Internet Information Services (IIS) will also create a similar default account called "iis apppool\defaultapppool" for web applications.
+- To elevate privileges using such accounts an attacker needs following:-
+  - To be able to spawn a process so that a user can authenticate to it for impersonation to occur
+  - Find a way to force privileged users to connect & authenticate to spawned malicious processes
+
+## tools of trade
+- There are tools to perform enumeration and help us find potential attack vectors.
+- However do remember that automatic tools miss privelege escalation vectors
+### WinPeas
+- WinPEAS is a script developed to enumerate the target system to uncover privilege escalation paths. You can find more information about winPEAS and download either the precompiled executable or a .bat script. WinPEAS will run commands similar to the ones listed in the previous task and print their output. The output from winPEAS can be lengthy and sometimes difficult to read. This is why it would be good practice to always redirect the output to a file, as shown below: `winpeas.exe > output.txt`
+
+### PrivescCheck
+- PrivescCheck is a PowerShell script that searches common privilege escalation on the target system. It provides an alternative to WinPEAS without requiring the execution of a binary file.
+```
+Set-ExecutionPolicy Bypass -Scope process -Force
+. .\PrivescCheck.ps1
+Invoke-PrivescCheck
+```
+### WES-NG: Windows Exploit Suggester - Next Generation
+- If you want to be stealthy go for WES-NG
+- Some exploit suggesting scripts (e.g. winPEAS) will require you to upload them to the target system and run them there. This may cause antivirus software to detect and delete them. To avoid making unnecessary noise that can attract attention, you may prefer to use WES-NG, which will run on your attacking machine (e.g. Kali or TryHackMe AttackBox).
+- Once installed before using it, type the `wes.py --update` command to update the database
+. This script will refer to the database it checks for missing patches that can result in a vulnearbility you can use to elevate your privileges on the target system.
+- To use the script you need to first run the following command:- `wes.py systeminfo.txt`
+
+### Metasploit
+- If you already have a meterpreter shell on the target system, you can use the following module to list vulnerabilities that may affect the target system & allow you to elevate privileges on the target system.
+- `use multi/recon/local_exploit_suggester`
+
+
+
 ## References
+- [Windows Exploit Suggester](https://github.com/bitsadmin/wesng)
 - [PayloadsAllTheThings - Windows Privilege Escalation](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Windows%20-%20Privilege%20Escalation.md)
 - [Priv2Admin - Abusing Windows Privileges](https://github.com/gtworek/Priv2Admin)
 - [RogueWinRM Exploit](https://github.com/antonioCoco/RogueWinRM)
