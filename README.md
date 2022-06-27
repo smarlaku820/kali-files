@@ -15,6 +15,13 @@
 - [Windows Exploitation](./THM/rooms/windows_exploitation)
 - [Vulnversity - Reconn/PrivEsc/Web Attacks](./THM/rooms/vulnversity)
 - [Windows Privilege Escalation](./THM/rooms/windows_privesc)
+- [Burp Suite Intruder](./THM/rooms/burp_suite_intruder)
+- [Burp Suite Modules](./THM/rooms/burp_suite_modules)
+- [Metasploit](./THM/rooms/metasploit)
+- [Active Directory](./THM/rooms/active_directory)
+- [Attacking Kerberos](./THM/rooms/attacking_kerberos)
+- [Post Exploitation](./THM/rooms/post_exploitation)
+- [Wire Shark](./THM/rooms/wire_shark)
 
 ## Interesting Rooms
 - [More rooms related to Web Enumeration](./THM/rooms/web_enumeration)
