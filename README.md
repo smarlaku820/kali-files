@@ -22,6 +22,7 @@
 - [Attacking Kerberos](./THM/rooms/attacking_kerberos)
 - [Post Exploitation](./THM/rooms/post_exploitation)
 - [Wire Shark](./THM/rooms/wire_shark)
+- [MITRE](./THM/rooms/mitre)
 
 ## Interesting Rooms
 - [More rooms related to Web Enumeration](./THM/rooms/web_enumeration)
