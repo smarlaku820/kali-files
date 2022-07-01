@@ -1,0 +1,3 @@
+#
+yara myfirstrule.yar somefile
+yara myfirstrule.yar somefile_that_doesntexist
