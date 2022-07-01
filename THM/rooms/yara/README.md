@@ -31,6 +31,9 @@ The above rule is telling YARA that any file containing one of the three strings
 - https://valhalla.nextron-systems.com/
 - https://www.virustotal.com/gui/home/upload
 
+## b374k PHP shell
+- https://github.com/b374k/b374k
+
 ## References
 - https://github.com/virustotal/yara
 - https://github.com/InQuest/awesome-yara

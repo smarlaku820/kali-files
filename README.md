@@ -23,6 +23,8 @@
 - [Post Exploitation](./THM/rooms/post_exploitation)
 - [Wire Shark](./THM/rooms/wire_shark)
 - [MITRE](./THM/rooms/mitre)
+- [YARA](./THM/rooms/yara)
+
 
 ## Interesting Rooms
 - [More rooms related to Web Enumeration](./THM/rooms/web_enumeration)
