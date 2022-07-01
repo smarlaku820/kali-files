@@ -27,6 +27,9 @@ The above rule is telling YARA that any file containing one of the three strings
 ## LOKI
 - Indicator of Compromise (IOC) scanner
 
+## Virus Total & Valhalla
+- https://valhalla.nextron-systems.com/
+- https://www.virustotal.com/gui/home/upload
 
 ## References
 - https://github.com/virustotal/yara
@@ -37,3 +40,4 @@ The above rule is telling YARA that any file containing one of the three strings
 - https://www.bsk-consulting.de/2015/02/16/write-simple-sound-yara-rules/
 - https://www.bsk-consulting.de/2015/10/17/how-to-write-simple-but-sound-yara-rules-part-2/
 - https://www.bsk-consulting.de/2016/04/15/how-to-write-simple-but-sound-yara-rules-part-3/
+
