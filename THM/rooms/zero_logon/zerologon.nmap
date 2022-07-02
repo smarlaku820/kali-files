@@ -1,0 +1,53 @@
+nmap -sC -sT -p- 10.10.208.220
+
+Starting Nmap 7.60 ( https://nmap.org ) at 2022-07-02 08:30 BST
+Nmap scan report for ip-10-10-208-220.eu-west-1.compute.internal (10.10.208.220)
+Host is up (0.00042s latency).
+Not shown: 65509 closed ports
+PORT      STATE SERVICE
+53/tcp    open  domain
+80/tcp    open  http
+| http-methods: 
+|_  Potentially risky methods: TRACE
+|_http-title: Site doesn't have a title (text/html).
+88/tcp    open  kerberos-sec
+135/tcp   open  msrpc
+139/tcp   open  netbios-ssn
+389/tcp   open  ldap
+445/tcp   open  microsoft-ds
+464/tcp   open  kpasswd5
+593/tcp   open  http-rpc-epmap
+636/tcp   open  ldapssl
+3268/tcp  open  globalcatLDAP
+3269/tcp  open  globalcatLDAPssl
+3389/tcp  open  ms-wbt-server
+| ssl-cert: Subject: commonName=DC01.hololive.local
+| Not valid before: 2022-07-01T07:25:50
+|_Not valid after:  2022-12-31T07:25:50
+|_ssl-date: 2022-07-02T07:32:27+00:00; 0s from scanner time.
+5985/tcp  open  wsman
+9389/tcp  open  adws
+47001/tcp open  winrm
+49664/tcp open  unknown
+49665/tcp open  unknown
+49666/tcp open  unknown
+49668/tcp open  unknown
+49669/tcp open  unknown
+49670/tcp open  unknown
+49673/tcp open  unknown
+49674/tcp open  unknown
+49685/tcp open  unknown
+49694/tcp open  unknown
+MAC Address: 02:63:47:1B:8E:0D (Unknown)
+
+Host script results:
+|_nbstat: NetBIOS name: DC01, NetBIOS user: <unknown>, NetBIOS MAC: 02:63:47:1b:8e:0d (unknown)
+| smb2-security-mode: 
+|   2.02: 
+|_    Message signing enabled and required
+| smb2-time: 
+|   date: 2022-07-02 08:32:25
+|_  start_date: 1600-12-31 23:58:45
+
+Nmap done: 1 IP address (1 host up) scanned in 113.99 seconds
+
