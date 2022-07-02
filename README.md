@@ -24,7 +24,8 @@
 - [Wire Shark](./THM/rooms/wire_shark)
 - [MITRE](./THM/rooms/mitre)
 - [YARA](./THM/rooms/yara)
-
+- [Intro to ISAC](./THM/rooms/isac)
+- [ZeroLogon](./THM/rooms/zero_logon)
 
 ## Interesting Rooms
 - [More rooms related to Web Enumeration](./THM/rooms/web_enumeration)
