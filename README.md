@@ -26,6 +26,9 @@
 - [YARA](./THM/rooms/yara)
 - [Intro to ISAC](./THM/rooms/isac)
 - [ZeroLogon](./THM/rooms/zero_logon)
+- [Open Vulnerability Assessment Scanning](./THM/rooms/openvas)
+- [Security Operations Center](./THM/rooms/soc)
+- [Malware Information Sharing Platform](./THM/rooms/misp)
 
 ## Interesting Rooms
 - [More rooms related to Web Enumeration](./THM/rooms/web_enumeration)

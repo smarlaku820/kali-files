@@ -1,0 +1,48 @@
+┌──(bluejay820㉿kali)-[~/…/kali-files/THM/rooms/openvas]
+└─$ sudo gvm-check-setup        
+gvm-check-setup 21.4.3
+  Test completeness and readiness of GVM-21.4.3
+Step 1: Checking OpenVAS (Scanner)... 
+        OK: OpenVAS Scanner is present in version 21.4.4.
+        OK: Server CA Certificate is present as /var/lib/gvm/CA/servercert.pem.
+Checking permissions of /var/lib/openvas/gnupg/*
+        OK: _gvm owns all files in /var/lib/openvas/gnupg
+        OK: redis-server is present.
+        OK: scanner (db_address setting) is configured properly using the redis-server socket: /var/run/redis-openvas/redis-server.sock
+        OK: redis-server is running and listening on socket: /var/run/redis-openvas/redis-server.sock.
+        OK: redis-server configuration is OK and redis-server is running.
+        OK: _gvm owns all files in /var/lib/openvas/plugins
+        OK: NVT collection in /var/lib/openvas/plugins contains 98950 NVTs.
+Checking that the obsolete redis database has been removed
+        OK: No old Redis DB
+        OK: ospd-OpenVAS is present in version 21.4.4.
+Step 2: Checking GVMD Manager ... 
+        OK: GVM Manager (gvmd) is present in version 21.4.5.
+Step 3: Checking Certificates ... 
+        OK: GVM client certificate is valid and present as /var/lib/gvm/CA/clientcert.pem.
+        OK: Your GVM certificate infrastructure passed validation.
+Step 4: Checking data ... 
+        OK: SCAP data found in /var/lib/gvm/scap-data.
+        OK: CERT data found in /var/lib/gvm/cert-data.
+Step 5: Checking Postgresql DB and user ... 
+        OK: Postgresql version and default port are OK.
+ gvmd      | _gvm     | UTF8     | en_IN   | en_IN | 
+        OK: At least one user exists.
+Step 6: Checking Greenbone Security Assistant (GSA) ... 
+Oops, secure memory pool already initialized
+        OK: Greenbone Security Assistant is present in version 21.4.4.
+Step 7: Checking if GVM services are up and running ... 
+        OK: ospd-openvas service is active.
+        OK: gvmd service is active.
+        OK: gsad service is active.
+Step 8: Checking few other requirements...
+        OK: nmap is present in version 21.4.4.
+        OK: ssh-keygen found, LSC credential generation for GNU/Linux targets is likely to work.
+        WARNING: Could not find makensis binary, LSC credential package generation for Microsoft Windows targets will not work.
+        SUGGEST: Install nsis.
+        OK: xsltproc found.
+        WARNING: Your password policy is empty.
+        SUGGEST: Edit the /etc/gvm/pwpolicy.conf file to set a password policy.
+
+It seems like your GVM-21.4.3 installation is OK.
+
