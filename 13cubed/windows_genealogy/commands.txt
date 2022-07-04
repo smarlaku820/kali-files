@@ -1,0 +1,16 @@
+# volatility
+
+## for suggestions on profiles
+volatility -f normal.mem imageinfo
+
+## running the plugin plist
+volatility -f normal.mem --profile=Win10x64_10568 pstree
+
+## to check if malware authors have taken advantage of svchost.exe process
+volatility -f normal.mem --profile=Win10x64_10568 pslist | grep svchost.exe
+
+## to check for svchost.exe rogue processes
+volatility -f abnormal.mem --profile=Win10x64_10568 pslist | grep <pid>
+
+## psscan gives info about exited processes
+volatility -f abobormal.mem --profile=Win10x64_10568 psscan | grep <pid>
