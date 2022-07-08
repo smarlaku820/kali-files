@@ -1,0 +1,48 @@
+https://live.sysinternals.com/
+
+sysdm.cpl # launch system properties from command line
+
+# launch sysinternals live without downloading the tools
+\\live.sysinternals.com\tools\procmon.exe
+
+# For the above command to work, WebDav Client needs to be installed on windows. WebDav is what allows local machine to access a remote machine running a WebDav share & perform actions in it.
+get-service webclient
+start-service webclient
+
+# also network discovery needs to be enabled. 
+# first you need to open network & sharing center
+control.exe /name Microsoft.NetworkAndSharingCenter
+# click on advanced sharing center settings and turn on network discovery
+
+# You can also launch sysinternals from a network mapped drive
+net use * \\live.sysinternals.com\tools\
+
+
+# File And Disk Utilities
+# sigcheck is a tool that helps with file version number, timestamp information & digital signature details, including certificate chains. It also includes an option to check a file's status on VirusTotal, a site that performs automated file scanning against 40 anti-virus engines, & an option to upload file for scanning.
+sigcheck -accepteula
+# usecase:- check for unsigned files in C:\windows\system32
+sigcheck -u -e C:\windows\system32
+# -u -> check for unsigned files & not known to VirusTotal or which have zero-detection
+# -e -> only executables
+
+# streams
+# The NTFS file system provides applications the ability to create alternate data streams of information. By default, all data is stored in a file's main unnamed data stream, but by using the syntax 'file:stream', you are able to read and write to alternates.
+# Alternate Data Streams (ADS) is a file attribute specific to Windows NTFS (New Technology File System). Every file has at least one data stream ($DATA) and ADS allows files to contain more than one stream of data. Natively Window Explorer doesn't display ADS to the user. There are 3rd party executables that can be used to view this data, but Powershell gives you the ability to view ADS for files.
+# Malware writers have used ADS to hide data in an endpoint, but not all its uses are malicious. When you download a file from the Internet unto an endpoint, there are identifiers written to ADS to identify that it was downloaded from the Internet.
+streams -accepteula
+streams C:\Users\Administrator\sysinternals.zip -accepteula
+dir /r
+# to view the actual file
+type file.txt
+# to view the ADS file
+more < file.txt:ads.txt
+# creating a normal file
+echo DATA > normal.txt
+echo ADS DATA > normal.txt:ads.txt
+
+# SDelete
+# SDelete is a command line utility that takes a number of options. In any given use, it allows you to delete one or more files and/or directories, or to cleanse the free space on a logical disk
+# https://docs.microsoft.com/en-us/sysinternals/downloads/sdelete
+
+
