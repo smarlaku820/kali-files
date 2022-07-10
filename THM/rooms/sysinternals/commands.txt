@@ -45,4 +45,15 @@ echo ADS DATA > normal.txt:ads.txt
 # SDelete is a command line utility that takes a number of options. In any given use, it allows you to delete one or more files and/or directories, or to cleanse the free space on a logical disk
 # https://docs.microsoft.com/en-us/sysinternals/downloads/sdelete
 
+# TCPview - networking utility from sysinternals
+tcpview -accepteula
+
+# Programs starting at boottime
+autoruns -accepteula
+
+# more deep dive into processes
+procdump -accepteula
+procexp -accepteula
+# with procmon you can capture all events associated with a particular process - https://adamtheautomator.com/procmon/
+procmon -accepteula 
 
