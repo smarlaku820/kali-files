@@ -57,3 +57,14 @@ procexp -accepteula
 # with procmon you can capture all events associated with a particular process - https://adamtheautomator.com/procmon/
 procmon -accepteula 
 
+# security utilities
+sysmon
+
+# System information, 
+winobj -accepteula
+bginfo -accepteula
+
+# regjump
+regjump -accepteula
+regjump HKLM\System\CurrentControlSet\Services\WebClient -accepteula
+strings .\ZoomIt.exe | grep -i '.pdb'
