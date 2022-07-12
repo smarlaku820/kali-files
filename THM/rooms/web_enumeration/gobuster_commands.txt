@@ -5,3 +5,4 @@ gobuster vhost -w -u http://example.com -w /usr/share/wordlists/SecLists/Discove
 gobuster vhost -t 64 -w /usr/share/wordlists/SecLists/Discovery/DNS/subdomains-top1million-5000.txt -u http://webenum.thm/usr/share/wordlists/dirbuster/directory-list-2.3-*.txt
 gobuster dir -t 64 -u http://products.webenum.thm -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -x.txt,.php
 gobuster dir -t 64 -u http://10.10.23.59 -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -x php,sh,txt,cgi,html,css,js,py | tee -a rick_morty_ctf.txt
+gobuster dir -t 64 -k -u https://10.10.10.60 -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -x txt

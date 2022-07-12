@@ -27,8 +27,16 @@
 - [Intro to ISAC](./THM/rooms/isac)
 - [ZeroLogon](./THM/rooms/zero_logon)
 - [Open Vulnerability Assessment Scanning](./THM/rooms/openvas)
-- [Security Operations Center](./THM/rooms/soc)
+- [Security Operations Center](./THM/rooms/SOC)
 - [Malware Information Sharing Platform](./THM/rooms/misp)
+- [Core Windows Processes](./THM/rooms/SOC/core_windows_processes)
+- [SysInternals](./THM/rooms/SOC/sysinternals)
+- [Windows Event Logs](./THM/rooms/SOC/windows_event_logs)
+- [SysMon](./THM/rooms/SOC/sysmon)
+- [Suricata](./THM/rooms/SOC/suricata)
+- [OSQuery](./THM/rooms/SOC/osquery)
+- [Splunk](./THM/rooms/SOC/splunk)
+- [OpenEDR](./THM/rooms/SOC/open_edr)
 
 ## Interesting Rooms
 - [More rooms related to Web Enumeration](./THM/rooms/web_enumeration)

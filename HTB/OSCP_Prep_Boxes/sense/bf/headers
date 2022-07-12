@@ -1,0 +1,20 @@
+POST /index.php HTTP/1.1
+Host: 10.10.10.60
+Cookie: cookie_test=1657627787; PHPSESSID=8dc0d7249682970361198221e0e3b8e6
+User-Agent: Mozilla/5.0 (X11; Linux aarch64; rv:91.0) Gecko/20100101 Firefox/91.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 122
+Origin: https://10.10.10.60
+Referer: https://10.10.10.60/index.php
+Upgrade-Insecure-Requests: 1
+Sec-Fetch-Dest: document
+Sec-Fetch-Mode: navigate
+Sec-Fetch-Site: same-origin
+Sec-Fetch-User: ?1
+Te: trailers
+Connection: close
+
+__csrf_magic=sid%3Ad67805452c8e81e367562c3ad533356bee9aa15d%2C1657624187&usernamefld=rohit&passwordfld=pfsense&login=Login
