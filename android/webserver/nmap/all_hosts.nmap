@@ -1,0 +1,30 @@
+# Nmap 7.92 scan initiated Fri Jul 15 02:56:03 2022 as: nmap -oA nmap/all_hosts 192.168.0.0/24
+Nmap scan report for 192.168.0.1
+Host is up (0.019s latency).
+Not shown: 994 closed tcp ports (conn-refused)
+PORT     STATE    SERVICE
+21/tcp   open     ftp
+23/tcp   filtered telnet
+80/tcp   open     http
+139/tcp  open     netbios-ssn
+445/tcp  open     microsoft-ds
+1900/tcp open     upnp
+
+Nmap scan report for 192.168.0.100
+Host is up (0.0073s latency).
+Not shown: 995 closed tcp ports (conn-refused)
+PORT      STATE SERVICE
+8008/tcp  open  http
+8009/tcp  open  ajp13
+8443/tcp  open  https-alt
+9000/tcp  open  cslistener
+10001/tcp open  scp-config
+
+Nmap scan report for 192.168.0.106
+Host is up (0.0091s latency).
+Not shown: 998 closed tcp ports (conn-refused)
+PORT     STATE    SERVICE
+5060/tcp filtered sip
+8022/tcp open     oa-system
+
+# Nmap done at Fri Jul 15 02:56:11 2022 -- 256 IP addresses (3 hosts up) scanned in 8.30 seconds
