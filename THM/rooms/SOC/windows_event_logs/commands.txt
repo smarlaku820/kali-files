@@ -1,0 +1,58 @@
+
+Get-WinEvent -ListLog * | Select-Object LogName
+
+Get-WinEvent -FilterhashTable @{LogName='Application' ProviderName='MsiInstaller' ID=11707}
+Get-WinEvent -FilterHashtable @{LogName='Microsoft-Windows-PowerShell/Operational'; ID=4104} | Select-Object -Property Message | Select-String -Pattern 'SecureString'
+Get-WinEvent -ListLog * | findstr Application
+Get-WinEvent -ListLog Setup
+Get-WinEvent -ListLog | Format-List -Property *
+
+# configure the security log
+$log = Get-WinEvent -ListLog Security
+$log.MaximumSizeInBytes = 5gb
+try{
+   $log.SaveChanges()
+   Get-WinEvent -ListLog Security | Format-List -Property *
+}catch [System.UnauthorizedAccessException]{
+   $ErrMsg  = 'You do not have permission to configure this log!'
+   $ErrMsg += ' Try running this script with administrator privileges. '
+   $ErrMsg += $_.Exception.Message
+   Write-Error $ErrMsg
+}
+
+# get logs from another server
+Get-WinEvent -ListLog * -ComputerName localhost | Where-Object { $_.RecordCount }
+
+# get logs from multiple servers
+$S = 'Server01', 'Server02', 'Server03'
+ForEach ($Server in $S) {
+  Get-WinEvent -ListLog Application -ComputerName $Server |
+    Select-Object LogMode, MaximumSizeInBytes, RecordCount, LogName,
+      @{name='ComputerName'; expression={$Server}} |
+    Format-Table -AutoSize
+}
+
+# list providers and log names
+Get-WinEvent -ListProvider *
+
+# list providers for a specific log
+(Get-WinEvent -ListLog Application).ProviderNames 
+(Get-WinEvent -ListLog Setup).ProviderNames
+
+# get log provider names that contain a specific string
+Get-WinEvent -ListProvider *Policy*
+Get-WinEvent -ListProvider *PowerShell*
+
+# get event ids that the event provider generates
+(Get-WinEvent -ListProvider Microsoft-Windows-GroupPolicy).Events | Format-Table Id, Description
+(Get-WinEvent -ListProvider Microsoft-Windows-PowerShell).Events | Format-Table Id, Description
+
+# log information from event object properties
+$Event = Get-WinEvent -LogName 'Windows PowerShell'
+$Event.Count
+$Event | Group-Object -Property Id -NoElement | Sort-Object -Property Count -Descending
+$Event | Group-Object -Property LevelDisplayName -NoElement
+
+# Reference
+# https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.diagnostics/Get-WinEvent?view=powershell-7.2&viewFallbackFrom=powershell-7.1
+
