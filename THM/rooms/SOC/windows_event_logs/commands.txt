@@ -72,4 +72,5 @@ Get-WinEvent -LogName Application -FilterXPath '*/System/Provider[@Name="WLMS"] 
 
 Get-WinEvent -LogName Security -FilterXPath '*/EventData/Data[@Name="TargetUserName"]="Sam" and */System/EventID=4720'
 
+Get-WinEvent -Path merged.evtx -FilterXPath '*/System/EventID=4104' -Oldest -MaxEvents 1 | Format-List
 

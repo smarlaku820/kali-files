@@ -22,3 +22,11 @@
 - The windows event logs are not text files that can be viewed using a notepad. However the raw data can be translated into XML using the windows API.
 - They are stored in .evt or .evtx extensions. These files reside in `C:\Windows\System32\winevt\Logs`
 
+## References
+- [EVTX Attack Samples](https://github.com/sbousseaden/EVTX-ATTACK-SAMPLES)
+- [PowerShell Blue Teaming](https://devblogs.microsoft.com/powershell/powershell-the-blue-team/)
+- [Tampering with Windows Tracing](https://blog.palantir.com/tampering-with-windows-event-tracing-background-offense-and-defense-4be7ac62ac63)
+- [Events to Monitor](https://docs.microsoft.com/en-us/windows-server/identity/ad-ds/plan/appendix-l--events-to-monitor)
+- [Security Monitoring and Auditing Reference](https://www.microsoft.com/en-us/download/confirmation.aspx?id=52630)
+- [Greater Visibility through Powershell Logging](https://www.mandiant.com/resources/greater-visibilityt)
+- [Powershell logging anamolies in UBA](https://docs.splunk.com/Documentation/UBA/5.0.4/GetDataIn/AddPowerShell)
