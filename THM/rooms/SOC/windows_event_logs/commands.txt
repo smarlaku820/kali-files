@@ -74,3 +74,24 @@ Get-WinEvent -LogName Security -FilterXPath '*/EventData/Data[@Name="TargetUserN
 
 Get-WinEvent -Path merged.evtx -FilterXPath '*/System/EventID=4104' -Oldest -MaxEvents 1 | Format-List
 
+# Cutting out the Noise - Sysmon
+
+Get-WinEvent -Path filtering.evtx -FilterXPath '*/System/EventID=3' | Measure-Object -Line
+
+Get-WinEvent -Path filtering.evtx -FilterXPath '*/System/EventID=3' -Oldest -MaxEvents 1 | Format-List
+
+# Hunting Metasploit
+
+Get-WinEvent -Path hunting_metasploit.evtx -FilterXPath '*/System/EventID=3 and */EventData/Data[@Name="DestinationPort"] and */EventData/Data=4444' | Format-List
+
+# Detecting MimiKatz
+
+Get-WinEvent -Path hunting_mimikatz.evtx -FilterXPath '*/System/EventID=11 and */EventData/Data[@Name="TargetFilename"]'  | Format-List
+Get-WinEvent -Path .\Hunting_Mimikatz.evtx -FilterXPath '*/System/EventID=10 and */EventData/Data[@Name="TargetImage"] and */EventData/Data="C:\Windows\system32\lsass.exe"' | Format-List
+
+# Hunting Persistence
+
+
+
+# Detecting Evasion Techniques
+ 
