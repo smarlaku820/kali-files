@@ -1,0 +1,19 @@
+# Investigations
+# USB Device Plugged IN.
+# What is the full registry key of the USB device calling svchost.exe in Investigation 1
+
+Get-WinEvent -Path .\Investigation-1.evtx -FilterXPath '*/System/EventID=13 and */EventData/Data[@Name="Image"] and */EventData/Data="C:\Windows\system32\svchost.exe"' | Format-List
+
+# What is the device name when being called by raw access read (#event-id 9)
+Get-WinEvent -Path .\Investigation-1.evtx -FilterXPath '*/System/EventID=9' | Format-List
+
+# What are first set of processess run by the USB
+Get-WinEvent -Path .\Investigation-1.evtx -FilterXPath '*/System/EventID=1' | Format-List
+
+# Investigation-2
+#Another suspicious file has appeared in your logs and has managed to execute code masking itself as an HTML file, evading your anti-virus detections. Open the logs and investigate the suspicious file.  
+
+# In the investigation-2 look for network events (event-id #3) and process create events (event-id #1)
+# Your team has informed you that the adversary has managed to set up persistence on your endpoints as they continue to move throughout your network. Find how the adversary managed to gain persistence using logs provided.
+
+ 

@@ -89,9 +89,22 @@ Get-WinEvent -Path hunting_metasploit.evtx -FilterXPath '*/System/EventID=3 and 
 Get-WinEvent -Path hunting_mimikatz.evtx -FilterXPath '*/System/EventID=11 and */EventData/Data[@Name="TargetFilename"]'  | Format-List
 Get-WinEvent -Path .\Hunting_Mimikatz.evtx -FilterXPath '*/System/EventID=10 and */EventData/Data[@Name="TargetImage"] and */EventData/Data="C:\Windows\system32\lsass.exe"' | Format-List
 
-# Hunting Persistence
+# Hunting Malware
 
+Get-WinEvent -Path .\Hunting_Rats.evtx -FilterXPath '*/System/EventID=3 and */EventData/Data[@Name="DestinationPort"] and */EventData/Data=8080'
 
+# Hunting Persistence - registry modification events or files created in startup or startup\menu directories
+# look for modifications in HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run\Persistence directory - there may be a file
+# look for eventID 11 or eventID 13
+
+Get-WinEvent -Path .\T1023.evtx -FilterXPath '*/System/EventID=13 and */EventData/Data[@Name="TargetObject"] and */EventData/Data="HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run\Persistence"
 
 # Detecting Evasion Techniques
+# event id - 15 will hash & log any alternate data streams
+# event id - 8 will detect dll injection, thread hijacking & process hollowing
+
+Get-WinEvent -Path <Path to Log> -FilterXPath '*/System/EventID=15'
+Get-WinEvent -Path <Path to Log> -FilterXPath '*/System/EventID=8'
+
+
  
