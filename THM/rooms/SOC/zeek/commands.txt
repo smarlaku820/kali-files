@@ -1,0 +1,10 @@
+zeek -v
+zeek -C -r sample.pcap
+zeekctl
+-> start
+-> stop
+
+cat dhcp.log | zeek-cut uids host_name server_addr
+cat dns.log | zeek-cut query | uniq
+# longest session
+cat conn.log | zeek-cut duration | grep -v "-" |sort -n
