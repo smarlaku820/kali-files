@@ -1,0 +1,90 @@
+┌──(bluejay820㉿kali)-[~/…/kali-files/HTB/OSCP_Prep_Boxes/node]
+└─$ ls -ltr
+total 3388
+drwxr-xr-x 2 bluejay820 bluejay820    4096 Jul 28 16:37 nmap
+-rw-r--r-- 1 bluejay820 bluejay820     450 Jul 28 16:52 notes
+-rw-r--r-- 1 bluejay820 bluejay820 3459880 Jul 28 17:13 myplace.backup
+
+┌──(bluejay820㉿kali)-[~/…/kali-files/HTB/OSCP_Prep_Boxes/node]
+└─$ base64 -d myplace.backup > unknown
+
+┌──(bluejay820㉿kali)-[~/…/kali-files/HTB/OSCP_Prep_Boxes/node]
+└─$ file unknown
+unknown: Zip archive data, at least v1.0 to extract, compression method=store
+
+┌──(bluejay820㉿kali)-[~/…/kali-files/HTB/OSCP_Prep_Boxes/node]
+└─$ mv unknown backup.zip
+
+┌──(bluejay820㉿kali)-[~/…/kali-files/HTB/OSCP_Prep_Boxes/node]
+└─$ file backup.zip
+backup.zip: Zip archive data, at least v1.0 to extract, compression method=store
+
+┌──(bluejay820㉿kali)-[~/…/kali-files/HTB/OSCP_Prep_Boxes/node]
+└─$ file backup.zip
+backup.zip: Zip archive data, at least v1.0 to extract, compression method=store
+
+┌──(bluejay820㉿kali)-[~/…/kali-files/HTB/OSCP_Prep_Boxes/node]
+└─$ unzip backup.zip
+Archive:  backup.zip
+   creating: var/www/myplace/
+[backup.zip] var/www/myplace/package-lock.json password:                                                                                                                   
+┌──(bluejay820㉿kali)-[~/…/kali-files/HTB/OSCP_Prep_Boxes/node]
+└─$ fcrackzip -D -p /usr/share/wordlists/rockyou.txt backup.zip
+Command 'fcrackzip' not found, but can be installed with:
+sudo apt install fcrackzip
+Do you want to install it? (N/y)y
+sudo apt install fcrackzip
+[sudo] password for bluejay820:
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+The following package was automatically installed and is no longer required:
+  libicu67
+Use 'sudo apt autoremove' to remove it.
+Suggested packages:
+  wordlist
+The following NEW packages will be installed:
+  fcrackzip
+0 upgraded, 1 newly installed, 0 to remove and 200 not upgraded.
+Need to get 29.8 kB of archives.
+After this operation, 74.8 kB of additional disk space will be used.
+Get:1 http://kali.download/kali kali-rolling/main arm64 fcrackzip arm64 1.0-11 [29.8 kB]
+Fetched 29.8 kB in 2s (17.5 kB/s)
+Selecting previously unselected package fcrackzip.
+(Reading database ... 370577 files and directories currently installed.)
+Preparing to unpack .../fcrackzip_1.0-11_arm64.deb ...
+Unpacking fcrackzip (1.0-11) ...
+Setting up fcrackzip (1.0-11) ...
+Processing triggers for man-db (2.10.2-1) ...
+Processing triggers for kali-menu (2022.3.0) ...
+Scanning processes...
+Scanning processor microcode...
+Scanning linux images...
+
+Running kernel seems to be up-to-date.
+
+Failed to check for processor microcode upgrades.
+
+No services need to be restarted.
+
+No containers need to be restarted.
+
+No user sessions are running outdated binaries.
+
+No VM guests are running outdated hypervisor (qemu) binaries on this host.
+
+┌──(bluejay820㉿kali)-[~/…/kali-files/HTB/OSCP_Prep_Boxes/node]
+└─$ fcrackzip -D -p /usr/share/wordlists/rockyou.txt backup.zip
+possible pw found: magicword ()
+
+┌──(bluejay820㉿kali)-[~/…/kali-files/HTB/OSCP_Prep_Boxes/node]
+└─$ unzip backup.zip
+Archive:  backup.zip
+[backup.zip] var/www/myplace/package-lock.json password:
+  inflating: var/www/myplace/package-lock.json
+   creating: var/www/myplace/node_modules/
+   creating: var/www/myplace/node_modules/serve-static/
+  inflating: var/www/myplace/node_modules/serve-static/README.md
+  inflating: var/www/myplace/node_modules/serve-static/index.js
+  inflating: var/www/myplace/node_modules/serve-static/LICENSE
+ 
