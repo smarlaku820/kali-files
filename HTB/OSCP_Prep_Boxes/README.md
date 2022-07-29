@@ -164,7 +164,13 @@ strace backup
 
 # analyze the assembly
 r2 backup
-aaa
+aaa # analyze
+afl # print the function list
+vvv # to enter the visualization mode
+## scroll down to the point where the function call is sym.main
+## hit gg (a couple of times and space to change the view to get the viz
+## you get a flow graph (function view)
+## try to depict how the binary is executed interms of arguments and try to strace the command to find the system calls
 
 # compile time protections
 gdb backup 
