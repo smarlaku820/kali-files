@@ -181,3 +181,38 @@ r # run the program
 jmpcall
 
 ```
+
+## 5. Valentine
+
+### Approach Taken
+- run the nmap scan 
+- run the nmap vuln scan
+- do the gobuster
+- exploit the heart bleed vuln with `python github heartbleed` script
+- heartbleed will reveal the passphrase
+- gobuster will reveal the key
+- SSH into the server and there by run the LinEnum.sh as always
+- connect to the tmux -S <socket-name>
+
+### Lessons Learnt
+- always observe the versions being printed out
+- whenever a webserver is installed depending on the version you may predict the version of the underlying operating system
+- search like this `apache 2.2.22 ubuntu` & look for launchpad links which will point you to the distro that particular package was uploaded to.
+- Once you know the distro name search again like this `ubuntu releases <distro-name>`, or for example `ubuntu releases precise`
+- there are LTS releases, future releases and end of life releases
+- when the operating system is too old or end of life, there is a great chance of vulns
+- A app called `sslyze` which is an ssl scanner
+- xkcd is a comic about explaining the difficult concepts
+- run the heartbleed and see what you can find from the memory
+- You need to find about the root processes which are root running in that way, if there is some file/socket which as a user/group have access you can try to exploit it
+- If you are copying stuff off of internet into some editors, use `:set paste`
+
+### Commands used
+```
+nmap -sC -sV -oA nmap/valentine 10.10.10.79
+nmap --script vuln -oA nmap/vulnscan 10.10.10.79
+sslyze --heartbleed 10.10.10.79:443
+xkcd heartbleed
+python3 heartbleed.py -n 100 10.10.10.79
+tmux -S <socket-name>
+```
