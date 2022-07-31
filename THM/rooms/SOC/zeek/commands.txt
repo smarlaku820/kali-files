@@ -8,3 +8,66 @@ cat dhcp.log | zeek-cut uids host_name server_addr
 cat dns.log | zeek-cut query | uniq
 # longest session
 cat conn.log | zeek-cut duration | grep -v "-" |sort -n
+
+
+# zeek signatures
+# http-password.sig
+signature http-password {
+     ip-proto == tcp
+     dst_port == 80
+     payload /.*password.*/
+     event "Cleartext Password Found!"
+}
+
+
+zeek -C -r http.pcap -s http-password.sig
+cat notice.log  | zeek-cut id.orig_h id.resp_h msg 
+cat signatures.log | zeek-cut src_addr dest_addr sig_id event_msg 
+cat signatures.log | zeek-cut sub_msg
+cat signatures.log | zeek-cut sub
+
+# ftp-admin.sig
+signature ftp-admin {
+     ip-proto == tcp
+     ftp /.*USER.*dmin.*/
+     event "FTP Admin Login Attempt!"
+}
+
+zeek -C -r ftp.pcap -s ftp-admin.sig
+cat signatures.log | zeek-cut src_addr dst_addr event_msg sub_msg | sort -r| uniq
+
+signature ftp-brute {
+     ip-proto == tcp
+     payload /.*530.*Login.*incorrect.*/
+     event "FTP Brute-force Attempt"
+}
+# This signature will create logs for each event containing "FTP 530 response", which allows us to track the login failure events regardless of username. 
+
+
+zeek -C -r ftp.pcap -s ftp-admin-new.sig
+cat notice.log | zeek-cut uid id.orig_h id.resp_h msg sub | sort -r| nl | uniq | sed -n '1001,1004p'
+
+# no.of.unique events
+cat notice.log | zeek-cut uid | sort | uniq |wc -l
+
+# Sent packets (orig_pkts), received packets (resp_pkts) source port (id.orig_p).
+cat conn.log | zeek-cut id.orig_p orig_pkts resp_pkts
+
+
+# zeek scripts
+sudo tcpdump -ntr smallFlows.pcap port 67 or port 68 -e -vv | grep 'Hostname Option' | awk -F: '{print $2}' | sort -nr | uniq | nl
+tshark -V -r smallFlows.pcap -Y "udp.port==67 or udp.port==68" -T fields -e dhcp.option.hostname | nl | awk NF
+
+# zeek script - dhcp-hostname.zeek
+event dhcp_message (c: connection, is_orig: bool, msg: DHCP::Msg, options: DHCP::Options)
+{
+print options$host_name;
+}
+
+zeek -C -r smallFlows.pcap dhcp-hostname.zeek 
+
+# uniq no of queries from dns.log
+cat dns.log | zeek-cut query | sort | uniq | grep -v '*' | grep -v '-' |wc -l
+
+# uniq no of hosts from dhcp.log
+cat dhcp.log | zeek-cut host_name | sort| uniq |wc -l

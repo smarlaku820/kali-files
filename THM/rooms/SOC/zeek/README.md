@@ -51,3 +51,6 @@ loaded_scripts.log	ssh.log		traceroute.log	weird.log
 
 
 ```
+
+## References
+- [Zeek Scripting Language](https://try.bro.org/#/?example=hello)
