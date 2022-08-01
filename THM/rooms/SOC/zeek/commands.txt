@@ -71,3 +71,38 @@ cat dns.log | zeek-cut query | sort | uniq | grep -v '*' | grep -v '-' |wc -l
 
 # uniq no of hosts from dhcp.log
 cat dhcp.log | zeek-cut host_name | sort| uniq |wc -l
+
+# Running zeek scripts
+# zeek events - https://docs.zeek.org/en/master/scripts/base/bif/event.bif.zeek.html?highlight=signature_match
+zeek -C -r sample.pcap 101.zeek
+
+
+event signature_match (state: signature_state, msg: string, data: string)
+{
+if (state$sig_id == "ftp-admin")
+    {
+    print ("Signature hit! --> #FTP-Admin ");
+    }
+}
+
+signature ftp-admin {
+    ip-proto == tcp
+    ftp /.*USER.*admin.*/
+    event "FTP Username Input Found!"
+}
+
+zeek -C -r ftp.pcap -s ftp-admin.sig 201.zeek
+
+
+# loading local scripts which are located at "/opt/zeek/share/zeek/base". 
+zeek -C -r ftp.pcap local  
+
+#  Zeek provided additional log files this time. Loaded scripts generated loaded_scripts.log, capture_loss.log, notice.log, stats.log files
+
+# loading specific scripts
+# https://docs.zeek.org/en/master/frameworks/index.html
+zeek -C -r ftp.pcap /opt/zeek/share/zeek/policy/protocols/ftp/detect-bruteforcing.zeek 
+cat notice.log | zeek-cut ts note msg 
+
+
+

@@ -54,3 +54,5 @@ loaded_scripts.log	ssh.log		traceroute.log	weird.log
 
 ## References
 - [Zeek Scripting Language](https://try.bro.org/#/?example=hello)
+- [Zeek Events](https://docs.zeek.org/en/master/scripts/base/bif/event.bif.zeek.html?highlight=signature_match)
+- [Zeek Pre-Built Scripts and Frameworks](https://docs.zeek.org/en/master/frameworks/index.html)
