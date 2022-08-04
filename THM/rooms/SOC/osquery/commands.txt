@@ -15,3 +15,28 @@ osqueryi
 # osquery sql queries - joining tables with common column
 select pid,name,path from osquery_info JOIN processes using (PID);
 select username from users where username like '%en'
+
+# osqueryi extensions
+osqueryi --allow-unsafe --extension "C:\Program Files\osquery\extensions\osq-ext-bin\plgx_win_extension.ext.exe"
+
+
+
+osquery> select * from shell_history;
+osquery> select md5,directory from has;
+osquery> select md5,directory from hash;
+osquery> select md5,directory from hash where path='/home/tryhackme/fleet.zip';
+osquery> select md5,directory from hash where path='%';
+osquery> select * from yara;
+osquery> select * from yara where sigfile='%';
+osquery> select * from yara where sigfile='/var/osquery/yara/scanner.yara' and path='/home/charlie/notes';
+osquery> select * from shell_history;
+osquery> select * from yara where sigfile='/var/osquery/yara/scanner.yara' and path='/home/tryhackme/notsus';
+osquery> select name from services where name like '%defend%';
+osquery> select name,display_name,status,description from services where name='WinDefend';
+osquery> select name,publisher from programs;
+osquery> select count(*) from win_event_log_data;
+osquery> select count(*) from win_event_log_channels;
+osquery> select * from win_event_log_channels where source like "%defend%";
+osquery> select datetime from win_event_log_data where source="Microsoft-Windows-Windows Defender/Operational" and eventid="1116";
+osquery> select eventid from win_event_log_data where source="Microsoft-Windows-Sysmon/Operational" ORDER BY datetime LIMIT 1;
+osquery> select * from win_event_log_channels where source like "%sysmon%";

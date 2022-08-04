@@ -1,0 +1,171 @@
+osquery> select * from shell_history;
++------+------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------+
+| uid  | time | command                                                                                                                                                                                                                                                                                                      | history_file                  |
++------+------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------+
+| 1000 | 0    |                                                                                                                                                                                                                                                                                                              | /home/tryhackme/.bash_history |
+| 1000 | 0    | exit                                                                                                                                                                                                                                                                                                         | /home/tryhackme/.bash_history |
+| 1000 | 0    | pwd                                                                                                                                                                                                                                                                                                          | /home/tryhackme/.bash_history |
+| 1000 | 0    | ls                                                                                                                                                                                                                                                                                                           | /home/tryhackme/.bash_history |
+| 1000 | 0    | cp ../charlie/notes .                                                                                                                                                                                                                                                                                        | /home/tryhackme/.bash_history |
+| 1000 | 0    | md5sum notes                                                                                                                                                                                                                                                                                                 | /home/tryhackme/.bash_history |
+| 1000 | 0    | mv notes notsus                                                                                                                                                                                                                                                                                              | /home/tryhackme/.bash_history |
+| 1000 | 0    | dd if=/dev/zero bs=1 count=1 >> notsus                                                                                                                                                                                                                                                                       | /home/tryhackme/.bash_history |
+| 1000 | 0    | md5sum notsus                                                                                                                                                                                                                                                                                                | /home/tryhackme/.bash_history |
+| 1000 | 0    | exit                                                                                                                                                                                                                                                                                                         | /home/tryhackme/.bash_history |
+| 1000 | 0    | sudo redis-server --daemonize yes                                                                                                                                                                                                                                                                            | /home/tryhackme/.bash_history |
+| 1000 | 0    | sudo service mysql start                                                                                                                                                                                                                                                                                     | /home/tryhackme/.bash_history |
+| 1000 | 0    | /usr/bin/fleet serve --mysql_address=127.0.0.1:3306 --mysql_database=kolide --mysql_username=root --mysql_password=tryhackme --redis_address=127.0.0.1:6379 --server_cert=/home/tryhackme/server.cert --server_key=/home/tryhackme/server.key --auth_jwt_key=JB+wEDR4V3bbhU4OlIMcXpcBQAaZc+4r --logging_json | /home/tryhackme/.bash_history |
++------+------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------+
+osquery> exit
+    ...> ;
+Error: near "exit": syntax error
+osquery>
+
+tryhackme@WIN-FG4Q5UQP406:~$ find . -name notsus
+./notsus
+tryhackme@WIN-FG4Q5UQP406:~$ ls -ltr
+total 104608
+-rw-rw-rw- 1 tryhackme tryhackme 107104869 Oct  8  2020 fleet.zip
+-rw-rw-rw- 1 tryhackme tryhackme      3247 Mar 31  2021 server.key
+-rw-rw-rw- 1 tryhackme tryhackme      1626 Mar 31  2021 server.csr
+-rw-r--r-- 1 root      root           1753 Mar 31  2021 server.cert
+drwxrwxrwx 1 tryhackme tryhackme       512 Mar 31  2021 fleet
+-rw-r--r-- 1 tryhackme tryhackme        69 Apr  1  2021 notsus
+tryhackme@WIN-FG4Q5UQP406:~$ which md5sum
+/usr/bin/md5sum
+tryhackme@WIN-FG4Q5UQP406:~$ md5sum notsus
+3df6a21c6d0c554719cffa6ee2ae0df7  notsus
+tryhackme@WIN-FG4Q5UQP406:~$ pwd
+/home/tryhackme
+tryhackme@WIN-FG4Q5UQP406:~$ ls -ltr
+total 104608
+-rw-rw-rw- 1 tryhackme tryhackme 107104869 Oct  8  2020 fleet.zip
+-rw-rw-rw- 1 tryhackme tryhackme      3247 Mar 31  2021 server.key
+-rw-rw-rw- 1 tryhackme tryhackme      1626 Mar 31  2021 server.csr
+-rw-r--r-- 1 root      root           1753 Mar 31  2021 server.cert
+drwxrwxrwx 1 tryhackme tryhackme       512 Mar 31  2021 fleet
+-rw-r--r-- 1 tryhackme tryhackme        69 Apr  1  2021 notsus
+tryhackme@WIN-FG4Q5UQP406:~$ cd ..
+tryhackme@WIN-FG4Q5UQP406:/home$ ls -ltr
+total 0
+drwxr-xr-x 1 alpha     alpha     512 Mar 31  2021 alpha
+drwxr-xr-x 1 bravo     bravo     512 Mar 31  2021 bravo
+drwxr-xr-x 1 charlie   charlie   512 Mar 31  2021 charlie
+drwxr-xr-x 1 tryhackme tryhackme 512 Apr  1  2021 tryhackme
+tryhackme@WIN-FG4Q5UQP406:/home$ cd charlie
+tryhackme@WIN-FG4Q5UQP406:/home/charlie$ ls -ltr
+total 0
+-rw-r--r-- 1 charlie charlie 68 Mar 31  2021 notes
+tryhackme@WIN-FG4Q5UQP406:/home/charlie$ cat notes
+X5O!P%@AP[4\PZX54(P^)7CC)7}$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!$H+H*tryhackme@WIN-FG4Q5UQP406:/home/charlie$
+tryhackme@WIN-FG4Q5UQP406:/home/charlie$
+tryhackme@WIN-FG4Q5UQP406:/home/charlie$ cd ../bravo
+tryhackme@WIN-FG4Q5UQP406:/home/bravo$ ls -ltr
+total 0
+tryhackme@WIN-FG4Q5UQP406:/home/bravo$ cd ../alpha
+tryhackme@WIN-FG4Q5UQP406:/home/alpha$ ls -ltr
+total 0
+tryhackme@WIN-FG4Q5UQP406:/home/alpha$ cd ../tryhackme/
+tryhackme@WIN-FG4Q5UQP406:~$ ls
+fleet  fleet.zip  notsus  server.cert  server.csr  server.key
+tryhackme@WIN-FG4Q5UQP406:~$ osqueryi
+Using a virtual database. Need help, type '.help'
+W0803 04:40:14.175165   572 interface.cpp:274] Extensions disabled: cannot start extension manager (/home/tryhackme/.osquery/shell.em) (Could not set SO_LINGER: Invalid argument)
+osquery> select md5,directory from has;
+Error: no such table: has
+osquery> select md5,directory from hash;
+W0803 04:40:31.588744   570 virtual_table.cpp:965] Table hash was queried without a required column in the WHERE clause
+W0803 04:40:31.589004   570 virtual_table.cpp:976] Please see the table documentation: https://osquery.io/schema/#hash
+Error: constraint failed
+osquery> select md5,directory from hash where path='/home/tryhackme/fleet.zip';
+W0803 04:41:29.382701   570 filesystem.cpp:134] Cannot read file that exceeds size limit: /home/tryhackme/fleet.zip
++-----+-----------------+
+| md5 | directory       |
++-----+-----------------+
+|     | /home/tryhackme |
++-----+-----------------+
+osquery> select md5,directory from hash where path='%';
+osquery>
+
+tryhackme@WIN-FG4Q5UQP406:~$ cat /var/osquery/yara/scanner.yara
+rule eicar_av_test {
+    /*
+       Per standard, match only if entire file is EICAR string plus optional trailing whitespace.
+       The raw EICAR string to be matched is:
+       X5O!P%@AP[4\PZX54(P^)7CC)7}$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!$H+H*
+    */
+
+    meta:
+        description = "This is a standard AV test, intended to verify that BinaryAlert is working correctly."
+        author = "Austin Byers | Airbnb CSIRT"
+        reference = "http://www.eicar.org/86-0-Intended-use.html"
+
+    strings:
+        $eicar_regex = /^X5O!P%@AP\[4\\PZX54\(P\^\)7CC\)7\}\$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!\$H\+H\*\s*$/
+
+    condition:
+        all of them
+}
+
+rule eicar_substring_test {
+    /*
+       More generic - match just the embedded EICAR string (e.g. in packed executables, PDFs, etc)
+    */
+
+    meta:
+        description = "Standard AV test, checking for an EICAR substring"
+        author = "Austin Byers | Airbnb CSIRT"
+
+    strings:
+        $eicar_substring = "$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!"
+
+    condition:
+        all of them
+}tryhackme@WIN-FG4Q5UQP406:~$ cat /var/osquery/yara/scanner.yara | grep -i sig
+tryhackme@WIN-FG4Q5UQP406:~$ osqueryi
+Using a virtual database. Need help, type '.help'
+W0803 04:43:06.636330   579 interface.cpp:274] Extensions disabled: cannot start extension manager (/home/tryhackme/.osquery/shell.em) (Could not set SO_LINGER: Invalid argument)
+osquery> select * from yara;
+W0803 04:43:11.357101   577 virtual_table.cpp:965] Table yara was queried without a required column in the WHERE clause
+W0803 04:43:11.357439   577 virtual_table.cpp:976] Please see the table documentation: https://osquery.io/schema/#yara
+Error: constraint failed
+osquery> select * from yara where sigfile='%';
+W0803 04:43:46.837435   577 virtual_table.cpp:965] Table yara was queried without a required column in the WHERE clause
+W0803 04:43:46.837850   577 virtual_table.cpp:976] Please see the table documentation: https://osquery.io/schema/#yara
+Error: constraint failed
+osquery> .schema yara
+CREATE TABLE yara(`path` TEXT, `matches` TEXT, `count` INTEGER, `sig_group` TEXT, `sigfile` TEXT, `sigrule` TEXT HIDDEN, `strings` TEXT, `tags` TEXT, `sigurl` TEXT HIDDEN, PRIMARY KEY (`path`, `sig_group`, `sigfile`, `sigrule`, `sigurl`)) WITHOUT ROWID;
+CREATE TABLE yara_events(`target_path` TEXT, `category` TEXT, `action` TEXT, `transaction_id` BIGINT, `matches` TEXT, `count` INTEGER, `strings` TEXT, `tags` TEXT, `time` BIGINT, `eid` TEXT HIDDEN);
+osquery> select * from yara where sigfile='/var/osquery/yara/scanner.yara' and path='/home/charlie/notes';
++---------------------+------------------------------------+-------+-----------+--------------------------------+------------------------------------+------+
+| path                | matches                            | count | sig_group | sigfile                        | strings                            | tags |
++---------------------+------------------------------------+-------+-----------+--------------------------------+------------------------------------+------+
+| /home/charlie/notes | eicar_av_test,eicar_substring_test | 2     |           | /var/osquery/yara/scanner.yara | $eicar_regex:0,$eicar_substring:1b |      |
++---------------------+------------------------------------+-------+-----------+--------------------------------+------------------------------------+------+
+osquery> select * from shell_history;
++------+------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------+
+| uid  | time | command                                                                                                                                                                                                                                                                                                      | history_file                  |
++------+------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------+
+| 1000 | 0    |                                                                                                                                                                                                                                                                                                              | /home/tryhackme/.bash_history |
+| 1000 | 0    | exit                                                                                                                                                                                                                                                                                                         | /home/tryhackme/.bash_history |
+| 1000 | 0    | pwd                                                                                                                                                                                                                                                                                                          | /home/tryhackme/.bash_history |
+| 1000 | 0    | ls                                                                                                                                                                                                                                                                                                           | /home/tryhackme/.bash_history |
+| 1000 | 0    | cp ../charlie/notes .                                                                                                                                                                                                                                                                                        | /home/tryhackme/.bash_history |
+| 1000 | 0    | md5sum notes                                                                                                                                                                                                                                                                                                 | /home/tryhackme/.bash_history |
+| 1000 | 0    | mv notes notsus                                                                                                                                                                                                                                                                                              | /home/tryhackme/.bash_history |
+| 1000 | 0    | dd if=/dev/zero bs=1 count=1 >> notsus                                                                                                                                                                                                                                                                       | /home/tryhackme/.bash_history |
+| 1000 | 0    | md5sum notsus                                                                                                                                                                                                                                                                                                | /home/tryhackme/.bash_history |
+| 1000 | 0    | exit                                                                                                                                                                                                                                                                                                         | /home/tryhackme/.bash_history |
+| 1000 | 0    | sudo redis-server --daemonize yes                                                                                                                                                                                                                                                                            | /home/tryhackme/.bash_history |
+| 1000 | 0    | sudo service mysql start                                                                                                                                                                                                                                                                                     | /home/tryhackme/.bash_history |
+| 1000 | 0    | /usr/bin/fleet serve --mysql_address=127.0.0.1:3306 --mysql_database=kolide --mysql_username=root --mysql_password=tryhackme --redis_address=127.0.0.1:6379 --server_cert=/home/tryhackme/server.cert --server_key=/home/tryhackme/server.key --auth_jwt_key=JB+wEDR4V3bbhU4OlIMcXpcBQAaZc+4r --logging_json | /home/tryhackme/.bash_history |
++------+------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------+
+osquery> select * from yara where sigfile='/var/osquery/yara/scanner.yara' and path='/home/tryhackme/notsus';
++------------------------+----------------------+-------+-----------+--------------------------------+---------------------+------+
+| path                   | matches              | count | sig_group | sigfile                        | strings             | tags |
++------------------------+----------------------+-------+-----------+--------------------------------+---------------------+------+
+| /home/tryhackme/notsus | eicar_substring_test | 1     |           | /var/osquery/yara/scanner.yara | $eicar_substring:1b |      |
++------------------------+----------------------+-------+-----------+--------------------------------+---------------------+------+
+osquery>
+
+

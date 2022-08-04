@@ -17,5 +17,10 @@ proxy_dns
 - When running nmap scans, if there is a firewall use the flag `-sT` explicitly as nmap usually runs the stealth scan which is also invoked by invoking `-sS` which is the default.
 - `nc -lnvp 9000 < commands.txt` commands.txt contains list of commands to be sent over when someone tries to netcat on the port 9000 on the attack box
 
+## Boxed referred by ippsec for additional learning
+- `October` for learning more about binary exploitation and/or buffer-overflow exploitation
+- `CrimeStoppers` for learning more about php exfiltration
+- `beep` for more LFI stuff
+
 ## References
 - [Setting Up ProxyChains](https://medium.com/cyberxerx/how-to-setup-proxychains-in-kali-linux-by-terminal-618e2039b663)

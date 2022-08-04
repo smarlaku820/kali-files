@@ -6,3 +6,11 @@
 
 ## Reference
 - [OSQuery Schema](https://osquery.io/schema/4.7.0/)
+- https://github.com/trailofbits/osquery-extensions
+- https://github.com/polylogyx/osq-ext-bin
+- https://github.com/kolide/fleet
+- https://github.com/kolide/launcher
+- https://github.com/fleetdm/fleet
+- File Integrity Monitoring: https://osquery.readthedocs.io/en/latest/deployment/file-integrity-monitoring/
+- Process Auditing: https://osquery.readthedocs.io/en/latest/deployment/process-auditing/
+- Syslog Consumption: https://osquery.readthedocs.io/en/latest/deployment/syslog/

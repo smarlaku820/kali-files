@@ -1,0 +1,77 @@
+osquery> select name from services where name like '%defend%';
++-----------+
+| name      |
++-----------+
+| WinDefend |
++-----------+
+osquery> .schema services
+CREATE TABLE services(`name` TEXT, `service_type` TEXT, `display_name` TEXT, `status` TEXT, `pid` INTEGER, `start_type` TEXT, `win32_exit_code` INTEGER, `service_exit_code` INTEGER, `path` TEXT, `module_path` TEXT, `description` TEXT, `user_account` TEXT);
+osquery> select name,display_name,status,description from services where name='WinDefend';
++-----------+------------------------------------+---------+--------------------------------------------------------------------------+
+| name      | display_name                       | status  | description                                                              |
++-----------+------------------------------------+---------+--------------------------------------------------------------------------+
+| WinDefend | Windows Defender Antivirus Service | RUNNING | Helps protect users from malware and other potentially unwanted software |
++-----------+------------------------------------+---------+--------------------------------------------------------------------------+
+osquery> select name,publisher from programs;
++--------------------------------------------------------------------+-----------------------+
+| name                                                               | publisher             |
++--------------------------------------------------------------------+-----------------------+
+| VMware Tools                                                       | VMware, Inc.          |
+| AlienVault Agent                                                   | AlienVault Inc.       |
+| Microsoft Visual C++ 2019 X64 Minimum Runtime - 14.24.28127        | Microsoft Corporation |
+| Microsoft Visual C++ 2019 X64 Additional Runtime - 14.24.28127     | Microsoft Corporation |
+| Amazon SSM Agent                                                   | Amazon Web Services   |
+| Google Chrome                                                      | Google LLC            |
+| Microsoft Visual C++ 2015-2019 Redistributable (x64) - 14.24.28127 | Microsoft Corporation |
+| Microsoft Visual C++ 2019 X86 Minimum Runtime - 14.24.28127        | Microsoft Corporation |
+| Amazon SSM Agent                                                   | Amazon Web Services   |
+| Microsoft Visual C++ 2015-2019 Redistributable (x86) - 14.24.28127 | Microsoft Corporation |
+| Microsoft Visual C++ 2019 X86 Additional Runtime - 14.24.28127     | Microsoft Corporation |
++--------------------------------------------------------------------+-----------------------+
+osquery> .schema win_event_log_data
+CREATE TABLE win_event_log_data(`time` BIGINT, `datetime` TEXT, `source` TEXT, `provider_name` TEXT, `provider_guid` TEXT, `eventid` INTEGER, `task` INTEGER, `level` INTEGER, `keywords` BIGINT, `data` TEXT, `eid` TEXT HIDDEN);
+osquery> select count(*) from win_event_log_data;
+E0803 05:08:58.536731  3852 plgx_win_evt_log_data_table.cpp:41] Provide 'source' as input in query. Use 'win_event_log_channels' table for help.
++----------+
+| count(*) |
++----------+
+| 0        |
++----------+
+osquery> .schema win_event_log_channels
+CREATE TABLE win_event_log_channels(`source` TEXT);
+osquery> select count(*) from win_event_log_channels;
++----------+
+| count(*) |
++----------+
+| 1076     |
++----------+
+osquery> select * from win_event_log_channels where source like "%defend%";
++------------------------------------------------+
+| source                                         |
++------------------------------------------------+
+| Microsoft-Windows-Windows Defender/Operational |
+| Microsoft-Windows-Windows Defender/WHC         |
++------------------------------------------------+
+osquery> select datetime from win_event_log_data where source="Microsoft-Windows-Windows Defender/Operational" and eventid="1116";
++--------------------------------+
+| datetime                       |
++--------------------------------+
+| 2021-04-01T00:50:44.637359900Z |
+| 2021-04-01T00:51:09.673408800Z |
++--------------------------------+
+osquery> select eventid from win_event_log_data where source="Microsoft-Windows-Sysmon/Operational" ORDER BY datetime LIMIT 1;
++---------+
+| eventid |
++---------+
+| 16      |
++---------+
+osquery> select * from win_event_log_channels where source like "%sysmon%";
++--------------------------------------+
+| source                               |
++--------------------------------------+
+| Microsoft-Windows-Sysmon/Operational |
++--------------------------------------+
+osquery>
+
+
+
