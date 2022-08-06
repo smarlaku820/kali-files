@@ -1,0 +1,95 @@
+┌──(bluejay820㉿kali)-[~/…/HTB/OSCP_Prep_Boxes/poison/php_exfil]
+└─$ cat index_php.txt | base64 -d
+<html>
+<body>
+<h1>Temporary website to test local .php scripts.</h1>
+Sites to be tested: ini.php, info.php, listfiles.php, phpinfo.php
+
+</body>
+</html>
+
+<form action="/browse.php" method="GET">
+     Scriptname: <input type="text" name="file"><br>
+     <input type="submit" value="Submit">
+</form>
+
+┌──(bluejay820㉿kali)-[~/…/HTB/OSCP_Prep_Boxes/poison/php_exfil]
+└─$ cat index_php.txt | base64 -d >  index.php
+
+┌──(bluejay820㉿kali)-[~/…/HTB/OSCP_Prep_Boxes/poison/php_exfil]
+└─$ vi ini_php.txt
+
+┌──(bluejay820㉿kali)-[~/…/HTB/OSCP_Prep_Boxes/poison/php_exfil]
+└─$ cat ini_php.txt| base64 -d
+<?php
+print_r(ini_get_all());
+?>
+
+┌──(bluejay820㉿kali)-[~/…/HTB/OSCP_Prep_Boxes/poison/php_exfil]
+└─$ cat ini_php.txt| base64 -d > ini.php
+
+┌──(bluejay820㉿kali)-[~/…/HTB/OSCP_Prep_Boxes/poison/php_exfil]
+└─$ vi info_php.txt
+
+┌──(bluejay820㉿kali)-[~/…/HTB/OSCP_Prep_Boxes/poison/php_exfil]
+└─$ cat info_php.txt| base64 -d
+<?php
+echo php_uname();
+?>
+
+┌──(bluejay820㉿kali)-[~/…/HTB/OSCP_Prep_Boxes/poison/php_exfil]
+└─$ cat info_php.txt| base64 -d > info.php
+
+┌──(bluejay820㉿kali)-[~/…/HTB/OSCP_Prep_Boxes/poison/php_exfil]
+└─$ ll
+total 24
+-rw-r--r-- 1 bluejay820 bluejay820 289 Aug  6 07:16 index.php
+-rw-r--r-- 1 bluejay820 bluejay820 389 Aug  6 07:16 index_php.txt
+-rw-r--r-- 1 bluejay820 bluejay820  27 Aug  6 07:18 info.php
+-rw-r--r-- 1 bluejay820 bluejay820  37 Aug  6 07:17 info_php.txt
+-rw-r--r-- 1 bluejay820 bluejay820  33 Aug  6 07:17 ini.php
+-rw-r--r-- 1 bluejay820 bluejay820  45 Aug  6 07:17 ini_php.txt
+
+┌──(bluejay820㉿kali)-[~/…/HTB/OSCP_Prep_Boxes/poison/php_exfil]
+└─$ vi listfiles_php.txt
+
+┌──(bluejay820㉿kali)-[~/…/HTB/OSCP_Prep_Boxes/poison/php_exfil]
+└─$ cat listfiles_php.txt| base64 -d
+<?php
+$dir = '/usr/local/www/apache24/data';
+$files = scandir($dir);
+
+print_r($files);
+?>
+
+┌──(bluejay820㉿kali)-[~/…/HTB/OSCP_Prep_Boxes/poison/php_exfil]
+└─$ cat listfiles_php.txt| base64 -d > listfiles.php
+
+┌──(bluejay820㉿kali)-[~/…/HTB/OSCP_Prep_Boxes/poison/php_exfil]
+└─$ vi phpinfo_php.txt
+
+┌──(bluejay820㉿kali)-[~/…/HTB/OSCP_Prep_Boxes/poison/php_exfil]
+└─$ cat phpinfo_php.txt| base64 -d
+<?php
+phpinfo();
+?>
+
+┌──(bluejay820㉿kali)-[~/…/HTB/OSCP_Prep_Boxes/poison/php_exfil]
+└─$ cat phpinfo_php.txt| base64 -d > phpinfo.php
+
+┌──(bluejay820㉿kali)-[~/…/HTB/OSCP_Prep_Boxes/poison/php_exfil]
+└─$ ls -ltr
+total 40
+-rw-r--r-- 1 bluejay820 bluejay820 389 Aug  6 07:16 index_php.txt
+-rw-r--r-- 1 bluejay820 bluejay820 289 Aug  6 07:16 index.php
+-rw-r--r-- 1 bluejay820 bluejay820  45 Aug  6 07:17 ini_php.txt
+-rw-r--r-- 1 bluejay820 bluejay820  33 Aug  6 07:17 ini.php
+-rw-r--r-- 1 bluejay820 bluejay820  37 Aug  6 07:17 info_php.txt
+-rw-r--r-- 1 bluejay820 bluejay820  27 Aug  6 07:18 info.php
+-rw-r--r-- 1 bluejay820 bluejay820 121 Aug  6 07:18 listfiles_php.txt
+-rw-r--r-- 1 bluejay820 bluejay820  90 Aug  6 07:18 listfiles.php
+-rw-r--r-- 1 bluejay820 bluejay820  29 Aug  6 07:19 phpinfo_php.txt
+-rw-r--r-- 1 bluejay820 bluejay820  20 Aug  6 07:19 phpinfo.php
+
+┌──(bluejay820㉿kali)-[~/…/HTB/OSCP_Prep_Boxes/poison/php_exfil]
+└
