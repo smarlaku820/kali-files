@@ -1,0 +1,4 @@
+# Nmap 7.92 scan initiated Tue Aug  9 21:09:08 2022 as: nmap -sC -sV -oA nmap/initial 10.10.10.76
+Host: 10.10.10.76 ()	Status: Up
+Host: 10.10.10.76 ()	Ports: 79/open/tcp//finger?///, 515/open/tcp//printer///	Ignored State: closed (998)
+# Nmap done at Tue Aug  9 21:11:14 2022 -- 1 IP address (1 host up) scanned in 125.35 seconds

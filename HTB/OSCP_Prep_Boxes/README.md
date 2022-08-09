@@ -301,6 +301,9 @@ vncviewer 127.0.0.1::6901
 - finger tells you what users are logged into the system, you can do some cool enumeration on the system
 - two programs to enumerate metasploit, one is metasploit `msfdb run` and two is `finger enum github`
 - if the linux OS is dated back to 2008, it may be vulnerable to shell shock
+- different ways to priv esc with wget
+- `less -S` (-S or --chop-long-lines -> Causes  lines longer than the screen width to be chopped (truncated) rather than wrapped.  That is, the portion of a long line that does not fit in the screen width is not displayed until you press RIGHT-ARROW.  The default is to wrap long lines; that is, display the remainder on the next line.)
+
 
 ### Commands Used
 
@@ -316,6 +319,7 @@ nmap -sC -sV -p 79,111,22022,35342,56272 -oA nmap/TargetedPorts 10.10.10.76
 # finger-user-enum
 ./finger-user-enum.pl -U /usr/share/SecLists/Usernames/Names/names.txt -h 10.10.10.76 | less -S
 ./finger-user-enum.pl -u root -h 10.10.10.76
+
 
 ssh -p 22022 -okexAlgorithms=+diffie-hellman-group1-sha1 sunny@10.10.10.76
 
