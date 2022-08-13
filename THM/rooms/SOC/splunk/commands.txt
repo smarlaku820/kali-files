@@ -1,4 +1,24 @@
 # metadata commands
 | metadata type=sourcetypes index=botsv2 | eval firstTime=strftime(firstTime,"%Y-%m-%d %H:%M:%S") | eval lastTime=strftime(lastTime,"%Y-%m-%d %H:%M:%S") | eval recentTime=strftime(recentTime,"%Y-%m-%d %H:%M:%S") | sort - totalCount
 
+# from splunk you can query sysmon events
+# The question says Scheduled Tasks, and we know malware can induce persistence with that. If this is invoked through command line, Sysmon events should have it. Let’s filter for schtasks.exe in Sysmon logs.
+index=botsv2 source=WinEventLog:Microsoft-Windows-Sysmon/Operational CommandLine=*schtasks.exe* 
+| table _time host CommandLine ParentCommandLine
 
+index=botsv2 source=WinEventLog:Microsoft-Windows-Sysmon/Operational CommandLine=*schtasks.exe* CommandLine!="*Microsoft\\Office*"
+| table _time host CommandLine ParentCommandLine
+
+# The task says basically to run code stored in Registry key HKLM:\Software\Microsoft\Network debug after decoding from base64. So we need to pivot to the source WinRegistry
+index=botsv2 source=WinRegistry "\\Software\\Microsoft\\Network"
+
+# ftp upload and download
+index=botsv2 sourcetype="stream:ftp" method=STOR # upload
+index=botsv2 sourcetype="stream:ftp" method=RETR
+
+# trying to capture how much has been uploaded
+index=botsv2 sourcetype="stream:ftp" method=STOR reply_content="*(measured here)*" 
+| rex field=reply_content "(?<duration>[0-9]{1,11}\.[0-9]{3}?) seconds \(measured here\), (?<speed>[0-9]{1,11}\.[0-9]{2}) (?<data_size>M|K)bytes per second" 
+| eval norm_speed = case(data_size == "M", 1048576, data_size == "K", 1024) 
+| eval totalbytes=duration*speed*norm_speed
+| stats sum(totalbytes) by flow_id
