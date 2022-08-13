@@ -40,4 +40,4 @@ An online version of this tool created by SOC PRIME (Florian Roth) does the conv
 ## References
 - https://github.com/SigmaHQ/sigma
 - https://uncoder.io/
-
+- https://ivanitlearning.wordpress.com/2020/06/23/hunting-with-splunk-botsv2-qns-4xx/#:~:text=405%20%E2%80%93%20What%20is%20the%20first,answer%20above%20from%20qn%20401.
