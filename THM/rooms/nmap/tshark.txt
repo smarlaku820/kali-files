@@ -1,0 +1,2 @@
+tshark -ni ens5
+tshark -ni ens5 -T fields -e ftp.request.command -e ftp.request.arg -Y ftp.request.arg

