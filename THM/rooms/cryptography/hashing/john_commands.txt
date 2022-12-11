@@ -2,6 +2,7 @@
   john --help
   john --test
   john --list=formats
+  john hash.txt
   john --wordlist=/usr/share/wordlists/rockyou.txt.gz --format=Raw-MD5 first_task_hashes/hash1.txt
   john --wordlist=/usr/share/wordlists/rockyou.txt --format=Raw-SHA1 first_task_hashes/hash2.txt 
   john --list=formats | grep -iF "sha256" 
