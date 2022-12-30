@@ -48,3 +48,33 @@ Value at buf2: AAAAAAAAAAAAAAAAA
 Address at buf1: 0xfffffffff250
 Address at buf2: 0xfffffffff240
 ```
+
+
+## Now, let us look at the exploitation program.
+
+```
+
+the auth, system_pass variable gets stored first and they occupy the higher address.
+
+the user_pass if provided with specific input (16 + 1), it will override the system_pass variable. As the difference between
+the two addresssess is 16.
+
+where as for the user_pass to reach out and overwrite auth variable, you need to calculate the difference of addressess between auth and system_pass which is 20, so effectively you must have (20 + 1) to override.
+
+So, therefore, 16 + 16 + 5 = 37 ( 'A'*32 + 'B'*5 ) will achive stack overflow exploitation and you will be able to achive the exploitation as demnostrated below.
+
+For more understanding, open the program buffer_overflow_exploit.c
+
+┌──(bluejay820㉿kali)-[~/Documents/kali-files/buffer_overflow]
+└─$ ./buffer_overflow_exploit
+Enter your password:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABBBBB
+Value at user_pass: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABBBBB
+Value at system_pass: AAAAAAAAAAAAAAAABBBBB
+Address at user_pass: 0xffffffffed38
+Address at system_pass: 0xffffffffed48
+Address at auth: 0xffffffffed5c
+auth variable: 66
+Password is correct!
+
+
+```
